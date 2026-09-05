@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { STUDIO } from '../data/studio'
+import LoaderOrb from './LoaderOrb'
 
 export default function Loader({ onDone }: { onDone: () => void }) {
   const [pct, setPct] = useState(0)
@@ -39,6 +40,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
             exit={{ y: -30, opacity: 0, transition: { duration: 0.7 } }}
           >
             <div className="loader-eyebrow eyebrow">Photography · Cinematography</div>
+            <LoaderOrb progress={pct} />
             <h1 className="loader-title serif">
               {STUDIO.name.split(' ').map((w, i) => (
                 <motion.span

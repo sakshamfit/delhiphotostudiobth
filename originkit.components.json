@@ -1,0 +1,56 @@
+{
+  "_comment": "Curated OriginKit components for Delhi Photo Studio BTH. Install all with `npm run originkit:add` (needs ORIGINKIT_API_KEY in .env.local and network access to originkit.dev). Each was chosen to match the cinematic dark/gold aesthetic and to have zero or light dependencies.",
+  "registry": "https://mcp.originkit.dev",
+  "stack": "vite",
+  "styling": "css",
+  "components": [
+    {
+      "name": "particle-interlock",
+      "use": "Premium loading-screen orb (counter-rotating Fibonacci dot shells). Drop into Loader.tsx.",
+      "category": "loader",
+      "deps": []
+    },
+    {
+      "name": "fluidtrail",
+      "use": "GPU Navier-Stokes fluid trail behind the cursor for the hero — upgrades the custom cursor glow.",
+      "category": "cursor",
+      "deps": []
+    },
+    {
+      "name": "satin-flow",
+      "use": "Domain-warped silk shader background for the Studio / Contact bands (subtle, dark-tinted).",
+      "category": "background-animation",
+      "deps": []
+    },
+    {
+      "name": "network-lines",
+      "use": "Drifting constellation lines behind the Location / Reviews sections.",
+      "category": "background-animation",
+      "deps": []
+    },
+    {
+      "name": "scroll-text-highlight",
+      "use": "Word-by-word scroll highlight for the Studio manifesto copy.",
+      "category": "animation",
+      "deps": []
+    },
+    {
+      "name": "motion-text-trail",
+      "use": "Cinematic heading trail effect for section titles.",
+      "category": "animation",
+      "deps": []
+    },
+    {
+      "name": "light-glass-button",
+      "use": "Glassmorphism CTA with cursor-tracked inner light for Book / WhatsApp buttons.",
+      "category": "button",
+      "deps": []
+    },
+    {
+      "name": "image-grid",
+      "use": "Alternative animated layout option for the portfolio gallery.",
+      "category": "animation",
+      "deps": []
+    }
+  ]
+}

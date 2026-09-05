@@ -1,10 +1,35 @@
-import { Suspense, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Environment, Float, AdaptiveDpr } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette, Noise, DepthOfField } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import CameraModel from './CameraModel'
+import CameraGLB from './CameraGLB'
 import DustField from './DustField'
+
+/**
+ * Detect whether a real camera GLB has been dropped in at /models/camera.glb.
+ * If present, the site drives the exploded-view from the real model's meshes;
+ * otherwise it falls back to the high-quality procedural camera. This lets the
+ * user add their GLB later with zero code changes.
+ */
+function useHasGLB() {
+  const [has, setHas] = useState(false)
+  useEffect(() => {
+    let alive = true
+    fetch('/models/camera.glb', { method: 'HEAD' })
+      .then((r) => {
+        const type = r.headers.get('content-type') || ''
+        // treat as present only if it's a real binary asset, not an SPA HTML fallback
+        if (alive && r.ok && !type.includes('text/html')) setHas(true)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  return has
+}
 
 /**
  * Rig that maps the hero scroll progress (0..1) onto:
@@ -55,10 +80,18 @@ function Rig({ progress, pointer }: { progress: number; pointer: React.MutableRe
     }
   })
 
+  const hasGLB = useHasGLB()
+
   return (
     <group ref={groupRef}>
       <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.25} enabled={progress < 0.18}>
-        <CameraModel explode={explode} reveal={reveal} />
+        {hasGLB ? (
+          <Suspense fallback={<CameraModel explode={explode} reveal={reveal} />}>
+            <CameraGLB explode={explode} reveal={reveal} />
+          </Suspense>
+        ) : (
+          <CameraModel explode={explode} reveal={reveal} />
+        )}
       </Float>
     </group>
   )

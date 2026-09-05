@@ -5,3 +5,9 @@ dist-ssr
 .DS_Store
 .env
 .vite
+
+.env.local
+.env.*
+.originkit
+components.json.bak
+*.tsbuildinfo

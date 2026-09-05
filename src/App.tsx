@@ -3,6 +3,7 @@ import Lenis from 'lenis'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
+import FluidCursor from './components/FluidCursor'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Portfolio from './components/Portfolio'
@@ -76,6 +77,7 @@ export default function App() {
   return (
     <>
       {!loaded && <Loader onDone={() => setLoaded(true)} />}
+      <FluidCursor />
       <Cursor />
 
       <div className="fx-grain" aria-hidden />
