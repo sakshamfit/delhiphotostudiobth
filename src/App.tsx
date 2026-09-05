@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import Loader from './components/Loader'
 import Cursor from './components/Cursor'
 import FluidCursor from './components/FluidCursor'
@@ -15,6 +17,8 @@ import Location from './components/Location'
 import Contact from './components/Contact'
 import { STUDIO } from './data/studio'
 import './styles/sections.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const CameraScene = lazy(() => import('./three/CameraScene'))
 
@@ -33,9 +37,10 @@ function useIsMobile() {
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   const isMobile = useIsMobile()
-  const heroRef = useRef<HTMLDivElement>(null)
+  const cameraLayer = useRef<HTMLDivElement>(null)
 
-  // smooth scroll
+  // Smooth scroll (Lenis) wired into GSAP ScrollTrigger so scrubbed timelines
+  // stay perfectly in sync with the smoothed scroll position.
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.15,
@@ -43,36 +48,46 @@ export default function App() {
       smoothWheel: true,
       touchMultiplier: 1.4,
     })
-    let raf = 0
-    const loop = (time: number) => {
-      lenis.raf(time)
-      raf = requestAnimationFrame(loop)
-    }
-    raf = requestAnimationFrame(loop)
+
+    lenis.on('scroll', ScrollTrigger.update)
+    const raf = (time: number) => lenis.raf(time * 1000)
+    gsap.ticker.add(raf)
+    gsap.ticker.lagSmoothing(0)
+
+    // refresh once layout settles
+    const id = setTimeout(() => ScrollTrigger.refresh(), 300)
+
     return () => {
-      cancelAnimationFrame(raf)
+      clearTimeout(id)
+      gsap.ticker.remove(raf)
       lenis.destroy()
     }
   }, [])
 
-  // hero pinned scroll progress (0..1 across the tall hero container)
-  const { scrollYProgress: heroProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end end'],
-  })
-
-  // sampled numeric progress for the 3D rig
-  const [rigProgress, setRigProgress] = useState(0)
+  // Fade the fixed 3D camera layer out as the hero pin releases into the photo.
   useEffect(() => {
-    return heroProgress.on('change', (v) => setRigProgress(v))
-  }, [heroProgress])
+    if (!loaded) return
+    const el = cameraLayer.current
+    if (!el) return
+    const trigger = document.querySelector('.hero-pin')
+    if (!trigger) return
+    const st = ScrollTrigger.create({
+      trigger: trigger as HTMLElement,
+      start: 'top top',
+      end: '+=560%',
+      scrub: true,
+      onUpdate: (self) => {
+        // stay fully visible through the sequence, fade only in the last 12%
+        const p = self.progress
+        el.style.opacity = p < 0.88 ? '1' : String(Math.max(0, 1 - (p - 0.88) / 0.12))
+      },
+    })
+    return () => st.kill()
+  }, [loaded])
 
   // global scroll progress bar
   const { scrollYProgress } = useScroll()
   const barScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })
-
-  // fade the fixed 3D canvas out once hero scroll completes
-  const canvasOpacity = useTransform(heroProgress, [0, 0.9, 1], [1, 1, 0])
 
   return (
     <>
@@ -88,22 +103,17 @@ export default function App() {
 
       <Nav />
 
-      {/* Fixed 3D camera canvas — visible through the hero */}
-      <motion.div className="camera-fixed" style={{ opacity: canvasOpacity }}>
+      {/* Fixed 3D camera canvas — visible through the pinned hero */}
+      <div className="camera-fixed" ref={cameraLayer}>
         {loaded && (
           <Suspense fallback={<div className="camera-fallback" />}>
-            <CameraScene progress={rigProgress} quality={isMobile ? 'low' : 'high'} />
+            <CameraScene quality={isMobile ? 'low' : 'high'} />
           </Suspense>
         )}
-      </motion.div>
+      </div>
 
       <main>
-        {/* Tall hero spacer that drives the pinned camera scroll story */}
-        <div className="hero-scroll" ref={heroRef}>
-          <div className="hero-sticky">
-            <Hero progress={heroProgress} />
-          </div>
-        </div>
+        <Hero />
 
         <Portfolio />
         <WeddingExperience />

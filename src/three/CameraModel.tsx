@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Text } from '@react-three/drei'
 import { CAMERA_LABELS } from '../data/studio'
+import { scrollState } from './scrollState'
 
 /**
  * Procedural, physically-based professional mirrorless camera.
@@ -118,16 +119,18 @@ function RidgedRing({
 
 export default function CameraModel({ explode, reveal }: PartProps) {
   const root = useRef<THREE.Group>(null)
+  const zoomRing = useRef<THREE.Group>(null)
+  const focusRing = useRef<THREE.Group>(null)
   const m = useMaterials()
   const e = ease(Math.min(1, Math.max(0, explode)))
 
-  // idle rotation + explode-driven presentation tilt
-  useFrame((state) => {
-    if (!root.current) return
-    const t = state.clock.elapsedTime
-    root.current.rotation.y = t * 0.16 + e * 0.5
-    root.current.rotation.x = Math.sin(t * 0.4) * 0.04 + e * 0.12
-    root.current.position.y = Math.sin(t * 0.6) * 0.03
+  // The parent Rig handles the whole-camera 360 orbit; here we only drive the
+  // independent focus/zoom ring rotation from live scroll (the "lens rotates
+  // independently / focus ring rotates" beats).
+  useFrame(() => {
+    const p = scrollState.get()
+    if (zoomRing.current) zoomRing.current.rotation.z = p * Math.PI * 3
+    if (focusRing.current) focusRing.current.rotation.z = -p * Math.PI * 4
   })
 
   // helper to lerp a rest position toward an exploded position
@@ -257,13 +260,15 @@ export default function CameraModel({ explode, reveal }: PartProps) {
         </mesh>
       </group>
 
-      {/* zoom ring */}
+      {/* zoom ring — rotates independently with scroll */}
       <group position={P([0, 0, 1.7], [0, 0, 2.6])}>
         <mesh rotation={[Math.PI / 2, 0, 0]} material={m.rubberMat} castShadow>
           <cylinderGeometry args={[0.72, 0.72, 0.42, 48]} />
         </mesh>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <RidgedRing radius={0.72} count={64} height={0.4} thickness={0.02} material={m.rubberMat} />
+          <group ref={zoomRing}>
+            <RidgedRing radius={0.72} count={64} height={0.4} thickness={0.02} material={m.rubberMat} />
+          </group>
         </group>
       </group>
 
@@ -274,13 +279,15 @@ export default function CameraModel({ explode, reveal }: PartProps) {
         </mesh>
       </group>
 
-      {/* focus ring */}
+      {/* focus ring — rotates independently with scroll */}
       <group position={P([0, 0, 2.5], [0, 0, 4.6])}>
         <mesh rotation={[Math.PI / 2, 0, 0]} material={m.rubberMat} castShadow>
           <cylinderGeometry args={[0.68, 0.68, 0.36, 48]} />
         </mesh>
         <group rotation={[Math.PI / 2, 0, 0]}>
-          <RidgedRing radius={0.68} count={56} height={0.34} thickness={0.02} material={m.metalMat} />
+          <group ref={focusRing}>
+            <RidgedRing radius={0.68} count={56} height={0.34} thickness={0.02} material={m.metalMat} />
+          </group>
         </group>
       </group>
 

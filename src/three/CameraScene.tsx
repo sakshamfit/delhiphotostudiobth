@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Environment, Float, AdaptiveDpr } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette, Noise, DepthOfField } from '@react-three/postprocessing'
@@ -6,12 +6,13 @@ import * as THREE from 'three'
 import CameraModel from './CameraModel'
 import CameraGLB from './CameraGLB'
 import DustField from './DustField'
+import { scrollState, explodeAmount, revealAmount, lensDolly } from './scrollState'
 
 /**
  * Detect whether a real camera GLB has been dropped in at /models/camera.glb.
- * If present, the site drives the exploded-view from the real model's meshes;
- * otherwise it falls back to the high-quality procedural camera. This lets the
- * user add their GLB later with zero code changes.
+ * If present, the exploded-view is driven from the real model's meshes;
+ * otherwise it falls back to the high-quality procedural camera. Zero code
+ * changes needed to add the GLB later.
  */
 function useHasGLB() {
   const [has, setHas] = useState(false)
@@ -20,7 +21,6 @@ function useHasGLB() {
     fetch('/models/camera.glb', { method: 'HEAD' })
       .then((r) => {
         const type = r.headers.get('content-type') || ''
-        // treat as present only if it's a real binary asset, not an SPA HTML fallback
         if (alive && r.ok && !type.includes('text/html')) setHas(true)
       })
       .catch(() => {})
@@ -32,59 +32,62 @@ function useHasGLB() {
 }
 
 /**
- * Rig that maps the hero scroll progress (0..1) onto:
- *  - camera explode amount
- *  - label reveal
- *  - dolly toward the lens (the "camera -> lens -> photograph" transition)
+ * The scroll-scrubbed 3D rig. Reads the normalized hero progress from the
+ * frame-rate scroll store every frame (no React re-renders) and eases toward
+ * it, so scrolling forward advances the disassembly and scrolling backward
+ * reverses it — smoothly, never teleporting.
  */
-function Rig({ progress, pointer }: { progress: number; pointer: React.MutableRefObject<{ x: number; y: number }> }) {
+function Rig({ pointer }: { pointer: React.MutableRefObject<{ x: number; y: number }> }) {
   const { camera } = useThree()
   const groupRef = useRef<THREE.Group>(null)
 
-  // Stage mapping across hero scroll (0..1):
-  // 0.00 - 0.18  assembled (stage 1)
-  // 0.18 - 0.45  lens separates (stage 2)
-  // 0.45 - 0.72  full explode + labels (stage 3)
-  // 0.72 - 1.00  reassemble slightly + dolly into lens (stage 4)
-  const explode = useMemo(() => {
-    const p = progress
-    if (p < 0.18) return 0
-    if (p < 0.72) return (p - 0.18) / (0.72 - 0.18)
-    // reassemble toward lens transition
-    return 1 - (p - 0.72) / (1 - 0.72) * 0.55
-  }, [progress])
+  // eased/live values (kept in refs so R3F children read them without re-render)
+  const explodeRef = useRef(0)
+  const revealRef = useRef(0)
+  const eased = useRef(0)
 
-  const reveal = useMemo(() => {
-    const p = progress
-    if (p < 0.3) return 0
-    if (p < 0.72) return (p - 0.3) / (0.72 - 0.3)
-    return Math.max(0, 1 - (p - 0.72) / 0.1)
-  }, [progress])
+  const [explode, setExplode] = useState(0)
+  const [reveal, setReveal] = useState(0)
 
   useFrame((state, delta) => {
-    // Dolly the camera toward the lens for the final transition.
-    const dolly = Math.max(0, (progress - 0.72) / (1 - 0.72))
-    const targetZ = 8.5 - dolly * 5.2
-    const targetY = 0.2 - dolly * 0.1
+    const target = scrollState.get()
+    // ease the raw scroll toward its target for buttery scrubbing
+    eased.current += (target - eased.current) * Math.min(1, delta * 8)
+    const p = eased.current
+
+    const exp = explodeAmount(p)
+    const rev = revealAmount(p)
+    explodeRef.current = exp
+    revealRef.current = rev
+    // push to children only when meaningfully changed (throttled re-render)
+    if (Math.abs(exp - explode) > 0.004) setExplode(exp)
+    if (Math.abs(rev - reveal) > 0.02) setReveal(rev)
+
+    // ---- camera dolly + 360 orbit ----
+    const dolly = lensDolly(p)
+    // orbit the whole rig a full turn across the timeline
+    if (groupRef.current) {
+      const t = state.clock.elapsedTime
+      groupRef.current.rotation.y = t * 0.14 + p * Math.PI * 2 + exp * 0.4
+      groupRef.current.rotation.x = Math.sin(t * 0.4) * 0.04 + exp * 0.1
+      groupRef.current.position.y = Math.sin(t * 0.6) * 0.03
+      groupRef.current.rotation.z += (pointer.current.x * 0.02 - groupRef.current.rotation.z) * Math.min(1, delta * 3)
+    }
+
+    // dolly the camera toward the lens; lens fills viewport near p=1
+    const targetZ = 8.5 - dolly * 6.6
+    const targetY = 0.2 - dolly * 0.15
     camera.position.z += (targetZ - camera.position.z) * Math.min(1, delta * 4)
     camera.position.y += (targetY - camera.position.y) * Math.min(1, delta * 4)
-
-    // subtle parallax toward pointer
-    const px = pointer.current.x
-    const py = pointer.current.y
-    camera.position.x += (px * 0.6 - camera.position.x) * Math.min(1, delta * 3)
-    camera.lookAt(0, 0, 0.5)
-
-    if (groupRef.current) {
-      groupRef.current.rotation.z = px * 0.02
-    }
+    camera.position.x += (pointer.current.x * 0.5 * (1 - dolly) - camera.position.x) * Math.min(1, delta * 3)
+    camera.lookAt(0, 0, 0.6 + dolly * 2.4)
   })
 
   const hasGLB = useHasGLB()
 
   return (
     <group ref={groupRef}>
-      <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.25} enabled={progress < 0.18}>
+      <Float speed={1.1} rotationIntensity={0.1} floatIntensity={0.2} enabled={explode < 0.05}>
         {hasGLB ? (
           <Suspense fallback={<CameraModel explode={explode} reveal={reveal} />}>
             <CameraGLB explode={explode} reveal={reveal} />
@@ -97,12 +100,29 @@ function Rig({ progress, pointer }: { progress: number; pointer: React.MutableRe
   )
 }
 
-function Lights() {
+/**
+ * Dynamic lighting that shifts warmth/intensity with scroll — the "lighting
+ * changes dynamically" beat. Reads the store directly per frame.
+ */
+function DynamicLights() {
+  const key = useRef<THREE.SpotLight>(null)
+  const rim = useRef<THREE.SpotLight>(null)
+  const glass = useRef<THREE.PointLight>(null)
+
+  useFrame(() => {
+    const p = scrollState.get()
+    const dolly = lensDolly(p)
+    if (key.current) key.current.intensity = 80 + Math.sin(p * Math.PI) * 40
+    if (rim.current) rim.current.intensity = 35 + p * 60
+    // as we dive into the lens, the front glass catch-light blooms
+    if (glass.current) glass.current.intensity = 22 + dolly * 90
+  })
+
   return (
     <>
       <ambientLight intensity={0.15} />
-      {/* key light */}
       <spotLight
+        ref={key}
         position={[6, 8, 6]}
         angle={0.5}
         penumbra={1}
@@ -111,23 +131,14 @@ function Lights() {
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
-      {/* rim / gold accent */}
-      <spotLight position={[-8, 2, -4]} angle={0.7} penumbra={1} intensity={45} color="#c9a86a" />
-      {/* fill cool */}
+      <spotLight ref={rim} position={[-8, 2, -4]} angle={0.7} penumbra={1} intensity={45} color="#c9a86a" />
       <pointLight position={[0, -4, 6]} intensity={18} color="#4a6a8a" />
-      {/* front glass catch light */}
-      <pointLight position={[0, 1, 9]} intensity={22} color="#ffffff" />
+      <pointLight ref={glass} position={[0, 1, 9]} intensity={22} color="#ffffff" />
     </>
   )
 }
 
-export default function CameraScene({
-  progress,
-  quality = 'high',
-}: {
-  progress: number
-  quality?: 'high' | 'low'
-}) {
+export default function CameraScene({ quality = 'high' }: { quality?: 'high' | 'low' }) {
   const pointer = useRef({ x: 0, y: 0 })
 
   const handlePointer = (e: React.PointerEvent) => {
@@ -144,13 +155,13 @@ export default function CameraScene({
       onPointerMove={handlePointer}
     >
       <color attach="background" args={['#0a0a0b']} />
-      <fog attach="fog" args={['#0a0a0b', 9, 20]} />
+      <fog attach="fog" args={['#0a0a0b', 9, 22]} />
 
       <Suspense fallback={null}>
-        <Lights />
+        <DynamicLights />
         <Environment preset="studio" environmentIntensity={0.6} />
         <DustField count={quality === 'high' ? 900 : 300} />
-        <Rig progress={progress} pointer={pointer} />
+        <Rig pointer={pointer} />
 
         {quality === 'high' && (
           <EffectComposer multisampling={4}>
