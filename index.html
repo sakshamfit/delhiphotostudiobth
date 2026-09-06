@@ -13,6 +13,7 @@
   <script type="module">
     const response = await fetch('/src/site.html');
     document.querySelector('#app').outerHTML = await response.text();
+    await import('/src/site.js');
   </script>
 </body>
 </html>
