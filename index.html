@@ -37,8 +37,8 @@
     }
 
     body, html {
-      overflow: hidden;
-      height: 100%;
+      overflow-x: hidden;
+      min-height: 100%;
       font-family: var(--font-body);
       background-color: var(--sw-bg);
       color: var(--sw-ink);
@@ -50,12 +50,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
+      z-index: 0;
+      pointer-events: none;
     }
 
     #content {
       position: relative;
-      z-index: 10;
+      z-index: 1;
       padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
@@ -63,8 +64,10 @@
 
     section {
       margin-bottom: 4rem;
-      opacity: 0;
-      transform: translateY(50px);
+      /* Keep the content usable if an optional animation dependency fails.
+         GSAP applies the animated starting state when it initializes. */
+      opacity: 1;
+      transform: translateY(0);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
@@ -240,189 +243,6 @@
     </section>
   </div>
 
-  <!-- Three.js and GSAP as ES Modules -->
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
-    import { gsap } from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.js';
-    import { ScrollTrigger } from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.js';
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Three.js setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg'), alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0); // Transparent background
-
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambientLight);
-
-    // Add directional light for shadows and depth
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 10, 7);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
-
-    // Add a second light for fill
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
-    fillLight.position.set(-5, 5, -5);
-    scene.add(fillLight);
-
-    // Load GLB model (Canon camera)
-    const loader = new THREE.GLTFLoader();
-    let model = null;
-    let mixer = null;
-
-    loader.load(
-      'assets/models/canon-camera.glb',
-      (gltf) => {
-        model = gltf.scene;
-        // Scale the model appropriately
-        model.scale.set(0.4, 0.4, 0.4);
-        model.position.set(0, 0, 0);
-        scene.add(model);
-
-        // Play animations if any
-        if (gltf.animations && gltf.animations.length) {
-          mixer = new THREE.AnimationMixer(model);
-          gltf.animations.forEach((clip) => {
-            mixer.clipAction(clip).play();
-          });
-        }
-
-        // Enable shadow casting and receiving
-        model.traverse((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-      },
-      (error) => {
-        console.error('Error loading model:', error);
-      }
-    );
-
-    // Add a subtle ground plane for context
-    const groundGeometry = new THREE.PlaneGeometry(20, 20);
-    const groundMaterial = new THREE.MeshStandardMaterial({
-      color: 0xf5ede0,
-      roughness: 0.8,
-      metalness: 0.1
-    });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.5;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    // Set initial camera position - positioned to view the Canon camera
-    camera.position.set(0, 2, 4);
-    camera.lookAt(0, 0, 0);
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Animation loop
-    const clock = new THREE.Clock();
-    function animate() {
-      requestAnimationFrame(animate);
-
-      if (mixer) {
-        mixer.update(clock.getDelta());
-      }
-
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Define scroll-triggered animations for creating a cinematic journey
-    const sections = document.querySelectorAll('section');
-
-    // Define camera orbit points for each section - creates a journey around the model
-    const cameraOrbits = {
-      hero: { radius: 4, height: 2, angle: 0 },           // Front view
-      wedding: { radius: 3.5, height: 1.5, angle: Math.PI/4 }, // Front-right
-      cinematography: { radius: 3, height: 1, angle: Math.PI/2 }, // Right side
-      prewedding: { radius: 2.5, height: 0.5, angle: Math.PI*3/4 }, // Back-right
-      candid: { radius: 2, height: 0, angle: Math.PI }, // Back view
-      destination: { radius: 2.5, height: -0.5, angle: Math.PI*5/4 }, // Back-left
-      finale: { radius: 3.5, height: 1.5, angle: Math.PI*3/2 } // Left side, returning to front
-    };
-
-    // Create ScrollTriggers for each section to control camera orbit
-    sections.forEach((section, index) => {
-      const sectionId = section.id;
-      const orbit = cameraOrbits[sectionId];
-
-      // Animate camera to orbit around the model based on scroll position
-      gsap.to(camera.position, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
-          onUpdate: (self) => {
-            const progress = self.progress; // 0 to 1 within this section
-
-            // Calculate target camera position in orbit
-            const targetX = Math.sin(orbit.angle) * orbit.radius;
-            const targetZ = Math.cos(orbit.angle) * orbit.radius;
-            const targetY = orbit.height;
-
-            // Smoothly move camera to target position
-            camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetX, 0.1);
-            camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.1);
-            camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.1);
-
-            // Always look at the center (Canon camera)
-            camera.lookAt(0, 0, 0);
-          }
-        }
-      });
-
-      // Animate section visibility as it enters viewport
-      gsap.fromTo(section,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1, y: 0,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 70%',
-            end: 'top 30%',
-            scrub: true
-          }
-        }
-      );
-    });
-
-    // Add a subtle continuous rotation to the scene for extra life
-    gsap.to(model ? model.rotation : {}, {
-      y: Math.PI * 2,
-      duration: 25,
-      repeat: -1,
-      ease: 'none'
-    });
-
-    // Add a gentle floating/bobbing motion to the camera model
-    gsap.to(model ? model.position : {}, {
-      y: 0.15,
-      duration: 3,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut'
-    });
-  </script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
