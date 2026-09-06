@@ -1,4 +1,4 @@
-import { STUDIO } from '../data/studio'
+import { STUDIO, STUDIO_VISUAL } from '../data/studio'
 import Reveal from './Reveal'
 
 export default function Studio() {
@@ -47,7 +47,7 @@ export default function Studio() {
         </div>
 
         <Reveal delay={0.1} className="studio-visual">
-          <div className="studio-visual-img" style={{ backgroundImage: 'url(/images/studio-portrait.jpg)' }} />
+          <div className="studio-visual-img" style={{ backgroundImage: `url(${STUDIO_VISUAL})` }} />
           <div className="studio-visual-badge">
             <span className="serif">Est.</span> Bettiah
           </div>
