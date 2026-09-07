@@ -1,32 +1,920 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080706" />
-  <meta name="description" content="Delhi Photo Studio BTH — cinematic wedding photography and films from Bettiah, Bihar." />
-  <title>Delhi Photo Studio BTH — Stories That Feel Alive</title>
-  <link rel="stylesheet" href="/src/site.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Delhi Photo Studio BTH — The World of Wedding Photography</title>
+  <meta name="description" content="Scroll to fly through the world of Delhi Photo Studio BTH." />
+  <style>
+    /* Theme the engine here. These match your generated scenes' background + palette. */
+    :root, .sw-root {
+      --sw-bg: #F5EDE0;          /* == the scene background colour */
+      --sw-ink: #241d2b;
+      --sw-ink-soft: #6a6072;
+      --sw-accent: #9B7EBD;      /* per-section accents override this at runtime */
+
+      /* Design System Colors from UI/UX Pro Max */
+      --color-primary: #18181B;
+      --color-on-primary: #FFFFFF;
+      --color-secondary: #27272A;
+      --color-accent: #F8FAFC;
+      --color-background: #000000;
+      --color-foreground: #FAFAFA;
+      --color-muted: #181818;
+      --color-border: #3F3F46;
+      --color-destructive: #EF4444;
+      --color-ring: #18181B;
+
+      /* Design System Typography */
+      --font-heading: 'Great Vibes', cursive;
+      --font-body: 'Cormorant Infant', serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      overflow: hidden;
+      height: 100%;
+      font-family: var(--font-body);
+      background-color: var(--sw-bg);
+      color: var(--sw-ink);
+    }
+
+    /* Hide overflow during loading */
+    body.loading {
+      overflow: hidden;
+    }
+
+    #bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    #content {
+      position: relative;
+      z-index: 10;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 1px;
+      color: var(--sw-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--sw-ink);
+    }
+
+    .body {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--sw-ink-soft);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: rgba(155, 126, 189, 0.1);
+      color: var(--sw-accent);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      border: 1px solid rgba(155, 126, 189, 0.3);
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .cta-btn{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--sw-accent);
+      color: var(--sw-ink);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .cta-btn:hover{
+      background: #8a6ea8;
+    }
+
+    .cta-btn.secondary{
+      background: transparent;
+      color: var(--sw-accent);
+      border: 2px solid var(--sw-accent);
+    }
+
+    .cta-btn.secondary:hover{
+      background: rgba(155, 126, 189, 0.1);
+    }
+
+    /* Loading screen styles */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--color-background);
+      color: var(--color-foreground);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      font-family: var(--font-body);
+    }
+
+    #loading-screen h1 {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    #loading-screen p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+
+    #loading-bar {
+      width: 80%;
+      max-width: 400px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    #loading-progress {
+      height: 100%;
+      background: var(--sw-accent);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Debug styles */
+    #debug-info {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0, 0, 0, 0.8);
+      color: #0f0;
+      font-family: monospace;
+      padding: 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px){
+      .title{
+        font-size: 2rem;
+      }
+      .body{
+        font-size: 1rem;
+      }
+      .cta-group{
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <canvas id="webgl" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="site">
-    <header class="nav"><a class="brand" href="#top">DELHI PHOTO <span>STUDIO</span> BTH</a><nav class="nav-links"><a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></nav><a class="nav-cta" href="https://wa.me/c/98526717546751">WhatsApp ↗</a></header>
-    <main>
-      <section class="hero" id="top"><div class="hero-copy"><div class="kicker">Bettiah · Bihar · India / Est. 2010</div><h1>We don't just<br><em>capture.</em><br>We preserve.</h1><p class="hero-sub">Cinematic wedding photography and films for couples who want to remember how it felt — not simply how it looked.</p><div class="hero-actions"><a class="button" href="https://wa.me/c/98526717546751">Book your date ↗</a><a class="button ghost" href="#work">Enter the stories</a></div></div><div class="hero-side"><span>01</span><span>SCROLL</span></div><div class="scroll-note">Scroll to enter the story</div></section>
-      <section class="experience" id="experience">
-        <article class="chapter"><div class="chapter-inner reveal"><div class="chapter-number">01 / THE BEGINNING</div><h2>Before the<br>first frame.</h2><p>Every wedding starts with a thousand little moments. We stay close, move quietly and let the real story unfold.</p><div class="line"></div></div></article>
-        <article class="chapter"><div class="chapter-inner reveal"><div class="chapter-number">02 / THE CELEBRATION</div><h2>Feel it.<br>Don't pose it.</h2><p>Candid energy, editorial portraits, honest reactions and all the beautiful chaos in between.</p><div class="line"></div></div></article>
-        <article class="chapter"><div class="chapter-inner reveal"><div class="chapter-number">03 / THE FILM</div><h2>Motion makes<br>memory.</h2><p>Our films are built like cinema — intentional compositions, sound, rhythm and emotion that bring you back years later.</p><div class="line"></div></div></article>
-        <article class="chapter"><div class="chapter-inner reveal"><div class="chapter-number">04 / THE KEEPSAKE</div><h2>Made to<br>outlive us.</h2><p>Fine albums, finished films and a complete digital archive. Your story deserves more than a hard drive.</p><div class="line"></div></div></article>
-      </section>
-      <section class="work" id="work"><div class="section-head reveal"><div><div class="kicker">SELECTED WORK / 2026</div><h2>Stories worth<br><em>remembering.</em></h2></div><p>A cinematic selection from weddings, celebrations and intimate pre-wedding stories across Bihar and beyond.</p></div><div class="grid"><a class="story-card" href="https://wa.me/c/98526717546751"><div class="story-image story-image-1"></div><div class="story-overlay"><div><small>WEDDING / BETTIAH</small><h3>Wedding Stories</h3></div><b>↗</b></div></a><a class="story-card" href="https://wa.me/c/98526717546751"><div class="story-image story-image-2"></div><div class="story-overlay"><div><small>PRE-WEDDING / DESTINATION</small><h3>Two souls, one road.</h3></div><b>↗</b></div></a><a class="story-card" href="https://wa.me/c/98526717546751"><div class="story-image story-image-3"></div><div class="story-overlay"><div><small>WEDDING / BIHAR</small><h3>In every glance.</h3></div><b>↗</b></div></a><a class="story-card" href="https://wa.me/c/98526717546751"><div class="story-image story-image-4"></div><div class="story-overlay"><div><small>CINEMATIC / INDIA</small><h3>After the vows.</h3></div><b>↗</b></div></a></div></section>
-      <section class="services" id="services"><div class="section-head reveal"><div><div class="kicker">THE STUDIO</div><h2>One team.<br>Every frame.</h2></div><p>Photography, cinematography and visual storytelling — built as one seamless experience.</p></div><div class="service-list"><div class="service-row reveal"><span>01</span><h3>Wedding Photography</h3><p>Candid, editorial portraits, details and every in-between moment.</p><b class="arrow">↗</b></div><div class="service-row reveal"><span>02</span><h3>Cinematic Films</h3><p>Wedding teasers, highlights and documentary films with sound design.</p><b class="arrow">↗</b></div><div class="service-row reveal"><span>03</span><h3>Pre-Wedding</h3><p>Location-led concepts that feel like a film rather than a photoshoot.</p><b class="arrow">↗</b></div><div class="service-row reveal"><span>04</span><h3>Destination Weddings</h3><p>Our team travels wherever your story takes you.</p><b class="arrow">↗</b></div></div></section>
-      <section class="contact" id="contact"><div class="reveal"><div class="kicker">LET'S MAKE SOMETHING TIMELESS</div><h2>Your story.<br><em>Our frame.</em></h2><p>Tell us your date, location and what you're dreaming of. We'll take it from there.</p><a class="button" href="https://wa.me/c/98526717546751">Open WhatsApp Catalogue ↗</a></div></section>
-    </main>
-    <footer class="footer"><span>© 2026 Delhi Photo Studio BTH</span><span>Photography · Films · Stories</span><span>Bettiah, Bihar · India</span></footer>
+  <canvas id="bg"></canvas>
+  <canvas id="explosion-canvas"></canvas>
+
+  <div id="loading-screen">
+    <h1>Delhi Photo Studio BTH</h1>
+    <p>Preparing the Frame</p>
+    <div id="loading-bar">
+      <div id="loading-progress"></div>
+    </div>
   </div>
-  <script type="module" src="/src/site.js"></script>
+
+  <div id="debug-info"></div>
+
+  <div id="content">
+    <div id="top"></div>
+
+    <!-- 3D Opening Sequence -->
+    <section id="opening">
+      <div class="eyebrow">WEDDING & CINEMATOGRAPHY STUDIO</div>
+      <h2 class="title">Every Moment Deserves to Be Remembered.</h2>
+      <p class="body">Delhi Photo Studio BTH captures your special day with timeless elegance.</p>
+      <div class="tags">
+        <span class="tag">Bettiah, Bihar</span>
+        <span class="tag">4.5/5 Rating</span>
+        <span class="tag">173 Reviews</span>
+      </div>
+    </section>
+
+    <!-- Explosion Sequence Section (pinned) -->
+    <section id="explosion-section">
+      <!-- This section will be pinned and controlled by scroll -->
+    </section>
+
+    <!-- Wedding Section -->
+    <section id="wedding">
+      <div class="eyebrow">FROM CEREMONY TO CELEBRATION</div>
+      <h2 class="title">Your Love Story in Frames.</h2>
+      <p class="body">From the bride's preparation to the final dance, we document every emotion.</p>
+      <div class="tags">
+        <span class="tag">Candid Shots</span>
+        <span class="tag">Traditional Poses</span>
+        <span class="tag">Detail Photography</span>
+      </div>
+    </section>
+
+    <!-- Cinematography Section -->
+    <section id="cinematography">
+      <div class="eyebrow">MOTION THAT MOVES THE HEART</div>
+      <h2 class="title">Your Day, Cinematographed.</h2>
+      <p class="body">Cinematic wedding films that you'll cherish for generations.</p>
+      <div class="tags">
+        <span class="tag">Highlight Film</span>
+        <span class="tag">Full Documentary</span>
+        <span class="tag">Teaser Trailer</span>
+      </div>
+    </section>
+
+    <!-- Prewedding Section -->
+    <section id="prewedding">
+      <div class="eyebrow">BEFORE THE BIG DAY</div>
+      <h2 class="title">Love in Every Glance.</h2>
+      <p class="body">Romantic pre-wedding sessions that capture your unique connection.</p>
+      <div class="tags">
+        <span class="tag">Outdoor Locations</span>
+        <span class="tag">Studio Sessions</span>
+        <span class="tag">Theme-Based</span>
+      </div>
+    </section>
+
+    <!-- Candid Section -->
+    <section id="candid">
+      <div class="eyebrow">THE UNSCRIPTED MOMENTS</div>
+      <h2 class="title">Real Emotions, Real Memories.</h2>
+      <p class="body">Unposed, natural moments that tell the true story of your day.</p>
+      <div class="tags">
+        <span class="tag">Behind-the-Scenes</span>
+        <span class="tag">Reaction Shots</span>
+        <span class="tag">Detail Details</span>
+      </div>
+    </section>
+
+    <!-- Destination Section -->
+    <section id="destination">
+      <div class="eyebrow">LOVE KNOWS NO BOUNDARIES</div>
+      <h2 class="title">Your Dream Destination, Documented.</h2>
+      <p class="body">We travel with you to capture weddings in exotic locations.</p>
+      <div class="tags">
+        <span class="tag">Travel Included</span>
+        <span class="tag">Local Expertise</span>
+        <span class="tag">All-Inclusive Packages</span>
+      </div>
+    </section>
+
+    <!-- Finale Section -->
+    <section id="finale">
+      <div class="eyebrow">AND IT ALL POURS INTO</div>
+      <h2 class="title">One Perfect Keepsake.</h2>
+      <p class="body">Handcrafted albums, fine art prints, and digital galleries.</p>
+      <div class="cta-group">
+        <a href="https://wa.me/98526717546751" class="cta-btn primary">Book a Shoot</a>
+        <a href="tel:07368878786" class="cta-btn secondary">Call Us</a>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    console.log('[DEBUG] Script loading started');
+
+    // Check for debug mode
+    const debugMode = new URLSearchParams(window.location.search).get('debug') === '1';
+
+    // Import libraries
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+    import { gsap } from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.js';
+    import { ScrollTrigger } from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.js';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Debug utility
+    function debugLog(...args) {
+      if (debugMode) {
+        console.log('[DEBUG]', ...args);
+        updateDebugInfo(...args);
+      }
+    }
+
+    function updateDebugInfo(...args) {
+      if (!debugMode) return;
+      const debugInfo = document.getElementById('debug-info');
+      if (debugInfo) {
+        debugInfo.textContent = args.join(' ');
+      }
+    }
+
+    // Main implementation
+    class CinematicExperience {
+      constructor() {
+        this.init();
+      }
+
+      init() {
+        debugLog('Initializing cinematic experience');
+
+        // Initialize Three.js scene
+        this.initThreeJS();
+
+        // Initialize explosion sequence
+        this.initExplosionSequence();
+
+        // Initialize scroll triggers
+        this.initScrollTriggers();
+
+        // Start loading
+        this.showLoadingScreen();
+
+        // Handle resize
+        window.addEventListener('resize', () => this.onWindowResize(), { passive: true });
+
+        // Start animation loop
+        this.animate();
+
+        debugLog('Cinematic experience initialized');
+      }
+
+      initThreeJS() {
+        debugLog('Initializing Three.js');
+
+        // Scene
+        this.scene = new THREE.Scene();
+
+        // Camera
+        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera.position.set(0, 2, 4);
+        this.camera.lookAt(0, 0, 0);
+
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById('bg'),
+          alpha: true,
+          antialias: true
+        });
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        this.renderer.setClearColor(0x000000, 0); // Transparent background
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        this.scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 7);
+        directionalLight.castShadow = true;
+        this.scene.add(directionalLight);
+
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.3);
+        fillLight.position.set(-5, 5, -5);
+        this.scene.add(fillLight);
+
+        // Ground plane
+        const groundGeometry = new THREE.PlaneGeometry(20, 20);
+        const groundMaterial = new THREE.MeshStandardMaterial({
+          color: 0xf5ede0,
+          roughness: 0.8,
+          metalness: 0.1
+        });
+        this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        this.ground.rotation.x = -Math.PI / 2;
+        this.ground.position.y = -0.5;
+        this.ground.receiveShadow = true;
+        this.scene.add(this.ground);
+
+        // Load GLB model
+        this.loadModel();
+
+        // Clock for animations
+        this.clock = new THREE.Clock();
+      }
+
+      loadModel() {
+        debugLog('Loading GLB model');
+        const loader = new GLTFLoader();
+        loader.load(
+          'assets/models/canon-camera.glb',
+          (gltf) => {
+            this.model = gltf.scene;
+            // Scale the model appropriately
+            this.model.scale.set(0.4, 0.4, 0.4);
+            this.model.position.set(0, 0, 0);
+            this.scene.add(this.model);
+
+            // Play animations if any
+            if (gltf.animations && gltf.animations.length) {
+              this.mixer = new THREE.AnimationMixer(this.model);
+              gltf.animations.forEach((clip) => {
+                this.mixer.clipAction(clip).play();
+              });
+            }
+
+            // Enable shadow casting and receiving
+            this.model.traverse((child) => {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            // Add a subtle continuous rotation to the scene for extra life
+            gsap.to(this.model.rotation, {
+              y: Math.PI * 2,
+              duration: 25,
+              repeat: -1,
+              ease: 'none'
+            });
+
+            // Add a gentle floating/bobbing motion to the camera model
+            gsap.to(this.model.position, {
+              y: 0.15,
+              duration: 3,
+              yoyo: true,
+              repeat: -1,
+              ease: 'sine.inOut'
+            });
+
+            debugLog('Model loaded successfully');
+            this.onModelLoaded();
+          },
+          (xhr) => {
+            const percent = (xhr.loaded / xhr.total * 100);
+            this.updateLoadingProgress(percent, `Loading camera model: ${Math.round(percent)}%`);
+          },
+          (error) => {
+            console.error('Error loading model:', error);
+            this.onModelError(error);
+          }
+        );
+      }
+
+      initExplosionSequence() {
+        debugLog('Initializing explosion sequence');
+
+        // Canvas for explosion sequence
+        this.explosionCanvas = document.getElementById('explosion-canvas');
+        this.explosionContext = this.explosionCanvas.getContext('2d');
+
+        // Explosion sequence state
+        this.explosionFrames = [];
+        this.loadedFrames = new Map(); // Cache for loaded frames
+        this.totalFrames = 240;
+        this.currentFrameIndex = 0;
+        this.targetFrameIndex = 0;
+        this.isLoading = false;
+        this.loadQueue = [];
+
+        // Loading priorities
+        this.loadingPhase = 0; // 0: initial, 1: nearby, 2: expanding, 3: remaining
+        this.framesToLoad = [];
+
+        // Initialize loading sequence
+        this.initLoadingSequence();
+
+        // Start preloading
+        this.startPreloading();
+      }
+
+      initLoadingSequence() {
+        // Define loading phases for progressive loading
+        this.loadingPhases = [
+          { start: 0, end: 15 },      // Phase 1: frames 1-15
+          { start: 16, end: 30 },     // Phase 2: frames 16-30
+          { start: 31, end: 60 },     // Phase 3: frames 31-60
+          { start: 61, end: 120 },    // Phase 4: frames 61-120
+          { start: 121, end: 240 }    // Phase 5: frames 121-240
+        ];
+      }
+
+      startPreloading() {
+        debugLog('Starting preloading sequence');
+        this.loadNextPhase();
+      }
+
+      loadNextPhase() {
+        if (this.loadingPhase >= this.loadingPhases.length) {
+          debugLog('All phases completed');
+          this.isLoading = false;
+          return;
+        }
+
+        const phase = this.loadingPhases[this.loadingPhase];
+        debugLog(`Loading phase ${this.loadingPhase + 1}: frames ${phase.start + 1}-${phase.end + 1}`);
+
+        // Add frames to load queue
+        for (let i = phase.start; i <= phase.end; i++) {
+          this.loadQueue.push(i);
+        }
+
+        this.loadingPhase++;
+
+        // Start loading queue
+        this.processLoadQueue();
+      }
+
+      processLoadQueue() {
+        if (this.loadQueue.length === 0) {
+          // Check if we need to load more phases
+          if (this.loadingPhase < this.loadingPhases.length) {
+            this.loadNextPhase();
+          } else {
+            this.isLoading = false;
+          }
+          return;
+        }
+
+        if (this.isLoading) {
+          // Already loading, wait for next frame
+          requestAnimationFrame(() => this.processLoadQueue());
+          return;
+        }
+
+        const frameIndex = this.loadQueue.shift();
+        this.isLoading = true;
+        this.loadFrame(frameIndex);
+      }
+
+      loadFrame(frameIndex) {
+        const frameNumber = String(frameIndex + 1).padStart(3, '0');
+        const filename = `ezgif-frame-${frameNumber}.jpg`;
+        const url = `assets/explosion-frames/${filename}`;
+
+        try {
+          debugLog(`Loading frame ${frameIndex + 1}: ${filename}`);
+
+          const img = new Image();
+          img.onload = () => {
+            try {
+              this.loadedFrames.set(frameIndex, img);
+              debugLog(`Frame ${frameIndex + 1} loaded`);
+
+              // Update loading progress
+              const loadedCount = this.loadedFrames.size;
+              const progress = (loadedCount / this.totalFrames) * 100;
+              this.updateLoadingProgress(progress, `Loading frames: ${loadedCount}/${this.totalFrames}`);
+
+              this.isLoading = false;
+              this.processLoadQueue(); // Load next frame
+              this.checkAndHideLoadingScreen(); // Check if we can hide loading screen now
+            } catch (onloadError) {
+              console.error('Error in frame onload handler:', onloadError);
+              this.isLoading = false;
+              this.processLoadQueue(); // Continue to next frame
+              this.checkAndHideLoadingScreen();
+            }
+          };
+
+          img.onerror = () => {
+            try {
+              debugLog(`Error loading frame ${frameIndex + 1}`);
+              this.isLoading = false;
+              this.processLoadQueue(); // Skip to next frame
+              this.checkAndHideLoadingScreen(); // Check if we can hide loading screen now
+            } catch (onerrorError) {
+              console.error('Error in frame onerror handler:', onerrorError);
+              this.isLoading = false;
+              this.processLoadQueue(); // Continue to next frame
+              this.checkAndHideLoadingScreen();
+            }
+          };
+
+          img.src = url;
+        } catch (loadError) {
+          console.error('Error creating frame image:', loadError);
+          this.isLoading = false;
+          this.processLoadQueue(); // Continue to next frame
+          this.checkAndHideLoadingScreen();
+        }
+      }
+
+      getFrame(frameIndex) {
+        // Validate frame index
+        frameIndex = Math.max(0, Math.min(frameIndex, this.totalFrames - 1));
+
+        // Return cached frame if available
+        if (this.loadedFrames.has(frameIndex)) {
+          return this.loadedFrames.get(frameIndex);
+        }
+
+        // If not loaded, request it and return nearest available
+        if (!this.loadedFrames.has(frameIndex) && !this.isLoading) {
+          // Add to load queue if not already there
+          if (!this.loadQueue.includes(frameIndex)) {
+            this.loadQueue.push(frameIndex);
+            this.processLoadQueue();
+          }
+        }
+
+        // Find nearest loaded frame
+        let nearestFrame = 0;
+        let minDistance = Infinity;
+
+        for (const [index] of this.loadedFrames.entries()) {
+          const distance = Math.abs(index - frameIndex);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestFrame = index;
+          }
+        }
+
+        return this.loadedFrames.has(nearestFrame) ? this.loadedFrames.get(nearestFrame) : null;
+      }
+
+      updateLoadingProgress(percent, text) {
+        const progressBar = document.getElementById('loading-progress');
+        if (progressBar) {
+          progressBar.style.width = percent + '%';
+        }
+
+        if (debugMode) {
+          updateDebugInfo(`Loading: ${percent.toFixed(1)}% - ${text}`);
+        }
+      }
+
+      showLoadingScreen() {
+        document.getElementById('loading-screen').style.display = 'flex';
+        document.body.classList.add('loading');
+      }
+
+      hideLoadingScreen() {
+        document.getElementById('loading-screen').style.display = 'none';
+        document.body.classList.remove('loading');
+      }
+
+      initScrollTriggers() {
+        debugLog('Initializing scroll triggers');
+
+        // Get sections
+        this.openingSection = document.getElementById('opening');
+        this.explosionSection = document.getElementById('explosion-section');
+        this.weddingSection = document.getElementById('wedding');
+        this.cinematographySection = document.getElementById('cinematography');
+        this.preweddingSection = document.getElementById('prewedding');
+        this.candidSection = document.getElementById('candid');
+        this.destinationSection = document.getElementById('destination');
+        this.finaleSection = document.getElementById('finale');
+
+        // Set up explosion section as pinned
+        this.setupPinnedExplosionSection();
+
+        // Scroll trigger for explosion sequence (controls frame progression)
+        this.setupExplosionScrollTrigger();
+
+        // Scroll triggers for section visibility
+        this.setupSectionVisibilityTriggers();
+      }
+
+      setupPinnedExplosionSection() {
+        // Make explosion section take full viewport height
+        this.explosionSection.style.position = 'sticky';
+        this.explosionSection.style.top = '0';
+        this.explosionSection.style.height = '100vh';
+        this.explosionSection.style.display = 'flex';
+        this.explosionSection.style.alignItems = 'center';
+        this.explosionSection.style.justifyContent = 'center';
+
+        // Set canvas to fill section
+        this.explosionCanvas.style.position = 'absolute';
+        this.explosionCanvas.style.top = '0';
+        this.explosionCanvas.style.left = '0';
+        this.explosionCanvas.style.width = '100%';
+        this.explosionCanvas.style.height = '100%';
+        this.explosionCanvas.style.display = 'block';
+      }
+
+      setupExplosionScrollTrigger() {
+        // Create a tall section that controls the explosion sequence
+        // The explosion section itself is pinned, but we need a scroller
+
+        // Create a spacer div to control scroll length
+        let spacer = document.createElement('div');
+        spacer.style.height = '600vh'; // Adjustable for cinematic feel
+        spacer.style.position = 'relative';
+        this.explosionSection.appendChild(spacer);
+
+        // Scroll trigger for explosion frames
+        ScrollTrigger.create({
+          trigger: spacer,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true,
+          onUpdate: (self) => {
+            // Map scroll progress (0-1) to frame index (0-239)
+            const progress = self.progress;
+            this.targetFrameIndex = Math.floor(progress * (this.totalFrames - 1));
+            this.updateExplosionFrame();
+          }
+        });
+      }
+
+      setupSectionVisibilityTriggers() {
+        // Animate sections as they enter viewport
+        const sections = [
+          this.weddingSection,
+          this.cinematographySection,
+          this.preweddingSection,
+          this.candidSection,
+          this.destinationSection,
+          this.finaleSection
+        ];
+
+        sections.forEach((section, index) => {
+          gsap.fromTo(section,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1, y: 0,
+              scrollTrigger: {
+                trigger: section,
+                start: 'top 70%',
+                end: 'top 30%',
+                scrub: true
+              }
+            }
+          );
+        });
+      }
+
+      updateExplosionFrame() {
+        // Smoothly interpolate between frames for smooth animation
+        if (this.currentFrameIndex !== this.targetFrameIndex) {
+          // Use easing for smooth transition
+          const diff = this.targetFrameIndex - this.currentFrameIndex;
+          this.currentFrameIndex += diff * 0.1; // Smooth damping
+
+          // Ensure we stay within bounds
+          this.currentFrameIndex = Math.max(0, Math.min(this.currentFrameIndex, this.totalFrames - 1));
+        }
+
+        // Render current frame
+        this.renderExplosionFrame(Math.floor(this.currentFrameIndex));
+      }
+
+      renderExplosionFrame(frameIndex) {
+        if (!this.explosionCanvas || !this.explosionContext) return;
+
+        const frameImg = this.getFrame(frameIndex);
+        if (!frameImg) {
+          debugLog(`Frame ${frameIndex + 1} not available yet`);
+          return;
+        }
+
+        // Update canvas size to match display size
+        this.explosionCanvas.width = this.explosionCanvas.clientWidth * window.devicePixelRatio;
+        this.explosionCanvas.height = this.explosionCanvas.clientHeight * window.devicePixelRatio;
+
+        // Clear canvas
+        this.explosionContext.clearRect(0, 0, this.explosionCanvas.width, this.explosionCanvas.height);
+
+        // Render image with cover behavior (maintain aspect ratio, fill viewport)
+        this.renderImageCover(frameImg);
+      }
+
+      renderImageCover(img) {
+        const canvasWidth = this.explosionCanvas.width;
+        const canvasHeight = this.explosionCanvas.height;
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+
+        // Calculate scale to cover canvas
+        const scaleX = canvasWidth / imgWidth;
+        const scaleY = canvasHeight / imgHeight;
+        const scale = Math.max(scaleX, scaleY); // Use max to cover
+
+        // Calculate dimensions
+        const renderedWidth = imgWidth * scale;
+        const renderedHeight = imgHeight * scale;
+
+        // Calculate position to center
+        const offsetX = (canvasWidth - renderedWidth) / 2;
+        const offsetY = (canvasHeight - renderedHeight) / 2;
+
+        // Draw image
+        this.explosionContext.drawImage(
+          img,
+          offsetX,
+          offsetY,
+          renderedWidth,
+          renderedHeight
+        );
+      }
+
+      checkAndHideLoadingScreen() {
+        // Hide loading screen when model is loaded AND we have enough frames
+        if (this.model && this.loadedFrames.size >= 15) {
+          this.hideLoadingScreen();
+        }
+      }
+
+      onModelLoaded() {
+        debugLog('Model loaded, checking if explosion frames are ready');
+        this.checkAndHideLoadingScreen();
+      }
+
+      onModelError(error) {
+        console.error('Failed to load model:', error);
+        // TODO: Show fallback or error state
+        this.hideLoadingScreen();
+      }
+
+      onWindowResize() {
+        debugLog('Window resized');
+
+        // Update camera aspect ratio
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+
+        // Update renderer size
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Update explosion canvas size will happen in render loop
+      }
+
+      animate() {
+        requestAnimationFrame(() => this.animate());
+
+        const delta = this.clock.getDelta();
+
+        // Update animations
+        if (this.mixer) {
+          this.mixer.update(delta);
+        }
+
+        // Render Three.js scene
+        this.renderer.render(this.scene, this.camera);
+
+        // Update debug info
+        if (debugMode) {
+          const fps = 1 / delta;
+          updateDebugInfo(
+            `FPS: ${fps.toFixed(1)} | ` +
+            `Frame: ${Math.floor(this.currentFrameIndex + 1)}/${this.totalFrames} | ` +
+            `Loaded: ${this.loadedFrames.size}/${this.totalFrames} | ` +
+            `Target: ${this.targetFrameIndex + 1}`
+          );
+        }
+      }
+    }
+
+    // Initialize the experience when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => new CinematicExperience());
+    } else {
+      new CinematicExperience();
+    }
+  </script>
 </body>
 </html>
