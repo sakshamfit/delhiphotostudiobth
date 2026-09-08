@@ -446,8 +446,10 @@
       loadModel() {
         debugLog('Loading GLB model');
         const loader = new GLTFLoader();
+        // Use BASE_URL for correct asset paths in production
+        const modelUrl = new URL('assets/models/canon-camera.glb', import.meta.env.BASE_URL).href;
         loader.load(
-          'assets/models/canon-camera.glb',
+          modelUrl,
           (gltf) => {
             this.model = gltf.scene;
             // Scale the model appropriately
@@ -591,7 +593,7 @@
       loadFrame(frameIndex) {
         const frameNumber = String(frameIndex + 1).padStart(3, '0');
         const filename = `ezgif-frame-${frameNumber}.jpg`;
-        const url = `assets/explosion-frames/${filename}`;
+        const url = new URL(`assets/explosion-frames/${filename}`, import.meta.env.BASE_URL).href;
 
         try {
           debugLog(`Loading frame ${frameIndex + 1}: ${filename}`);
