@@ -1,9 +1,10 @@
 {
   "name": "delhiphotostudiobth",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "node --check src/main.js",
+    "test": "node -e \"const s=require('fs').readFileSync('index.html','utf8');const m=s.match(/<script>([\\s\\S]*)<\\/script>/);if(!m)throw new Error('no page script');require('vm').compileFunction(m[1]);console.log('page script OK')\"",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
