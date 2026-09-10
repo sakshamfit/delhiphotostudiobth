@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DELHI PHOTO STUDIO BTH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%232b2721' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%232b2721'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%237b1e2c' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%237b1e2c'/%3E%3C/svg%3E">
 <meta name="description" content="Wedding photography & cinematography studio — Bettiah, Bihar">
 <style>
 @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;
@@ -15,12 +15,20 @@
   src:url(delhi-photo-studio/newsreader.woff2) format('woff2')}
 
 :root{
-  --paper:#ece7dc;
-  --ink:#2b2721;
-  --ink-soft:rgba(43,39,33,.58);
-  --ink-faint:rgba(43,39,33,.36);
-  --hairline:rgba(43,39,33,.14);
-  --earth:#9a6a3e;
+  --paper:#f8eeda;
+  --ink:#43121d;
+  --ink-soft:rgba(123,30,44,.68);
+  --ink-faint:rgba(123,30,44,.44);
+  --hairline:rgba(123,30,44,.22);
+  --earth:#b02a3c;
+  --maroon:#7b1e2c;
+  --maroon-deep:#521020;
+  --gold:#a87f2a;
+  --gold-soft:#e8c66a;
+  --haldi:#e8932e;
+  --leaf:#3f7a4e;
+  --rose:#c94f7c;
+  --blush:#f9e2cf;
   --display:'Instrument Serif',"New York",Georgia,'Times New Roman',serif;
   --font:'Newsreader',"New York",Georgia,'Times New Roman',serif;
   --track-caps:.24em;
@@ -35,7 +43,7 @@ body{
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
-::selection{background:rgba(43,39,33,.85);color:var(--paper)}
+::selection{background:var(--maroon);color:#ffe9c4}
 
 /* the painted ground the whole page sits on */
 .wash{
@@ -45,7 +53,11 @@ button{font:inherit}
 }
 .wash:after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(236,231,220,.25) 0%,rgba(236,231,220,.72) 58%,var(--paper) 88%);
+  background:
+    radial-gradient(42% 30% at 8% 4%,rgba(201,79,124,.20),rgba(201,79,124,0) 70%),
+    radial-gradient(44% 30% at 93% 10%,rgba(232,147,46,.22),rgba(232,147,46,0) 70%),
+    radial-gradient(50% 34% at 50% 0%,rgba(232,198,106,.20),rgba(232,198,106,0) 72%),
+    linear-gradient(180deg,rgba(255,205,160,.30) 0%,rgba(249,226,207,.55) 42%,rgba(248,238,218,.82) 66%,var(--paper) 90%);
 }
 
 /* ---------------- top bar ---------------- */
@@ -57,7 +69,7 @@ button{font:inherit}
 .top>*{pointer-events:auto}
 .top:before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(240,236,226,.94),rgba(240,236,226,.7) 48%,rgba(240,236,226,0));
+  background:linear-gradient(180deg,rgba(253,240,222,.95),rgba(250,228,204,.72) 48%,rgba(250,228,204,0));
   -webkit-backdrop-filter:blur(14px) saturate(.95);backdrop-filter:blur(14px) saturate(.95);
   -webkit-mask-image:linear-gradient(180deg,#000 46%,transparent);
   mask-image:linear-gradient(180deg,#000 46%,transparent);
@@ -65,19 +77,21 @@ button{font:inherit}
 .top .name{
   font-family:var(--display);font-size:clamp(24px,2.4vw,30px);letter-spacing:.01em;
   white-space:nowrap;line-height:1;
+  background:linear-gradient(100deg,var(--maroon-deep) 10%,var(--maroon) 42%,var(--gold) 78%,var(--maroon) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .top nav{
   display:flex;gap:clamp(14px,2vw,26px);font-size:15px;align-items:center;
   letter-spacing:var(--track-nav);font-weight:300;
 }
 .top nav a{color:var(--ink-soft);transition:color .2s}
-.top nav a:hover,.top nav a[aria-current]{color:var(--ink)}
+.top nav a:hover,.top nav a[aria-current]{color:var(--maroon)}
 .top nav .top-socials{
   display:flex;align-items:center;gap:13px;margin-left:2px;padding-left:clamp(12px,1.6vw,20px);
-  border-left:1px solid var(--hairline);
+  border-left:1px solid rgba(168,127,42,.45);
 }
-.icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s}
-.icon-btn:hover{color:var(--ink)}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s,transform .2s}
+.icon-btn:hover{color:var(--maroon);transform:translateY(-1px)}
 .top .icon-btn svg{width:16px;height:16px;display:block}
 @media (max-width:640px){
   .top{padding-inline:12px;padding-block:13px 50px;gap:8px}
@@ -104,8 +118,22 @@ button{font:inherit}
 
 .hero-kicker{
   font-size:12px;font-weight:400;letter-spacing:var(--track-caps);text-align:center;
-  color:var(--ink-soft);margin:0 0 clamp(22px,3.4vh,40px);text-transform:uppercase;
+  color:var(--maroon);margin:0 0 clamp(22px,3.4vh,40px);text-transform:uppercase;
 }
+/* a little marigold toran over the album — pure CSS */
+.toran{
+  width:min(560px,78vw);height:30px;margin:0 0 14px;
+  background:
+    linear-gradient(180deg,var(--leaf) 0 2px,transparent 2px),
+    radial-gradient(circle at 9px 13px,#ffd66e 0 6px,rgba(0,0,0,0) 7px),
+    radial-gradient(circle at 0px 12px,#ef8f2e 0 8px,rgba(0,0,0,0) 9px),
+    radial-gradient(circle at 18px 12px,#e2632e 0 8px,rgba(0,0,0,0) 9px),
+    radial-gradient(circle at 9px 26px,var(--leaf) 0 2.6px,rgba(0,0,0,0) 3.4px);
+  background-size:100% 100%,36px 30px,36px 30px,36px 30px,36px 30px;
+  background-repeat:no-repeat,repeat-x,repeat-x,repeat-x,repeat-x;
+  filter:drop-shadow(0 2px 2px rgba(123,30,44,.18));
+}
+.toran.tail{margin:0 auto;width:min(420px,60vw);opacity:.9}
 .hero-down{
   position:absolute;bottom:30px;left:50%;transform:translateX(-50%);border:0;background:transparent;
   padding:10px 14px;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;
@@ -126,10 +154,10 @@ button{font:inherit}
 }
 .sb-arrow{
   flex:none;display:inline-flex;align-items:center;justify-content:center;padding:6px 2px;
-  border:0;background:transparent;color:var(--ink-faint);cursor:pointer;transition:color .2s;
+  border:0;background:transparent;color:var(--gold);cursor:pointer;transition:color .2s,transform .2s;
   -webkit-tap-highlight-color:transparent;z-index:8;
 }
-.sb-arrow:hover{color:var(--ink)}
+.sb-arrow:hover{color:var(--maroon);transform:scale(1.12)}
 
 /* The box is the book's own untransformed frame: the loupe lives here, on
    the desk, while only .sb-tilt leans and scales underneath it. */
@@ -180,7 +208,7 @@ button{font:inherit}
 .sb-half-img.right{margin-left:-100%}
 /* the shadow the lifting leaf throws onto the page beneath it */
 .gutter-shade{
-  position:absolute;top:var(--pg,21.8%);bottom:var(--pg,21.8%);width:46%;
+  position:absolute;top:var(--pg,1.5%);bottom:var(--pg,1.5%);width:46%;
   pointer-events:none;opacity:calc(var(--shade,0) * .62);
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
@@ -228,7 +256,7 @@ button{font:inherit}
 .curl.next .strip.edge .face.back,.curl.prev .strip.edge .face.front{
   --hf:linear-gradient(270deg,#000 0 22%,transparent 96%);
 }
-.face .sh{position:absolute;left:0;right:0;top:var(--pg,21.8%);bottom:var(--pg,21.8%);pointer-events:none}
+.face .sh{position:absolute;left:0;right:0;top:var(--pg,1.5%);bottom:var(--pg,1.5%);pointer-events:none}
 .curl.next .face.front .sh,.curl.prev .face.back .sh{
   background:linear-gradient(90deg,rgba(58,43,20,var(--a1,0)),rgba(58,43,20,var(--a2,0)));
 }
@@ -236,7 +264,7 @@ button{font:inherit}
   background:linear-gradient(90deg,rgba(58,43,20,var(--a2,0)),rgba(58,43,20,var(--a1,0)));
 }
 .face .gl{
-  position:absolute;left:0;right:0;top:var(--pg,21.8%);bottom:var(--pg,21.8%);
+  position:absolute;left:0;right:0;top:var(--pg,1.5%);bottom:var(--pg,1.5%);
   pointer-events:none;background:#fffaf0;
   opacity:calc(var(--shade,0) * var(--lit,1) * var(--lit,1) * .20);
 }
@@ -327,22 +355,23 @@ button{font:inherit}
 /* ---- controls ---- */
 .sb-tools{
   display:flex;align-items:center;gap:6px;
-  border:1px solid var(--hairline);border-radius:999px;
-  padding:5px 7px;background:rgba(250,246,238,.62);
+  border:1px solid rgba(168,127,42,.5);border-radius:999px;
+  padding:5px 7px;background:linear-gradient(180deg,rgba(255,248,234,.85),rgba(249,226,207,.75));
+  box-shadow:0 4px 14px rgba(123,30,44,.12);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
 .tool{
   width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
-  border:0;border-radius:50%;background:transparent;color:var(--ink-soft);
-  cursor:pointer;transition:background-color .18s ease,color .18s ease;
+  border:0;border-radius:50%;background:transparent;color:var(--maroon);
+  cursor:pointer;transition:background-color .18s ease,color .18s ease,transform .18s ease;
 }
-.tool:hover{background:rgba(255,252,244,.9);color:var(--ink)}
-.tool[aria-pressed="true"]{background:rgba(154,106,62,.16);color:var(--earth)}
+.tool:hover{background:rgba(255,255,255,.9);color:var(--maroon-deep);transform:scale(1.08)}
+.tool[aria-pressed="true"]{background:rgba(123,30,44,.14);color:var(--maroon)}
 .tool:disabled{opacity:.32;cursor:default;background:transparent}
 .tool svg{width:15px;height:15px;display:block}
-.tool-sep{width:1px;height:17px;background:var(--hairline);margin:0 2px}
+.tool-sep{width:1px;height:17px;background:rgba(168,127,42,.45);margin:0 2px}
 .zoom-read{
-  font-size:11px;letter-spacing:.1em;color:var(--ink-faint);
+  font-size:11px;letter-spacing:.1em;color:var(--maroon);
   min-width:40px;text-align:center;font-variant-numeric:tabular-nums;
 }
 @media (pointer:coarse){.loupe{display:none}}
@@ -354,13 +383,14 @@ button{font:inherit}
 
 .sb-captions{display:grid;justify-items:center}
 .sb-captions>*{grid-area:1/1;margin:0}
-.sb-caption{font-size:13px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft);
+.sb-caption{font-size:clamp(10px,2.6vw,13px);letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--maroon);
+  text-align:center;padding:0 14px;max-width:min(860px,92vw);
   animation:sb-cap-in .5s ease both}
 .sb-caption.live{animation:none}
 @keyframes sb-cap-in{0%{opacity:0}}
 @keyframes sb-cap-out{to{opacity:0}}
 .sb-hint{
-  margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+  margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
   transition:opacity .4s ease;
 }
 .sb-hint.gone{opacity:0}
@@ -383,22 +413,23 @@ button{font:inherit}
   display:block;width:min(1080px,86vw);margin:clamp(30px,6vh,64px) auto;
   height:clamp(26px,4vw,46px);
   background:url(delhi-photo-studio/divider.webp) center / 100% auto no-repeat;
-  opacity:.5;
+  opacity:.65;filter:saturate(1.7) hue-rotate(-12deg);
 }
-.rule.short{width:min(420px,52vw);opacity:.4}
+.rule.short{width:min(420px,52vw);opacity:.55}
 .section-label{
   font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--ink-faint);margin:0 0 18px;
+  color:var(--gold);margin:0 0 18px;font-weight:400;
 }
+.section-label:before{content:"❋ ";color:var(--haldi);}
 .about{
   position:relative;max-width:1080px;margin:0 auto;
   padding:0 clamp(20px,5vw,48px);
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,60px);align-items:start;
 }
 .bio{font-size:clamp(17px,1.7vw,20px);line-height:1.74;letter-spacing:.005em;margin:0;font-weight:300;max-width:56ch}
-.bio-link{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(43,39,33,.28);
+.bio-link{color:var(--maroon);text-decoration:underline;text-decoration-color:rgba(168,127,42,.55);
   text-underline-offset:4px;transition:text-decoration-color .2s}
-.bio-link:hover{text-decoration-color:var(--ink)}
+.bio-link:hover{text-decoration-color:var(--maroon)}
 .bloom{width:clamp(150px,17vw,260px);opacity:.9;user-select:none;align-self:center}
 @media (max-width:760px){
   .about{grid-template-columns:1fr}
@@ -413,19 +444,23 @@ button{font:inherit}
   background:transparent;text-align:left;cursor:pointer;color:inherit;
   transition:background-color .22s ease,padding-left .22s ease;
 }
-.plate:hover,.plate[aria-current="true"]{background:rgba(255,252,244,.5);padding-left:12px}
-.plate .n{font-size:12px;color:var(--ink-faint);letter-spacing:var(--track-nav)}
-.plate .t{font-family:var(--display);font-size:clamp(19px,2.1vw,26px)}
+.plate:hover,.plate[aria-current="true"]{
+  background:linear-gradient(90deg,rgba(201,79,124,.10),rgba(232,198,106,.14));
+  padding-left:12px;box-shadow:inset 3px 0 0 var(--gold);
+}
+.plate .n{font-size:12px;color:var(--gold);letter-spacing:var(--track-nav)}
+.plate .t{font-family:var(--display);font-size:clamp(19px,2.1vw,26px);color:var(--ink)}
 .plate .p{font-size:12.5px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase;text-align:right}
+.plate[aria-current="true"] .t{color:var(--maroon)}
 .plate[aria-current="true"] .p{color:var(--earth)}
 
 /* ---------------- chai or coffee ---------------- */
 .chai{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px);text-align:center}
 .chai-title{
   font-family:var(--display);font-weight:400;font-size:clamp(36px,5.6vw,58px);
-  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;
+  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;color:var(--maroon);
 }
-.chai-title em{font-style:italic}
+.chai-title em{font-style:italic;color:var(--gold)}
 .chai-sub{
   font-size:clamp(15px,1.6vw,17.5px);font-weight:300;color:var(--ink-soft);
   line-height:1.65;margin:0 auto 36px;max-width:46ch;
@@ -433,7 +468,7 @@ button{font:inherit}
 .chai-form{display:grid;grid-template-columns:1fr 1fr;gap:30px 32px;text-align:left}
 .chai-field{display:flex;flex-direction:column;gap:9px;min-width:0}
 .chai-wide{grid-column:1/-1}
-.chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft)}
+.chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--gold)}
 .chai-field input,.chai-field select,.chai-field textarea{
   font-family:var(--font);font-size:16.5px;font-weight:300;color:var(--ink);
   background:transparent;border:0;border-bottom:1px solid var(--hairline);
@@ -441,11 +476,11 @@ button{font:inherit}
   transition:border-color .22s ease;
 }
 .chai-field textarea{resize:vertical;min-height:58px;line-height:1.55}
-.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--ink)}
+.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--maroon)}
 .chai-field :is(input,select,textarea)::placeholder{color:var(--ink-faint)}
 .chai-field select{
   appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:22px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%232b2721' stroke-opacity='.55' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%237b1e2c' stroke-opacity='.65' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
 }
 .chai-actions{
   grid-column:1/-1;display:flex;align-items:center;justify-content:center;
@@ -454,12 +489,14 @@ button{font:inherit}
 .chai-btn{
   display:inline-flex;align-items:center;gap:11px;cursor:pointer;
   font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
-  text-transform:uppercase;color:var(--ink);
-  border:1px solid var(--hairline);border-radius:999px;background:rgba(250,246,238,.62);
-  padding:13px 26px;transition:background-color .2s ease,border-color .2s ease;
+  text-transform:uppercase;color:#ffe9c4;
+  border:1px solid var(--gold-soft);border-radius:999px;
+  background:linear-gradient(135deg,#93303f,var(--maroon-deep));
+  box-shadow:0 6px 18px rgba(123,30,44,.28),inset 0 1px 0 rgba(255,233,196,.35);
+  padding:13px 26px;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.chai-btn:hover{background:rgba(255,252,244,.95);border-color:rgba(43,39,33,.3)}
+.chai-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 10px 24px rgba(123,30,44,.34)}
 .chai-btn svg{width:16px;height:16px;display:block}
 .chai-note{font-size:12px;letter-spacing:.06em;color:var(--ink-faint);transition:color .2s}
 .chai-note.err{color:var(--earth)}
@@ -469,7 +506,7 @@ button{font:inherit}
 }
 
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--ink-faint);text-align:center;padding-bottom:44px}
+  color:var(--maroon);text-align:center;padding-bottom:44px;opacity:.75}
 </style>
 </head>
 <body>
@@ -497,7 +534,8 @@ button{font:inherit}
     <img class="botany l" src="delhi-photo-studio/botany-left.webp" alt="" aria-hidden="true">
     <img class="botany r" src="delhi-photo-studio/botany-right.webp" alt="" aria-hidden="true">
 
-    <p class="hero-kicker">Wedding Photographers / Cinematographers / Storytellers @ Bettiah</p>
+    <div class="toran" aria-hidden="true"></div>
+    <p class="hero-kicker">❋ Wedding Photographers / Cinematographers / Storytellers @ Bettiah ❋</p>
 
     <div class="sb-wrap" id="sbWrap">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -546,7 +584,7 @@ button{font:inherit}
   <section id="about" class="about">
     <div>
       <p class="section-label">About</p>
-      <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This sketchbook holds that work the way we remember it, in <a class="bio-link" href="#plates">ink and a little colour</a> — and to write your own chapter, <a class="bio-link" href="https://wa.me/919716073555">say hello on WhatsApp</a>.</p>
+      <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This wedding album holds that work the way we remember it, in <a class="bio-link" href="#plates">full festive colour</a> — and to write your own chapter, <a class="bio-link" href="https://wa.me/919716073555">say hello on WhatsApp</a>.</p>
     </div>
     <img class="bloom" src="delhi-photo-studio/bloom.webp" alt="" aria-hidden="true">
   </section>
@@ -605,48 +643,59 @@ button{font:inherit}
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
+  <div class="toran tail" aria-hidden="true"></div>
   <p class="foot">Bettiah · Bihar · <a href="tel:+919716073555" class="bio-link">+919716073555</a></p>
 </main>
 
 <script>
 /* =====================================================================
-   Delhi Photo Studio — sketchbook hero.
-   Spreads are transparent WebP illustrations of an open sketchbook
-   painted for the studio.  The leaf that turns is a real curved surface: a chain of
-   nested strips whose tangent sweeps through an arc, so the page bends
-   the way paper bends instead of pivoting like a flat door.
+   Delhi Photo Studio — wedding album hero.
+   Spreads are full-bleed album pages (album-XX.webp): one photograph on
+   each page, framed in gold on festive paper with a maroon cover edge.
+   The leaf that turns is a real curved surface: a chain of nested
+   strips whose tangent sweeps through an arc, so the page bends the way
+   paper bends instead of pivoting like a flat door.
    ===================================================================== */
 const Q=new URLSearchParams(location.search);
 const DIR='delhi-photo-studio/';
-const PAGES=[
-  {file:'wedding-day.webp',    title:'The Wedding Day',        place:'Ceremony to Celebration'},
-  {file:'mandap.webp',         alt:'Pheras around the sacred fire'},
-  {file:'baraat.webp',         alt:'The baraat arrives — dhol, dancing and fireworks'},
-  {file:'bride.webp',          alt:'The bride, getting ready'},
-  {file:'cinematography.webp', title:'Wedding Cinematography', place:'Highlight Film'},
-  {file:'model-shoot.webp',    title:'Model & Fashion Shoots', place:'Studio & Location'},
-  {file:'model-2.webp',        alt:'A fashion editorial on a rooftop at golden hour'},
-  {file:'model-3.webp',        alt:'Beauty portrait — one light, deep shadow'},
-  {file:'pre-wedding.webp',    title:'Pre-Wedding Stories',    place:'Outdoor Locations'},
-  {file:'destination-palace.webp', alt:'A destination wedding beside a lake palace'},
-  {file:'candid.webp',         title:'Candid Moments',         place:'Behind the Scenes'},
-  {file:'destination.webp',    title:'Destination Weddings',   place:'Travel Included'},
-  {file:'portraits.webp',      title:'Traditional Portraits',  place:'Studio Sessions'},
-  {file:'family-portrait.webp',alt:'Three generations, one frame'},
-  {file:'mehendi.webp',        alt:'Mehendi morning — henna and laughter'},
-  {file:'haldi.webp',          alt:'Haldi — everyone a little golden'},
-  {file:'details.webp',        title:'Details & Décor',        place:'Detail Photography'},
-  {file:'reactions.webp',      title:'Reaction Shots',         place:'Unscripted'},
-  {file:'sangeet.webp',        alt:'Sangeet night, mid-dance'},
-  {file:'vidai.webp',          alt:'Vidai — waving goodbye, rice in the air'},
-  {file:'reception.webp',      alt:'Reception evening under fairy lights'},
-  {file:'event-stage.webp',    title:'Event Shoots',            place:'Stage, Shows & Celebrations'},
-  {file:'event-award.webp',    alt:'Award night — applause under the lights'},
-  {file:'event-birthday.webp', alt:'A milestone birthday, mid-cheer'},
-  {file:'albums.webp',         title:'Albums & Keepsakes',      place:'Fine-Art Prints'}
+/* Every photograph gets its own album page — two photos per spread,
+   composed into album-XX.webp spreads: a maroon & gold wedding album. */
+const PHOTOS=[
+  {title:'The Wedding Day',        place:'Ceremony to Celebration'},
+  {alt:'Pheras around the sacred fire'},
+  {alt:'The baraat arrives — dhol, dancing and fireworks'},
+  {alt:'The bride, getting ready'},
+  {title:'Wedding Cinematography', place:'Highlight Film'},
+  {title:'Model & Fashion Shoots', place:'Studio & Location'},
+  {alt:'A fashion editorial on a rooftop at golden hour'},
+  {alt:'Beauty portrait — one light, deep shadow'},
+  {title:'Pre-Wedding Stories',    place:'Outdoor Locations'},
+  {alt:'A destination wedding beside a lake palace'},
+  {title:'Candid Moments',         place:'Behind the Scenes'},
+  {title:'Destination Weddings',   place:'Travel Included'},
+  {title:'Traditional Portraits',  place:'Studio Sessions'},
+  {alt:'Three generations, one frame'},
+  {alt:'Mehendi morning — henna and laughter'},
+  {alt:'Haldi — everyone a little golden'},
+  {title:'Details & Décor',        place:'Detail Photography'},
+  {title:'Reaction Shots',         place:'Unscripted'},
+  {alt:'Sangeet night, mid-dance'},
+  {alt:'Vidai — waving goodbye, rice in the air'},
+  {alt:'Reception evening under fairy lights'},
+  {title:'Event Shoots',           place:'Stage, Shows & Celebrations'},
+  {alt:'Award night — applause under the lights'},
+  {alt:'A milestone birthday, mid-cheer'},
+  {title:'Albums & Keepsakes',     place:'Fine-Art Prints'}
 ];
+const PAIRS=[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15],[16,17],[18,19],[20,21],[22,23],[24,-1]];
+const capOf=i=>PHOTOS[i].title||PHOTOS[i].alt;
+const PAGES=PAIRS.map((pr,k)=>({
+  file:'album-'+String(k+1).padStart(2,'0')+'.webp',
+  title:pr[1]<0?capOf(pr[0]):capOf(pr[0])+'  ❋  '+capOf(pr[1]),
+  photos:pr[1]<0?[pr[0]]:pr
+}));
 PAGES.forEach(p=>p.url=DIR+p.file);
-const M=PAGES.length, LAND=9;
+const M=PAGES.length, LAND=6;
 
 const wrap=document.getElementById('sbWrap');
 const stage=document.getElementById('sbStage');
@@ -658,7 +707,7 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ------------------------------------------------ the turning leaf */
 const N=18;            /* strips — enough for a smooth curve          */
-const SPAN=0.449;      /* gutter → outer page edge, as a fraction     */
+const SPAN=0.498;      /* gutter → outer page edge, as a fraction     */
 const BETA=0.60;       /* peak curl of the arc, radians              */
 let idx=0, turn=null;  /* turn = {dir, from, to, t}                   */
 let strips=[];         /* the chain, kept for per-frame lighting       */
@@ -1007,8 +1056,8 @@ function placeLoupe(){
 
   /* where the paper's edges actually land once the book is scaled */
   const z=view.z, cx=bw/2, cy=bh/2;
-  const x0=cx+(bw*.051-cx)*z, x1=cx+(bw*.949-cx)*z;
-  const y0=cy+(bh*.218-cy)*z, y1=cy+(bh*.782-cy)*z;
+  const x0=cx+(bw*.015-cx)*z, x1=cx+(bw*.985-cx)*z;
+  const y0=cy+(bh*.02-cy)*z, y1=cy+(bh*.98-cy)*z;
   /* How far the glass's own centre is inside the paper.  The copy fades out
      as it wanders off the sheet, so you are left looking through plain
      glass rather than at a sliver of page on flat desk. */
@@ -1038,7 +1087,7 @@ function shoveLoupe(dir){
   const b=bookBox();
   /* which page point the glass covers, once the book's scale is undone */
   const nx=(b.w/2+(lx-b.x-b.w/2)/view.z)/b.w, ny=(b.h/2+(ly-b.y-b.h/2)/view.z)/b.h;
-  if(nx<0.02||nx>0.98||ny<0.17||ny>0.83)return;      /* already clear of the page */
+  if(nx<0.02||nx>0.98||ny<0.03||ny>0.97)return;      /* already clear of the page */
   lTarget={x:b.x+b.w*(dir==='next'?0.12:0.88), y:b.y+b.h*0.855};
   kick();
 }
@@ -1089,12 +1138,12 @@ zOutBtn.onclick=()=>{setView(view.trx,view.try_,view.tz/1.16);hideHint();};
 /* --------------------------------------------------------- the index */
 const plateList=document.getElementById('plateList');
 let plateNo=0;
-PAGES.forEach((p,i)=>{
-  if(!p.title)return;                 /* untitled spreads stay in the book only */
+PHOTOS.forEach((p,i)=>{
+  if(!p.title)return;                 /* untitled photos stay in the book only */
   plateNo++;
   const li=el('li');
   const b=el('button','plate');
-  b.dataset.pi=i;
+  b.dataset.pi=Math.floor(i/2);       /* the spread this photo lives on */
   b.innerHTML='<span class="n">'+String(plateNo).padStart(2,'0')+'</span>'+
               '<span class="t"></span><span class="p"></span>';
   b.querySelector('.t').textContent=p.title;

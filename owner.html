@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Owner — Shahnawaz Ali · Delhi Photo Studio BTH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%232b2721' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%232b2721'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%237b1e2c' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%237b1e2c'/%3E%3C/svg%3E">
 <meta name="description" content="Shahnawaz Ali — founder and chief photographer of Delhi Photo Studio BTH, Bettiah. His vision: honest, warm wedding photography and films.">
 <style>
 @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;
@@ -15,12 +15,17 @@
   src:url(delhi-photo-studio/newsreader.woff2) format('woff2')}
 
 :root{
-  --paper:#ece7dc;
-  --ink:#2b2721;
-  --ink-soft:rgba(43,39,33,.58);
-  --ink-faint:rgba(43,39,33,.36);
-  --hairline:rgba(43,39,33,.14);
-  --earth:#9a6a3e;
+  --paper:#f8eeda;
+  --ink:#43121d;
+  --ink-soft:rgba(123,30,44,.68);
+  --ink-faint:rgba(123,30,44,.44);
+  --hairline:rgba(123,30,44,.22);
+  --earth:#b02a3c;
+  --maroon:#7b1e2c;
+  --maroon-deep:#521020;
+  --gold:#a87f2a;
+  --gold-soft:#e8c66a;
+  --haldi:#e8932e;
   --display:'Instrument Serif',"New York",Georgia,'Times New Roman',serif;
   --font:'Newsreader',"New York",Georgia,'Times New Roman',serif;
   --track-caps:.24em;
@@ -35,7 +40,7 @@ body{
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
-::selection{background:rgba(43,39,33,.85);color:var(--paper)}
+::selection{background:var(--maroon);color:#ffe9c4}
 
 /* the painted ground the whole page sits on */
 .wash{
@@ -45,7 +50,11 @@ button{font:inherit}
 }
 .wash:after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(236,231,220,.25) 0%,rgba(236,231,220,.72) 58%,var(--paper) 88%);
+  background:
+    radial-gradient(42% 30% at 8% 4%,rgba(201,79,124,.20),rgba(201,79,124,0) 70%),
+    radial-gradient(44% 30% at 93% 10%,rgba(232,147,46,.22),rgba(232,147,46,0) 70%),
+    radial-gradient(50% 34% at 50% 0%,rgba(232,198,106,.20),rgba(232,198,106,0) 72%),
+    linear-gradient(180deg,rgba(255,205,160,.30) 0%,rgba(249,226,207,.55) 42%,rgba(248,238,218,.82) 66%,var(--paper) 90%);
 }
 
 /* ---------------- top bar ---------------- */
@@ -57,7 +66,7 @@ button{font:inherit}
 .top>*{pointer-events:auto}
 .top:before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(240,236,226,.94),rgba(240,236,226,.7) 48%,rgba(240,236,226,0));
+  background:linear-gradient(180deg,rgba(253,240,222,.95),rgba(250,228,204,.72) 48%,rgba(250,228,204,0));
   -webkit-backdrop-filter:blur(14px) saturate(.95);backdrop-filter:blur(14px) saturate(.95);
   -webkit-mask-image:linear-gradient(180deg,#000 46%,transparent);
   mask-image:linear-gradient(180deg,#000 46%,transparent);
@@ -65,19 +74,21 @@ button{font:inherit}
 .top .name{
   font-family:var(--display);font-size:clamp(24px,2.4vw,30px);letter-spacing:.01em;
   white-space:nowrap;line-height:1;
+  background:linear-gradient(100deg,var(--maroon-deep) 10%,var(--maroon) 42%,var(--gold) 78%,var(--maroon) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .top nav{
   display:flex;gap:clamp(14px,2vw,26px);font-size:15px;align-items:center;
   letter-spacing:var(--track-nav);font-weight:300;
 }
 .top nav a{color:var(--ink-soft);transition:color .2s}
-.top nav a:hover,.top nav a[aria-current]{color:var(--ink)}
+.top nav a:hover,.top nav a[aria-current]{color:var(--maroon)}
 .top nav .top-socials{
   display:flex;align-items:center;gap:13px;margin-left:2px;padding-left:clamp(12px,1.6vw,20px);
-  border-left:1px solid var(--hairline);
+  border-left:1px solid rgba(168,127,42,.45);
 }
-.icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s}
-.icon-btn:hover{color:var(--ink)}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s,transform .2s}
+.icon-btn:hover{color:var(--maroon);transform:translateY(-1px)}
 .top .icon-btn svg{width:16px;height:16px;display:block}
 @media (max-width:640px){
   .top{padding-inline:12px;padding-block:13px 50px;gap:8px}
@@ -93,13 +104,14 @@ button{font:inherit}
   display:block;width:min(1080px,86vw);margin:clamp(30px,6vh,64px) auto;
   height:clamp(26px,4vw,46px);
   background:url(delhi-photo-studio/divider.webp) center / 100% auto no-repeat;
-  opacity:.5;
+  opacity:.65;filter:saturate(1.7) hue-rotate(-12deg);
 }
-.rule.short{width:min(420px,52vw);opacity:.4}
+.rule.short{width:min(420px,52vw);opacity:.55}
 .section-label{
   font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--ink-faint);margin:0 0 18px;
+  color:var(--gold);margin:0 0 18px;
 }
+.section-label:before{content:"❋ ";color:var(--haldi);}
 
 /* ---------------- the owner's page ---------------- */
 .owner-page{
@@ -109,9 +121,9 @@ button{font:inherit}
 }
 .owner-title{
   font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,54px);
-  line-height:1.06;margin:4px 0 0;letter-spacing:.004em;
+  line-height:1.06;margin:4px 0 0;letter-spacing:.004em;color:var(--maroon);
 }
-.owner-title em{font-style:italic}
+.owner-title em{font-style:italic;color:var(--gold)}
 .owner-card{
   display:grid;gap:clamp(38px,5vw,72px);align-items:center;
   margin:clamp(26px,4vw,44px) auto 0;text-align:left;
@@ -124,8 +136,9 @@ button{font:inherit}
 }
 .owner-img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  border-radius:14px;border:6px solid rgba(250,246,238,.92);
-  box-shadow:0 10px 30px rgba(43,39,33,.22);
+  border-radius:14px;border:6px solid #fff8ea;
+  outline:2px solid var(--gold-soft);outline-offset:-9px;
+  box-shadow:0 10px 30px rgba(123,30,44,.30);
   will-change:transform,opacity;
 }
 .owner-name{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.6vw,42px);margin:0 0 7px;letter-spacing:.004em}
@@ -133,7 +146,7 @@ button{font:inherit}
 .owner-vision-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-faint);margin:0 0 12px}
 .owner-quote{
   font-size:clamp(17px,1.8vw,20px);font-weight:300;line-height:1.75;
-  color:rgba(43,39,33,.82);margin:0 0 36px;max-width:46ch;min-height:7.5em;
+  color:rgba(67,18,29,.85);margin:0 0 36px;max-width:46ch;min-height:7.5em;
 }
 .owner-quote span{
   display:inline-block;filter:blur(10px);opacity:0;transform:translateY(6px);
@@ -142,51 +155,55 @@ button{font:inherit}
 @keyframes owner-word{to{filter:blur(0);opacity:1;transform:none}}
 .owner-arrows{display:flex;gap:14px}
 .owner-arrow{
-  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-  display:inline-flex;align-items:center;justify-content:center;color:var(--paper);
-  background:var(--ink);transition:background-color .25s ease,transform .2s ease;
+  width:46px;height:46px;border-radius:50%;border:1px solid var(--gold-soft);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;color:#ffe9c4;
+  background:linear-gradient(135deg,#93303f,var(--maroon-deep));
+  box-shadow:0 6px 16px rgba(123,30,44,.28);
+  transition:filter .25s ease,transform .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.owner-arrow:hover{background:var(--earth)}
+.owner-arrow:hover{filter:brightness(1.12)}
 .owner-arrow:active{transform:scale(.94)}
 .owner-arrow svg{width:19px;height:19px;display:block}
 .owner-bio{
-  font-size:clamp(16px,1.7vw,19px);font-weight:300;line-height:1.74;color:rgba(43,39,33,.82);
+  font-size:clamp(16px,1.7vw,19px);font-weight:300;line-height:1.74;color:rgba(67,18,29,.85);
   max-width:58ch;margin:clamp(38px,6vw,56px) auto 0;
 }
 .owner-bio .bio-link{
-  color:var(--ink);text-decoration:underline;text-decoration-color:rgba(43,39,33,.28);
+  color:var(--maroon);text-decoration:underline;text-decoration-color:rgba(168,127,42,.55);
   text-underline-offset:4px;transition:text-decoration-color .2s;
 }
-.owner-bio .bio-link:hover{text-decoration-color:var(--ink)}
+.owner-bio .bio-link:hover{text-decoration-color:var(--maroon)}
 .owner-cta{margin:clamp(30px,4vw,42px) auto 0}
 .owner-btn{
   display:inline-flex;align-items:center;gap:11px;cursor:pointer;
   font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
-  text-transform:uppercase;color:var(--ink);
-  border:1px solid var(--hairline);border-radius:999px;background:rgba(250,246,238,.62);
-  padding:13px 26px;transition:background-color .2s ease,border-color .2s ease;
+  text-transform:uppercase;color:#ffe9c4;
+  border:1px solid var(--gold-soft);border-radius:999px;
+  background:linear-gradient(135deg,#93303f,var(--maroon-deep));
+  box-shadow:0 6px 18px rgba(123,30,44,.28),inset 0 1px 0 rgba(255,233,196,.35);
+  padding:13px 26px;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.owner-btn:hover{background:rgba(255,252,244,.95);border-color:rgba(43,39,33,.3)}
+.owner-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .owner-btn svg{width:16px;height:16px;display:block}
 .back{
   display:inline-block;margin-top:clamp(26px,4vw,38px);
-  font-size:12.5px;letter-spacing:var(--track-nav);text-transform:uppercase;color:var(--ink-soft);
-  text-decoration:underline;text-decoration-color:rgba(43,39,33,.28);text-underline-offset:4px;
+  font-size:12.5px;letter-spacing:var(--track-nav);text-transform:uppercase;color:var(--maroon);
+  text-decoration:underline;text-decoration-color:rgba(168,127,42,.55);text-underline-offset:4px;
   transition:color .2s,text-decoration-color .2s;
 }
-.back:hover{color:var(--ink);text-decoration-color:var(--ink)}
+.back:hover{color:var(--maroon-deep);text-decoration-color:var(--maroon-deep)}
 @media (prefers-reduced-motion:reduce){
   .owner-img{transition:none!important}
   .owner-quote span{animation:none;filter:none;opacity:1;transform:none}
 }
 
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--ink-faint);text-align:center;padding-bottom:44px;margin:0}
-.foot .bio-link{color:var(--ink-soft);text-decoration:underline;text-decoration-color:rgba(43,39,33,.28);
+  color:var(--maroon);text-align:center;padding-bottom:44px;margin:0;opacity:.75}
+.foot .bio-link{color:var(--maroon);text-decoration:underline;text-decoration-color:rgba(168,127,42,.55);
   text-underline-offset:4px;transition:text-decoration-color .2s}
-.foot .bio-link:hover{text-decoration-color:var(--ink)}
+.foot .bio-link:hover{text-decoration-color:var(--maroon-deep)}
 </style>
 </head>
 <body>
@@ -237,7 +254,7 @@ button{font:inherit}
         Say hello on WhatsApp
       </a>
     </div>
-    <a class="back" href="index.html">← Back to the sketchbook</a>
+    <a class="back" href="index.html">← Back to the album</a>
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
