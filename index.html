@@ -382,7 +382,7 @@ button{font:inherit}
 .rule{
   display:block;width:min(1080px,86vw);margin:clamp(30px,6vh,64px) auto;
   height:clamp(26px,4vw,46px);
-  background:url(delhi-photo-studio/divider.png) center / 100% auto no-repeat;
+  background:url(delhi-photo-studio/divider.webp) center / 100% auto no-repeat;
   opacity:.5;
 }
 .rule.short{width:min(420px,52vw);opacity:.4}
@@ -419,6 +419,55 @@ button{font:inherit}
 .plate .p{font-size:12.5px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase;text-align:right}
 .plate[aria-current="true"] .p{color:var(--earth)}
 
+/* ---------------- chai or coffee ---------------- */
+.chai{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px);text-align:center}
+.chai-title{
+  font-family:var(--display);font-weight:400;font-size:clamp(36px,5.6vw,58px);
+  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;
+}
+.chai-title em{font-style:italic}
+.chai-sub{
+  font-size:clamp(15px,1.6vw,17.5px);font-weight:300;color:var(--ink-soft);
+  line-height:1.65;margin:0 auto 36px;max-width:46ch;
+}
+.chai-form{display:grid;grid-template-columns:1fr 1fr;gap:30px 32px;text-align:left}
+.chai-field{display:flex;flex-direction:column;gap:9px;min-width:0}
+.chai-wide{grid-column:1/-1}
+.chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft)}
+.chai-field input,.chai-field select,.chai-field textarea{
+  font-family:var(--font);font-size:16.5px;font-weight:300;color:var(--ink);
+  background:transparent;border:0;border-bottom:1px solid var(--hairline);
+  border-radius:0;padding:6px 2px 10px;outline:none;width:100%;
+  transition:border-color .22s ease;
+}
+.chai-field textarea{resize:vertical;min-height:58px;line-height:1.55}
+.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--ink)}
+.chai-field :is(input,select,textarea)::placeholder{color:var(--ink-faint)}
+.chai-field select{
+  appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:22px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%232b2721' stroke-opacity='.55' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
+}
+.chai-actions{
+  grid-column:1/-1;display:flex;align-items:center;justify-content:center;
+  gap:18px;flex-wrap:wrap;margin-top:2px;
+}
+.chai-btn{
+  display:inline-flex;align-items:center;gap:11px;cursor:pointer;
+  font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
+  text-transform:uppercase;color:var(--ink);
+  border:1px solid var(--hairline);border-radius:999px;background:rgba(250,246,238,.62);
+  padding:13px 26px;transition:background-color .2s ease,border-color .2s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.chai-btn:hover{background:rgba(255,252,244,.95);border-color:rgba(43,39,33,.3)}
+.chai-btn svg{width:16px;height:16px;display:block}
+.chai-note{font-size:12px;letter-spacing:.06em;color:var(--ink-faint);transition:color .2s}
+.chai-note.err{color:var(--earth)}
+@media (max-width:640px){
+  .chai-form{grid-template-columns:1fr;gap:24px}
+  .chai-sub{margin-bottom:28px}
+}
+
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
   color:var(--ink-faint);text-align:center;padding-bottom:44px}
 </style>
@@ -443,8 +492,8 @@ button{font:inherit}
   </header>
 
   <section id="sketchbook" class="hero">
-    <img class="botany l" src="delhi-photo-studio/botany-left.png" alt="" aria-hidden="true">
-    <img class="botany r" src="delhi-photo-studio/botany-right.png" alt="" aria-hidden="true">
+    <img class="botany l" src="delhi-photo-studio/botany-left.webp" alt="" aria-hidden="true">
+    <img class="botany r" src="delhi-photo-studio/botany-right.webp" alt="" aria-hidden="true">
 
     <p class="hero-kicker">Wedding Photographers / Cinematographers / Storytellers @ Bettiah</p>
 
@@ -497,7 +546,7 @@ button{font:inherit}
       <p class="section-label">About</p>
       <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This sketchbook holds that work the way we remember it, in <a class="bio-link" href="#plates">ink and a little colour</a> — and to write your own chapter, <a class="bio-link" href="https://wa.me/98526717546751">say hello on WhatsApp</a>.</p>
     </div>
-    <img class="bloom" src="delhi-photo-studio/bloom.png" alt="" aria-hidden="true">
+    <img class="bloom" src="delhi-photo-studio/bloom.webp" alt="" aria-hidden="true">
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
@@ -508,13 +557,59 @@ button{font:inherit}
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
-  <p class="foot" id="contact">Bettiah · Bihar · <a href="tel:07368878786" class="bio-link">07368878786</a></p>
+
+  <section id="contact" class="chai" aria-labelledby="chaiTitle">
+    <p class="section-label">Contact</p>
+    <h2 class="chai-title" id="chaiTitle">Let’s have a <em>chai</em> or coffee</h2>
+    <p class="chai-sub">Tell us a little about your day — we’ll write back on WhatsApp, usually within a day.</p>
+    <form id="chaiForm" class="chai-form" novalidate>
+      <label class="chai-field">
+        <span class="chai-label">Your name</span>
+        <input name="name" type="text" autocomplete="name" placeholder="Ananya Sharma">
+      </label>
+      <label class="chai-field">
+        <span class="chai-label">Phone / WhatsApp</span>
+        <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98xxx xxxxx">
+      </label>
+      <label class="chai-field">
+        <span class="chai-label">Event date</span>
+        <input name="date" type="date">
+      </label>
+      <label class="chai-field">
+        <span class="chai-label">I’m interested in</span>
+        <select name="interest">
+          <option>Wedding Day</option>
+          <option>Bride Portraits</option>
+          <option>Pre-Wedding Story</option>
+          <option>Destination Wedding</option>
+          <option>Model / Fashion Shoot</option>
+          <option>Cinematography</option>
+          <option>Album &amp; Prints</option>
+          <option>Something else</option>
+        </select>
+      </label>
+      <label class="chai-field chai-wide">
+        <span class="chai-label">A few lines about your day</span>
+        <textarea name="note" rows="3" placeholder="Venue, city, how many guests, what you have in mind…"></textarea>
+      </label>
+      <div class="chai-actions">
+        <button type="submit" class="chai-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h12v4.6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9.5Z"/><path d="M16 10.5h2a2.4 2.4 0 0 1 0 4.8h-2"/><path d="M8 5.2c-.9.9-.9 1.9 0 2.8M12 5.2c-.9.9-.9 1.9 0 2.8"/></svg>
+          Send on WhatsApp
+        </button>
+        <span class="chai-note" id="chaiNote">Opens WhatsApp with your message ready to send</span>
+      </div>
+    </form>
+  </section>
+
+  <div class="rule short" aria-hidden="true"></div>
+  <p class="foot">Bettiah · Bihar · <a href="tel:07368878786" class="bio-link">07368878786</a></p>
 </main>
 
 <script>
 /* =====================================================================
    Delhi Photo Studio — sketchbook hero.
-   Spreads are transparent PNG illustrations of an open sketchbook
+   Spreads are transparent WebP illustrations of an open sketchbook
    painted for the studio.  The leaf that turns is a real curved surface: a chain of
    nested strips whose tangent sweeps through an arc, so the page bends
    the way paper bends instead of pivoting like a flat door.
@@ -522,18 +617,24 @@ button{font:inherit}
 const Q=new URLSearchParams(location.search);
 const DIR='delhi-photo-studio/';
 const PAGES=[
-  {file:'wedding-day.png',    title:'The Wedding Day',        place:'Ceremony to Celebration'},
-  {file:'cinematography.png', title:'Wedding Cinematography', place:'Highlight Film'},
-  {file:'pre-wedding.png',    title:'Pre-Wedding Stories',    place:'Outdoor Locations'},
-  {file:'candid.png',         title:'Candid Moments',         place:'Behind the Scenes'},
-  {file:'destination.png',    title:'Destination Weddings',   place:'Travel Included'},
-  {file:'portraits.png',      title:'Traditional Portraits',  place:'Studio Sessions'},
-  {file:'details.png',        title:'Details & Décor',        place:'Detail Photography'},
-  {file:'reactions.png',      title:'Reaction Shots',         place:'Unscripted'},
-  {file:'albums.png',         title:'Albums & Keepsakes',     place:'Fine-Art Prints'}
+  {file:'wedding-day.webp',    title:'The Wedding Day',        place:'Ceremony to Celebration'},
+  {file:'mandap.webp',         alt:'Pheras around the sacred fire'},
+  {file:'bride.webp',          alt:'The bride, getting ready'},
+  {file:'cinematography.webp', title:'Wedding Cinematography', place:'Highlight Film'},
+  {file:'model-shoot.webp',    alt:'A model shoot in studio light'},
+  {file:'pre-wedding.webp',    title:'Pre-Wedding Stories',    place:'Outdoor Locations'},
+  {file:'destination-palace.webp', alt:'A destination wedding beside a lake palace'},
+  {file:'candid.webp',         title:'Candid Moments',         place:'Behind the Scenes'},
+  {file:'destination.webp',    title:'Destination Weddings',   place:'Travel Included'},
+  {file:'portraits.webp',      title:'Traditional Portraits',  place:'Studio Sessions'},
+  {file:'haldi.webp',          alt:'Haldi — everyone a little golden'},
+  {file:'details.webp',        title:'Details & Décor',        place:'Detail Photography'},
+  {file:'reactions.webp',      title:'Reaction Shots',         place:'Unscripted'},
+  {file:'sangeet.webp',        alt:'Sangeet night, mid-dance'},
+  {file:'albums.webp',         title:'Albums & Keepsakes',     place:'Fine-Art Prints'}
 ];
 PAGES.forEach(p=>p.url=DIR+p.file);
-const M=PAGES.length, LAND=6;
+const M=PAGES.length, LAND=9;
 
 const wrap=document.getElementById('sbWrap');
 const stage=document.getElementById('sbStage');
@@ -639,22 +740,25 @@ function caption(){
   capBox.textContent='';
   capOut=capIn=null;
   if(turn){
-    capOut=el('p','sb-caption live');capOut.textContent=PAGES[turn.from].title;capBox.appendChild(capOut);
-    capIn=el('p','sb-caption live');capIn.textContent=PAGES[turn.to].title;capBox.appendChild(capIn);
+    if(PAGES[turn.from].title){
+      capOut=el('p','sb-caption live');capOut.textContent=PAGES[turn.from].title;capBox.appendChild(capOut);
+    }
+    if(PAGES[turn.to].title){
+      capIn=el('p','sb-caption live');capIn.textContent=PAGES[turn.to].title;capBox.appendChild(capIn);
+    }
     fadeCaption(turn.t);
-  }else{
+  }else if(PAGES[idx].title){
     const p=el('p','sb-caption');p.textContent=PAGES[idx].title;capBox.appendChild(p);
   }
 }
 let capOut=null,capIn=null;
 function fadeCaption(t){
-  if(!capOut||!capIn)return;
+  if(!capOut&&!capIn)return;
   /* the old title is gone before the new one arrives, so they never
      sit on top of each other mid-drag */
   const out=1-Math.max(0,Math.min(1,(t-0.10)/0.28));
-  const inn=Math.max(0,Math.min(1,(t-0.56)/0.30));
-  capOut.style.opacity=out.toFixed(3);
-  capIn.style.opacity=inn.toFixed(3);
+  if(capOut)capOut.style.opacity=out.toFixed(3);
+  if(capIn)capIn.style.opacity=Math.max(0,Math.min(1,(t-0.56)/0.30)).toFixed(3);
 }
 function layout(){
   sb3d.style.setProperty('--bw',book.clientWidth+'px');
@@ -972,10 +1076,14 @@ zOutBtn.onclick=()=>{setView(view.trx,view.try_,view.tz/1.16);hideHint();};
 
 /* --------------------------------------------------------- the index */
 const plateList=document.getElementById('plateList');
+let plateNo=0;
 PAGES.forEach((p,i)=>{
+  if(!p.title)return;                 /* untitled spreads stay in the book only */
+  plateNo++;
   const li=el('li');
   const b=el('button','plate');
-  b.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span>'+
+  b.dataset.pi=i;
+  b.innerHTML='<span class="n">'+String(plateNo).padStart(2,'0')+'</span>'+
               '<span class="t"></span><span class="p"></span>';
   b.querySelector('.t').textContent=p.title;
   b.querySelector('.p').textContent=p.place;
@@ -984,7 +1092,7 @@ PAGES.forEach((p,i)=>{
 });
 function marks(){
   const cur=turn?turn.to:idx;
-  plateList.querySelectorAll('.plate').forEach((b,i)=>b.setAttribute('aria-current',i===cur?'true':'false'));
+  plateList.querySelectorAll('.plate').forEach(b=>b.setAttribute('aria-current',(+b.dataset.pi===cur)?'true':'false'));
 }
 
 /* ---------------------------------------------------------- the riffle */
@@ -1012,6 +1120,10 @@ function startIntro(){
     const bell=Math.sin(Math.PI*(r/(steps-1)));
     riffle.push({bell:bell,dur:0.26-0.19*bell});
   }
+  /* however thick the book gets, the riffle stays a quick flourish */
+  const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.25;
+  const k=Math.min(1,BUDGET/natural);
+  riffle.forEach(s=>{s.dur*=k;});
   riffleAt=0;introOn=true;wrap.classList.add('intro');
   riffleStep();
 }
@@ -1033,6 +1145,40 @@ function startIntro(){
   }
   setTimeout(startIntro,220);
 })();
+
+/* ------------------------------------------------ the chai form → admin WhatsApp */
+const WA_NUMBER='98526717546751';   /* the studio's WhatsApp, same as up top */
+const chaiForm=document.getElementById('chaiForm');
+const chaiNote=document.getElementById('chaiNote');
+if(chaiForm){
+  chaiForm.addEventListener('submit',e=>{
+    e.preventDefault();
+    const d=new FormData(chaiForm);
+    const name=(d.get('name')||'').toString().trim();
+    const phone=(d.get('phone')||'').toString().trim();
+    if(!name||!phone){
+      chaiNote.textContent='Please add your name and phone number first.';
+      chaiNote.classList.add('err');
+      chaiForm.elements[!name?'name':'phone'].focus();
+      return;
+    }
+    const lines=[
+      'Hello Delhi Photo Studio — let’s have a chai or coffee!',
+      '',
+      'Name: '+name,
+      'Phone: '+phone
+    ];
+    const date=(d.get('date')||'').toString();
+    if(date)lines.push('Event date: '+date);
+    lines.push('Interested in: '+(d.get('interest')||''));
+    const note=(d.get('note')||'').toString().trim();
+    if(note)lines.push('About the day: '+note);
+    chaiNote.classList.remove('err');
+    chaiNote.textContent='Opening WhatsApp — your message is ready to send.';
+    window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
+  });
+}
 </script>
 </body>
 </html>
+
