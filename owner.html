@@ -45,6 +45,13 @@ a{color:inherit;text-decoration:none}
 button{font:inherit}
 ::selection{background:var(--red);color:#fff}
 
+/* soft watercolour flowers standing behind everything, tinted into the orange */
+.wash{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:url(delhi-photo-studio/bg-wash.jpg) center top / cover no-repeat;
+  mix-blend-mode:multiply;opacity:.5;
+}
+
 /* ---------------- top bar ---------------- */
 .top{
   position:fixed;top:0;left:0;right:0;z-index:500;
@@ -178,6 +185,7 @@ button{font:inherit}
 </style>
 </head>
 <body>
+<div class="wash" aria-hidden="true"></div>
 <header class="top">
   <a class="name" href="index.html">DELHI PHOTO STUDIO BTH</a>
   <nav>

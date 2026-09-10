@@ -45,6 +45,14 @@ a{color:inherit;text-decoration:none}
 button{font:inherit}
 ::selection{background:var(--red);color:#fff}
 
+/* soft watercolour flowers standing behind everything — steady, blurred-looking,
+   and tinted into the orange so the ground never feels plain                  */
+.wash{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:url(delhi-photo-studio/bg-wash.jpg) center top / cover no-repeat;
+  mix-blend-mode:multiply;opacity:.5;
+}
+
 /* ---------------- top bar ---------------- */
 .top{
   position:fixed;top:0;left:0;right:0;z-index:500;
@@ -109,7 +117,7 @@ button{font:inherit}
 .sb-stage{
   display:flex;align-items:center;justify-content:center;width:100%;
   position:relative;
-  touch-action:pan-x;              /* vertical swipes belong to the album */
+  touch-action:pan-y;              /* sideways swipes belong to the album */
 }
 .sb-3d{
   position:relative;flex:1 1;min-width:0;max-width:640px;
@@ -147,15 +155,12 @@ button{font:inherit}
 }
 /* the rings the pages hang from — they straddle the page's top edge and
    stay in front while a leaf folds through them                          */
-.sb-binding{
-  position:absolute;left:-3px;right:-3px;top:0;transform:translateY(-50%);
-  display:flex;justify-content:space-evenly;align-items:center;
-  pointer-events:none;z-index:7;
-}
-.sb-binding .ring{
-  width:clamp(13px,2.9vw,20px);height:clamp(13px,2.9vw,20px);border-radius:50%;
-  border:3px solid var(--gold);
-  box-shadow:0 2px 3px rgba(60,8,4,.45), inset 0 1px 1px rgba(60,8,4,.4);
+/* a slim stitched spine on the page's left edge — the page turns around it */
+.sb-spine{
+  position:absolute;left:0;top:0;bottom:0;width:14px;z-index:2;pointer-events:none;
+  border-radius:6px 0 0 6px;
+  background:linear-gradient(90deg,rgba(60,8,4,.30),rgba(60,8,4,.08) 55%,rgba(60,8,4,0) 100%);
+  border-right:1px solid rgba(242,193,78,.5);
 }
 /* the shadow the album throws on the desk underneath it */
 .sb-cast{position:absolute;pointer-events:none;z-index:0}
@@ -184,34 +189,47 @@ button{font:inherit}
 .leaf-shade{
   position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:5px;
   background:rgba(60,14,7,.16);
-  -webkit-mask-image:linear-gradient(180deg,#000 0,transparent 58%);
-  mask-image:linear-gradient(180deg,#000 0,transparent 58%);
+  -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 58%);
+  mask-image:linear-gradient(90deg,#000 0,transparent 58%);
   opacity:calc(var(--shade,0) * .8);
 }
 
-/* ---- the turning leaf: nested horizontal strips forming a curved
-       surface that folds UP over the top edge ---- */
+/* ---- the turning leaf: nested vertical strips forming a curved
+       surface that folds sideways over the LEFT spine of the page ---- */
 .curl{
-  position:absolute;left:0;top:0;width:100%;height:var(--bh,0px);
+  position:absolute;left:0;top:0;height:100%;width:var(--bw,0px);
   transform-style:preserve-3d;z-index:6;
 }
-.curl.next{transform-origin:50% 0;transform:rotateX(var(--tt,0deg))}
-.curl.prev{transform-origin:50% 0;transform:rotateX(calc(180deg - var(--tt,0deg)))}
+.curl.next{transform-origin:0 50%;transform:rotateY(calc(-1 * var(--tt,0deg)))}
+.curl.prev{transform-origin:0 50%;transform:rotateY(calc(var(--tt,0deg) - 180deg))}
 .strip{
-  position:absolute;left:0;width:100%;
-  height:calc(var(--bh,0px) / var(--n));
+  position:absolute;top:0;height:100%;
+  width:calc(var(--bw,0px) / var(--n));
   transform-style:preserve-3d;
 }
-.strip{transform-origin:50% 0}
-.curl>.strip{top:0}
-.curl .strip .strip{top:100%;transform:rotateX(var(--td,0deg))}
+.strip{transform-origin:0 50%}
+.curl>.strip{left:0}
+/* a whisper of z-depth per strip keeps nearly-coplanar neighbours from
+   z-fighting into 'venetian blinds' on some rasterisers                */
+.curl .strip .strip{left:100%;transform:rotateY(var(--td,0deg)) translateZ(var(--ez,0px))}
+/* when the leaf is in deep fold its curled tip can overlap the root of
+   the leaf in screen space, and two near-parallel surfaces z-fight into
+   a checkerboard — so the last strips fade away toward the tip          */
+.strip.edge .face{
+  -webkit-mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
+  mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
+}
+.strip.edge .face.back{   /* the back is rotated 180°, so the fade mirrors */
+  -webkit-mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
+  mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
+}
 .face{
-  position:absolute;left:0;right:0;top:0;bottom:-1.1px;
+  position:absolute;top:0;bottom:0;left:0;right:-1.1px;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
   background-repeat:no-repeat;background-size:var(--bw,0px) var(--bh,0px);
 }
 .face.back{
-  transform:rotateX(180deg);
+  transform:rotateY(180deg);
   background:#F9EEDC;
 }
 .face .sh,.face .gl{
@@ -219,32 +237,32 @@ button{font:inherit}
   mask-image:linear-gradient(180deg,#000 0,#000 100%);
 }
 .face .sh{position:absolute;top:0;bottom:0;left:0;right:0;pointer-events:none;border-radius:inherit;
-  background:linear-gradient(180deg,rgba(60,14,7,var(--a1,0)),rgba(60,14,7,var(--a2,0)));
+  background:rgba(60,14,7,var(--sh,0));
 }
 .face .gl{
   position:absolute;top:0;bottom:0;left:0;right:0;pointer-events:none;border-radius:inherit;
   background:#FFF6E6;
-  opacity:calc(var(--shade,0) * var(--lit,1) * var(--lit,1) * .10);
+  opacity:calc(var(--shade,0) * .06);
 }
 
-/* ---- the turn buttons: a vertical pair riding the album's right edge ---- */
-.sb-turn-col{
-  position:absolute;right:-12px;top:50%;transform:translateY(-50%);
-  display:grid;gap:14px;z-index:8;
-}
+/* ---- the turn buttons: red round arrows riding the album's side edges ---- */
 .sb-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:8;
   width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
   display:inline-flex;align-items:center;justify-content:center;
   background:var(--red);color:#FFF3E0;
   box-shadow:0 3px 8px rgba(92,20,13,.4);
-  transition:background-color .18s ease,transform .18s ease;
+  transition:background-color .18s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.sb-arrow:hover{background:var(--red-deep);transform:scale(1.07)}
-.sb-arrow:active{transform:scale(.94)}
+.sb-arrow.prev{left:-12px}
+.sb-arrow.next{right:-12px}
+.sb-arrow:hover{background:var(--red-deep)}
+.sb-arrow:active{transform:translateY(-50%) scale(.94)}
 .sb-arrow svg{width:17px;height:17px;display:block}
 @media (max-width:760px){
-  .sb-turn-col{right:0;gap:10px}
+  .sb-arrow.prev{left:4px}
+  .sb-arrow.next{right:4px}
   .sb-arrow{width:36px;height:36px}
   .sb-arrow svg{width:14px;height:14px}
 }
@@ -359,12 +377,12 @@ button{font:inherit}
 }
 @media (pointer:coarse){.loupe{display:none}}
 
-/* tap zones over the album: top half brings the previous page back down,
-   bottom half lifts this page up and over                              */
-.sb-zone{position:absolute;left:0;right:0;border:0;background:transparent;cursor:grab;z-index:60;-webkit-tap-highlight-color:transparent}
+/* tap zones over the album: the left half folds back to the previous page,
+   the right half turns the page over the spine                          */
+.sb-zone{position:absolute;top:0;bottom:0;border:0;background:transparent;cursor:grab;z-index:60;-webkit-tap-highlight-color:transparent}
 .sb-zone:active{cursor:grabbing}
-.sb-prev{top:0;height:46%}
-.sb-next{bottom:0;height:54%}
+.sb-prev{left:0;width:46%}
+.sb-next{right:0;width:54%}
 
 .sb-captions{display:grid;justify-items:center}
 .sb-captions>*{grid-area:1/1;margin:0}
@@ -490,6 +508,7 @@ button{font:inherit}
 </style>
 </head>
 <body>
+<div class="wash" aria-hidden="true"></div>
 <main class="page home">
 
   <header class="top">
@@ -514,8 +533,8 @@ button{font:inherit}
 
     <div class="sb-wrap" id="sbWrap">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <filter id="sb-mblur-1"><feGaussianBlur stdDeviation="0 6"/></filter>
-        <filter id="sb-mblur-2"><feGaussianBlur stdDeviation="0 16"/></filter>
+        <filter id="sb-mblur-1"><feGaussianBlur stdDeviation="6 0"/></filter>
+        <filter id="sb-mblur-2"><feGaussianBlur stdDeviation="16 0"/></filter>
       </svg>
       <div class="sb-stage" id="sbStage">
         <div class="sb-3d" id="sb3d">
@@ -527,14 +546,12 @@ button{font:inherit}
           </div>
           <div class="zoomwrap" id="zoomWrap" aria-hidden="true"><div class="zoominner" id="zoomInner"></div></div>
           <div class="loupe" id="loupe"><span class="grip"></span><span class="ring-glass"><span class="lens" id="loupeLens"><span class="mag" id="loupeMag"></span></span></span></div>
-          <div class="sb-turn-col">
-            <button class="sb-arrow" id="sbUp" aria-label="previous page">
-              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="3.5,12.5 10,6 16.5,12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="sb-arrow" id="sbDown" aria-label="next page">
-              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="3.5,7.5 10,14 16.5,7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
+          <button class="sb-arrow prev" id="sbLeft" aria-label="previous page">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="12.5,3.5 6,10 12.5,16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="sb-arrow next" id="sbRight" aria-label="next page">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="7.5,3.5 14,10 7.5,16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
       <div class="sb-captions" id="sbCaptions"></div>
@@ -545,7 +562,7 @@ button{font:inherit}
         <span class="tool-sep" aria-hidden="true"></span>
         <button class="tool" id="loupeBtn" aria-label="magnifier" aria-pressed="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.8" cy="8.8" r="5.8"/><path d="M13 13l4.4 4.4"/><path d="M6.4 7.2a3.2 3.2 0 0 1 2.4-1.4" opacity=".55"/></svg></button>
       </div>
-      <p class="sb-hint" id="sbHint">Swipe the page upward to turn · Drag the glass across it</p>
+      <p class="sb-hint" id="sbHint">Swipe the page sideways to turn · Drag the glass across it</p>
     </div>
 
     <button class="hero-down" id="heroDown" aria-label="scroll to about">
@@ -699,7 +716,7 @@ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ------------------------------------------------ the turning leaf */
 const N=20;            /* strips — enough for a smooth curve          */
-const BETA=0.36;       /* peak curl of the arc, radians              */
+const BETA=0.55;       /* peak curl of the arc, radians              */
 let idx=0, turn=null;  /* turn = {dir, from, to, t}                   */
 let strips=[];         /* the chain, kept for per-frame lighting       */
 let turnLeaf=null;     /* the curl element, for end-fades              */
@@ -709,37 +726,34 @@ function imgEl(i){
   const im=new Image();im.className='sb-page-img';
   im.draggable=false;im.alt=PAGES[i].title||PAGES[i].alt||'';im.src=PAGES[i].url;return im;
 }
-/* one photo page hanging in the cover */
+/* one photo page resting in the cover, with its stitched left spine */
 function pageEl(i){
   const p=el('div','sb-page');
   p.appendChild(imgEl(i));
+  const sp=el('div','sb-spine');sp.setAttribute('aria-hidden','true');
+  p.appendChild(sp);
   return p;
-}
-/* the row of gold rings the pages hang from */
-function bindingEl(){
-  const d=el('div','sb-binding');
-  d.setAttribute('aria-hidden','true');
-  for(let i=0;i<11;i++)d.appendChild(el('span','ring'));
-  return d;
 }
 /* build the strip chain once per turn; background offsets are pure
    geometry, so they never need touching again while it animates.
-   Chain order mirrors the physical page: slice 0 hangs at the rings. */
+   Chain order mirrors the physical page: slice 0 hangs at the spine. */
 function buildCurl(dir,from,to){
   strips=[];
   const c=el('div','curl '+dir);
   c.style.setProperty('--n',N);
   let host=c;
-  const sh='calc(var(--bh) * 1 / '+N+')';
+  const sw='calc(var(--bw) * 1 / '+N+')';
   for(let i=0;i<N;i++){
     const s=el('div','strip');
     s.style.setProperty('--i',i);
-    const A='calc(-1 * '+i+' * '+sh+')';         /* slice i of the image   */
+    s.style.setProperty('--ez',(0.15*i).toFixed(2)+'px');
+    if(i>=N-2)s.classList.add('edge');
+    const A='calc(-1 * '+i+' * '+sw+')';         /* slice i of the image   */
     const f=el('div','face front'), b=el('div','face back');
     /* the front of the paper shows the page being turned away (next)
        or brought back over (prev); the back is plain album paper     */
     f.style.backgroundImage='url('+PAGES[dir==='next'?from:to].url+')';
-    f.style.backgroundPositionY=A;
+    f.style.backgroundPositionX=A;
     f.appendChild(el('div','sh'));f.appendChild(el('div','gl'));
     b.appendChild(el('div','sh'));b.appendChild(el('div','gl'));
     s.appendChild(f);s.appendChild(b);
@@ -764,12 +778,10 @@ function applyTurn(t){
     else turnLeaf.style.opacity=(t<0.07?Math.max(0.15,t/0.07):1).toFixed(3);
   }
   for(let i=0;i<strips.length;i++){
-    const l1=Math.abs(Math.cos(tt-i*td));        /* facing at this strip's near edge */
-    const l2=Math.abs(Math.cos(tt-(i+1)*td));    /* ...and at its far edge           */
-    const st=strips[i].style;
-    st.setProperty('--lit',l1.toFixed(3));
-    st.setProperty('--a1',((1-l1)*.34).toFixed(3));
-    st.setProperty('--a2',((1-l2)*.34).toFixed(3));
+    const l1=Math.abs(Math.cos(tt-i*td));        /* how much this strip faces us      */
+    /* one flat shade per strip — a ramp per strip would re-seam the sheet,
+       and a per-strip sheen bands flat colours, so the sheen stays even   */
+    strips[i].style.setProperty('--sh',((1-l1)*.30).toFixed(3));
   }
 }
 function paint(){
@@ -778,7 +790,6 @@ function paint(){
   const resting=turn ? (turn.dir==='next'?turn.to:turn.from) : idx;
   const page=pageEl(resting);
   book.appendChild(page);
-  book.appendChild(bindingEl());
   if(turn){
     page.appendChild(el('div','leaf-shade'));
     turnLeaf=buildCurl(turn.dir,turn.from,turn.to);
@@ -940,13 +951,13 @@ stage.addEventListener('pointerdown',e=>{
   const dir=zone.classList.contains('sb-next')?'next':'prev';
   const r=pageRect();
   startTurn(dir,0);
-  drag={dir:dir,y0:e.clientY,h:r.height||1,moved:0,vel:0,tPrev:performance.now()};
+  drag={dir:dir,x0:e.clientX,w:r.width||1,moved:0,vel:0,tPrev:performance.now()};
 });
 stage.addEventListener('pointermove',e=>{
   if(!drag)return;
-  const dy=e.clientY-drag.y0;
-  drag.moved=Math.max(drag.moved,Math.abs(dy));
-  const raw=(drag.dir==='next'? -dy : dy)/(drag.h*0.62);
+  const dx=e.clientX-drag.x0;
+  drag.moved=Math.max(drag.moved,Math.abs(dx));
+  const raw=(drag.dir==='next'? -dx : dx)/(drag.w*0.62);
   const t=Math.max(0,Math.min(1,raw));
   const now=performance.now();
   drag.vel=(t-(turn?turn.t:0))/Math.max(0.001,(now-drag.tPrev)/1000);
@@ -1001,15 +1012,15 @@ function goTo(i){
   if(Math.min(fwd,back)===1){step(fwd===1?'next':'prev');return;}
   idx=i;paint();
 }
-document.getElementById('sbUp').onclick=()=>step('prev');
-document.getElementById('sbDown').onclick=()=>step('next');
+document.getElementById('sbLeft').onclick=()=>step('prev');
+document.getElementById('sbRight').onclick=()=>step('next');
 addEventListener('keydown',e=>{
-  if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'&&e.key!=='ArrowUp'&&e.key!=='ArrowDown')return;
+  if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
   if(e.metaKey||e.ctrlKey||e.altKey)return;
   const t=e.target;
   if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable))return;
   e.preventDefault();hideHint();
-  step(e.key==='ArrowRight'||e.key==='ArrowDown'?'next':'prev');
+  step(e.key==='ArrowRight'?'next':'prev');
 });
 document.getElementById('heroDown').onclick=()=>{
   document.getElementById('about').scrollIntoView({behavior:'smooth',block:'start'});
@@ -1111,7 +1122,7 @@ function shoveLoupe(dir){
   /* which page point the glass covers, once the album's scale is undone */
   const nx=(b.w/2+(lx-b.x-b.w/2)/view.z)/b.w, ny=(b.h/2+(ly-b.y-b.h/2)/view.z)/b.h;
   if(nx<0.02||nx>0.98||ny<0.17||ny>0.83)return;      /* already clear of the page */
-  lTarget={x:b.x+b.w*(dir==='next'?0.14:0.86), y:b.y+b.h*0.86};
+  lTarget={x:b.x+b.w*0.86, y:b.y+b.h*0.95};          /* down onto the cover band */
   kick();
 }
 function loupeEase(){
