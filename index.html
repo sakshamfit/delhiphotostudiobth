@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DELHI PHOTO STUDIO BTH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%237b1e2c' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%237b1e2c'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23ea580c' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23ea580c'/%3E%3C/svg%3E">
 <meta name="description" content="Wedding photography & cinematography studio — Bettiah, Bihar">
 <style>
 @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;
@@ -15,20 +15,20 @@
   src:url(delhi-photo-studio/newsreader.woff2) format('woff2')}
 
 :root{
-  --paper:#f8eeda;
-  --ink:#43121d;
-  --ink-soft:rgba(123,30,44,.68);
-  --ink-faint:rgba(123,30,44,.44);
-  --hairline:rgba(123,30,44,.22);
-  --earth:#b02a3c;
-  --maroon:#7b1e2c;
-  --maroon-deep:#521020;
-  --gold:#a87f2a;
-  --gold-soft:#e8c66a;
-  --haldi:#e8932e;
-  --leaf:#3f7a4e;
-  --rose:#c94f7c;
-  --blush:#f9e2cf;
+  --paper:#fff3e0;
+  --ink:#5f2706;
+  --ink-soft:rgba(194,65,12,.70);
+  --ink-faint:rgba(194,65,12,.45);
+  --hairline:rgba(234,88,12,.28);
+  --earth:#e11d48;
+  --orange:#ea580c;
+  --orange-deep:#9a3412;
+  --amber:#d97706;
+  --sunny:#ffc93c;
+  --haldi:#f59e0b;
+  --leaf:#16a34a;
+  --rose:#ec4899;
+  --blush:#ffe3c2;
   --display:'Instrument Serif',"New York",Georgia,'Times New Roman',serif;
   --font:'Newsreader',"New York",Georgia,'Times New Roman',serif;
   --track-caps:.24em;
@@ -43,7 +43,7 @@ body{
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
-::selection{background:var(--maroon);color:#ffe9c4}
+::selection{background:var(--orange);color:#ffe9c4}
 
 /* the painted ground the whole page sits on */
 .wash{
@@ -54,10 +54,11 @@ button{font:inherit}
 .wash:after{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(42% 30% at 8% 4%,rgba(201,79,124,.20),rgba(201,79,124,0) 70%),
-    radial-gradient(44% 30% at 93% 10%,rgba(232,147,46,.22),rgba(232,147,46,0) 70%),
-    radial-gradient(50% 34% at 50% 0%,rgba(232,198,106,.20),rgba(232,198,106,0) 72%),
-    linear-gradient(180deg,rgba(255,205,160,.30) 0%,rgba(249,226,207,.55) 42%,rgba(248,238,218,.82) 66%,var(--paper) 90%);
+    radial-gradient(42% 30% at 8% 4%,rgba(236,72,153,.24),rgba(236,72,153,0) 70%),
+    radial-gradient(44% 30% at 93% 10%,rgba(249,115,22,.30),rgba(249,115,22,0) 70%),
+    radial-gradient(50% 34% at 50% 0%,rgba(255,201,60,.30),rgba(255,201,60,0) 72%),
+    radial-gradient(36% 26% at 50% 46%,rgba(22,163,74,.10),rgba(22,163,74,0) 70%),
+    linear-gradient(180deg,rgba(255,190,120,.38) 0%,rgba(255,227,194,.60) 42%,rgba(255,243,224,.86) 66%,var(--paper) 90%);
 }
 
 /* ---------------- top bar ---------------- */
@@ -69,7 +70,7 @@ button{font:inherit}
 .top>*{pointer-events:auto}
 .top:before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(253,240,222,.95),rgba(250,228,204,.72) 48%,rgba(250,228,204,0));
+  background:linear-gradient(180deg,rgba(255,243,224,.96),rgba(255,231,194,.74) 48%,rgba(255,231,194,0));
   -webkit-backdrop-filter:blur(14px) saturate(.95);backdrop-filter:blur(14px) saturate(.95);
   -webkit-mask-image:linear-gradient(180deg,#000 46%,transparent);
   mask-image:linear-gradient(180deg,#000 46%,transparent);
@@ -77,7 +78,7 @@ button{font:inherit}
 .top .name{
   font-family:var(--display);font-size:clamp(24px,2.4vw,30px);letter-spacing:.01em;
   white-space:nowrap;line-height:1;
-  background:linear-gradient(100deg,var(--maroon-deep) 10%,var(--maroon) 42%,var(--gold) 78%,var(--maroon) 100%);
+  background:linear-gradient(100deg,var(--orange-deep) 5%,var(--orange) 38%,var(--haldi) 62%,var(--rose) 92%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .top nav{
@@ -85,13 +86,13 @@ button{font:inherit}
   letter-spacing:var(--track-nav);font-weight:300;
 }
 .top nav a{color:var(--ink-soft);transition:color .2s}
-.top nav a:hover,.top nav a[aria-current]{color:var(--maroon)}
+.top nav a:hover,.top nav a[aria-current]{color:var(--orange)}
 .top nav .top-socials{
   display:flex;align-items:center;gap:13px;margin-left:2px;padding-left:clamp(12px,1.6vw,20px);
-  border-left:1px solid rgba(168,127,42,.45);
+  border-left:1px solid rgba(245,158,11,.45);
 }
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s,transform .2s}
-.icon-btn:hover{color:var(--maroon);transform:translateY(-1px)}
+.icon-btn:hover{color:var(--orange);transform:translateY(-1px)}
 .top .icon-btn svg{width:16px;height:16px;display:block}
 @media (max-width:640px){
   .top{padding-inline:12px;padding-block:13px 50px;gap:8px}
@@ -118,20 +119,20 @@ button{font:inherit}
 
 .hero-kicker{
   font-size:12px;font-weight:400;letter-spacing:var(--track-caps);text-align:center;
-  color:var(--maroon);margin:0 0 clamp(22px,3.4vh,40px);text-transform:uppercase;
+  color:var(--orange);margin:0 0 clamp(22px,3.4vh,40px);text-transform:uppercase;
 }
 /* a little marigold toran over the album — pure CSS */
 .toran{
   width:min(560px,78vw);height:30px;margin:0 0 14px;
   background:
     linear-gradient(180deg,var(--leaf) 0 2px,transparent 2px),
-    radial-gradient(circle at 9px 13px,#ffd66e 0 6px,rgba(0,0,0,0) 7px),
-    radial-gradient(circle at 0px 12px,#ef8f2e 0 8px,rgba(0,0,0,0) 9px),
-    radial-gradient(circle at 18px 12px,#e2632e 0 8px,rgba(0,0,0,0) 9px),
+    radial-gradient(circle at 9px 13px,#ffd93c 0 6px,rgba(0,0,0,0) 7px),
+    radial-gradient(circle at 0px 12px,#fb8c1a 0 8px,rgba(0,0,0,0) 9px),
+    radial-gradient(circle at 18px 12px,#ea580c 0 8px,rgba(0,0,0,0) 9px),
     radial-gradient(circle at 9px 26px,var(--leaf) 0 2.6px,rgba(0,0,0,0) 3.4px);
   background-size:100% 100%,36px 30px,36px 30px,36px 30px,36px 30px;
   background-repeat:no-repeat,repeat-x,repeat-x,repeat-x,repeat-x;
-  filter:drop-shadow(0 2px 2px rgba(123,30,44,.18));
+  filter:drop-shadow(0 2px 2px rgba(234,88,12,.18));
 }
 .toran.tail{margin:0 auto;width:min(420px,60vw);opacity:.9}
 .hero-down{
@@ -154,10 +155,10 @@ button{font:inherit}
 }
 .sb-arrow{
   flex:none;display:inline-flex;align-items:center;justify-content:center;padding:6px 2px;
-  border:0;background:transparent;color:var(--gold);cursor:pointer;transition:color .2s,transform .2s;
+  border:0;background:transparent;color:var(--amber);cursor:pointer;transition:color .2s,transform .2s;
   -webkit-tap-highlight-color:transparent;z-index:8;
 }
-.sb-arrow:hover{color:var(--maroon);transform:scale(1.12)}
+.sb-arrow:hover{color:var(--orange);transform:scale(1.12)}
 
 /* The box is the book's own untransformed frame: the loupe lives here, on
    the desk, while only .sb-tilt leans and scales underneath it. */
@@ -294,8 +295,8 @@ button{font:inherit}
 .loupe .ring:before{
   content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
   background:linear-gradient(146deg,
-    #fdf7e9 0%,#e6d7b4 14%,#b69d70 32%,#7d6740 50%,
-    #cdbb92 66%,#f4ead3 80%,#9b8459 100%);
+    #fff6dd 0%,#ffe3a1 14%,#f5b942 32%,#b45309 50%,
+    #ffd66e 66%,#fff0c8 80%,#d97706 100%);
   box-shadow:
     inset 0 1px 1px rgba(255,255,255,.8),
     inset 0 -2px 3px rgba(70,52,26,.5);
@@ -313,8 +314,8 @@ button{font:inherit}
   background:
     linear-gradient(180deg,rgba(255,255,255,.46) 0 13%,rgba(255,255,255,0) 44%,
                     rgba(0,0,0,.26) 100%),
-    linear-gradient(90deg,#d9bd82 0 14%,#a9884e 14% 20%,#6d4c2b 20% 62%,
-                    #5a3d22 62% 92%,#7a563180 92% 100%);
+    linear-gradient(90deg,#ffd08a 0 14%,#f59e0b 14% 20%,#b45309 20% 62%,
+                    #92400e 62% 92%,#d9770680 92% 100%);
   box-shadow:0 8px 15px rgba(58,44,26,.26),0 18px 26px rgba(58,44,26,.14);
 }
 .lens{
@@ -355,23 +356,23 @@ button{font:inherit}
 /* ---- controls ---- */
 .sb-tools{
   display:flex;align-items:center;gap:6px;
-  border:1px solid rgba(168,127,42,.5);border-radius:999px;
-  padding:5px 7px;background:linear-gradient(180deg,rgba(255,248,234,.85),rgba(249,226,207,.75));
-  box-shadow:0 4px 14px rgba(123,30,44,.12);
+  border:1px solid rgba(245,158,11,.5);border-radius:999px;
+  padding:5px 7px;background:linear-gradient(180deg,rgba(255,252,242,.92),rgba(255,227,194,.85));
+  box-shadow:0 4px 14px rgba(234,88,12,.20);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
 }
 .tool{
   width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
-  border:0;border-radius:50%;background:transparent;color:var(--maroon);
+  border:0;border-radius:50%;background:transparent;color:var(--orange);
   cursor:pointer;transition:background-color .18s ease,color .18s ease,transform .18s ease;
 }
-.tool:hover{background:rgba(255,255,255,.9);color:var(--maroon-deep);transform:scale(1.08)}
-.tool[aria-pressed="true"]{background:rgba(123,30,44,.14);color:var(--maroon)}
+.tool:hover{background:rgba(255,255,255,.9);color:var(--orange-deep);transform:scale(1.08)}
+.tool[aria-pressed="true"]{background:rgba(234,88,12,.14);color:var(--orange)}
 .tool:disabled{opacity:.32;cursor:default;background:transparent}
 .tool svg{width:15px;height:15px;display:block}
-.tool-sep{width:1px;height:17px;background:rgba(168,127,42,.45);margin:0 2px}
+.tool-sep{width:1px;height:17px;background:rgba(245,158,11,.45);margin:0 2px}
 .zoom-read{
-  font-size:11px;letter-spacing:.1em;color:var(--maroon);
+  font-size:11px;letter-spacing:.1em;color:var(--orange);
   min-width:40px;text-align:center;font-variant-numeric:tabular-nums;
 }
 @media (pointer:coarse){.loupe{display:none}}
@@ -383,14 +384,14 @@ button{font:inherit}
 
 .sb-captions{display:grid;justify-items:center}
 .sb-captions>*{grid-area:1/1;margin:0}
-.sb-caption{font-size:clamp(10px,2.6vw,13px);letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--maroon);
+.sb-caption{font-size:clamp(10px,2.6vw,13px);letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--orange);
   text-align:center;padding:0 14px;max-width:min(860px,92vw);
   animation:sb-cap-in .5s ease both}
 .sb-caption.live{animation:none}
 @keyframes sb-cap-in{0%{opacity:0}}
 @keyframes sb-cap-out{to{opacity:0}}
 .sb-hint{
-  margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+  margin:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
   transition:opacity .4s ease;
 }
 .sb-hint.gone{opacity:0}
@@ -418,7 +419,7 @@ button{font:inherit}
 .rule.short{width:min(420px,52vw);opacity:.55}
 .section-label{
   font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--gold);margin:0 0 18px;font-weight:400;
+  color:var(--amber);margin:0 0 18px;font-weight:400;
 }
 .section-label:before{content:"❋ ";color:var(--haldi);}
 .about{
@@ -427,9 +428,9 @@ button{font:inherit}
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,60px);align-items:start;
 }
 .bio{font-size:clamp(17px,1.7vw,20px);line-height:1.74;letter-spacing:.005em;margin:0;font-weight:300;max-width:56ch}
-.bio-link{color:var(--maroon);text-decoration:underline;text-decoration-color:rgba(168,127,42,.55);
+.bio-link{color:var(--orange);text-decoration:underline;text-decoration-color:rgba(245,158,11,.55);
   text-underline-offset:4px;transition:text-decoration-color .2s}
-.bio-link:hover{text-decoration-color:var(--maroon)}
+.bio-link:hover{text-decoration-color:var(--orange)}
 .bloom{width:clamp(150px,17vw,260px);opacity:.9;user-select:none;align-self:center}
 @media (max-width:760px){
   .about{grid-template-columns:1fr}
@@ -445,22 +446,22 @@ button{font:inherit}
   transition:background-color .22s ease,padding-left .22s ease;
 }
 .plate:hover,.plate[aria-current="true"]{
-  background:linear-gradient(90deg,rgba(201,79,124,.10),rgba(232,198,106,.14));
-  padding-left:12px;box-shadow:inset 3px 0 0 var(--gold);
+  background:linear-gradient(90deg,rgba(236,72,153,.13),rgba(255,201,60,.24));
+  padding-left:12px;box-shadow:inset 3px 0 0 var(--orange);
 }
-.plate .n{font-size:12px;color:var(--gold);letter-spacing:var(--track-nav)}
+.plate .n{font-size:12px;color:var(--amber);letter-spacing:var(--track-nav)}
 .plate .t{font-family:var(--display);font-size:clamp(19px,2.1vw,26px);color:var(--ink)}
 .plate .p{font-size:12.5px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase;text-align:right}
-.plate[aria-current="true"] .t{color:var(--maroon)}
+.plate[aria-current="true"] .t{color:var(--orange)}
 .plate[aria-current="true"] .p{color:var(--earth)}
 
 /* ---------------- chai or coffee ---------------- */
 .chai{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px);text-align:center}
 .chai-title{
   font-family:var(--display);font-weight:400;font-size:clamp(36px,5.6vw,58px);
-  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;color:var(--maroon);
+  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;color:var(--orange);
 }
-.chai-title em{font-style:italic;color:var(--gold)}
+.chai-title em{font-style:italic;color:var(--amber)}
 .chai-sub{
   font-size:clamp(15px,1.6vw,17.5px);font-weight:300;color:var(--ink-soft);
   line-height:1.65;margin:0 auto 36px;max-width:46ch;
@@ -468,7 +469,7 @@ button{font:inherit}
 .chai-form{display:grid;grid-template-columns:1fr 1fr;gap:30px 32px;text-align:left}
 .chai-field{display:flex;flex-direction:column;gap:9px;min-width:0}
 .chai-wide{grid-column:1/-1}
-.chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--gold)}
+.chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--amber)}
 .chai-field input,.chai-field select,.chai-field textarea{
   font-family:var(--font);font-size:16.5px;font-weight:300;color:var(--ink);
   background:transparent;border:0;border-bottom:1px solid var(--hairline);
@@ -476,11 +477,11 @@ button{font:inherit}
   transition:border-color .22s ease;
 }
 .chai-field textarea{resize:vertical;min-height:58px;line-height:1.55}
-.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--maroon)}
+.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--orange)}
 .chai-field :is(input,select,textarea)::placeholder{color:var(--ink-faint)}
 .chai-field select{
   appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:22px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%237b1e2c' stroke-opacity='.65' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%23ea580c' stroke-opacity='.65' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
 }
 .chai-actions{
   grid-column:1/-1;display:flex;align-items:center;justify-content:center;
@@ -490,13 +491,13 @@ button{font:inherit}
   display:inline-flex;align-items:center;gap:11px;cursor:pointer;
   font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
   text-transform:uppercase;color:#ffe9c4;
-  border:1px solid var(--gold-soft);border-radius:999px;
-  background:linear-gradient(135deg,#93303f,var(--maroon-deep));
-  box-shadow:0 6px 18px rgba(123,30,44,.28),inset 0 1px 0 rgba(255,233,196,.35);
+  border:1px solid var(--sunny);border-radius:999px;
+  background:linear-gradient(135deg,#f97316,var(--orange-deep));
+  box-shadow:0 6px 18px rgba(234,88,12,.28),inset 0 1px 0 rgba(255,233,196,.35);
   padding:13px 26px;transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.chai-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 10px 24px rgba(123,30,44,.34)}
+.chai-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 10px 24px rgba(234,88,12,.34)}
 .chai-btn svg{width:16px;height:16px;display:block}
 .chai-note{font-size:12px;letter-spacing:.06em;color:var(--ink-faint);transition:color .2s}
 .chai-note.err{color:var(--earth)}
@@ -506,7 +507,7 @@ button{font:inherit}
 }
 
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--maroon);text-align:center;padding-bottom:44px;opacity:.75}
+  color:var(--orange);text-align:center;padding-bottom:44px;opacity:.75}
 </style>
 </head>
 <body>
@@ -651,7 +652,7 @@ button{font:inherit}
 /* =====================================================================
    Delhi Photo Studio — wedding album hero.
    Spreads are full-bleed album pages (album-XX.webp): one photograph on
-   each page, framed in gold on festive paper with a maroon cover edge.
+   each page, framed in amber on festive paper with a bright orange edge.
    The leaf that turns is a real curved surface: a chain of nested
    strips whose tangent sweeps through an arc, so the page bends the way
    paper bends instead of pivoting like a flat door.
@@ -659,7 +660,7 @@ button{font:inherit}
 const Q=new URLSearchParams(location.search);
 const DIR='delhi-photo-studio/';
 /* Every photograph gets its own album page — two photos per spread,
-   composed into album-XX.webp spreads: a maroon & gold wedding album. */
+   composed into album-XX.webp spreads: a bright orange wedding album. */
 const PHOTOS=[
   {title:'The Wedding Day',        place:'Ceremony to Celebration'},
   {alt:'Pheras around the sacred fire'},
