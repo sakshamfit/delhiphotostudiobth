@@ -405,55 +405,6 @@ button{font:inherit}
   .bloom{width:170px;justify-self:center}
 }
 
-/* ---------------- the owner's card ---------------- */
-.owner{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
-.owner-title{
-  font-family:var(--display);font-weight:400;font-size:clamp(32px,4.6vw,50px);
-  line-height:1.08;margin:4px 0 0;letter-spacing:.004em;text-align:center;
-}
-.owner-title em{font-style:italic}
-.owner-card{
-  display:grid;gap:clamp(38px,5vw,72px);align-items:center;
-  margin-top:clamp(26px,4vw,44px);
-}
-@media (min-width:900px){.owner-card{grid-template-columns:minmax(0,440px) minmax(0,1fr)}}
-.owner-stage{
-  position:relative;width:100%;max-width:390px;margin:58px auto 0;  /* headroom for the raised side cards */
-  aspect-ratio:4/5;perspective:1000px;
-}
-.owner-img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  border-radius:14px;border:6px solid rgba(250,246,238,.92);
-  box-shadow:0 10px 30px rgba(43,39,33,.22);
-  will-change:transform,opacity;
-}
-.owner-name{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.6vw,42px);margin:0 0 7px;letter-spacing:.004em}
-.owner-role{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft);margin:0 0 30px}
-.owner-vision-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-faint);margin:0 0 12px}
-.owner-quote{
-  font-size:clamp(17px,1.8vw,20px);font-weight:300;line-height:1.75;
-  color:rgba(43,39,33,.82);margin:0 0 36px;max-width:46ch;min-height:7.5em;
-}
-.owner-quote span{
-  display:inline-block;filter:blur(10px);opacity:0;transform:translateY(6px);
-  animation:owner-word .24s ease-in-out forwards;
-}
-@keyframes owner-word{to{filter:blur(0);opacity:1;transform:none}}
-.owner-arrows{display:flex;gap:14px}
-.owner-arrow{
-  width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-  display:inline-flex;align-items:center;justify-content:center;color:var(--paper);
-  background:var(--ink);transition:background-color .25s ease,transform .2s ease;
-  -webkit-tap-highlight-color:transparent;
-}
-.owner-arrow:hover{background:var(--earth)}
-.owner-arrow:active{transform:scale(.94)}
-.owner-arrow svg{width:19px;height:19px;display:block}
-@media (prefers-reduced-motion:reduce){
-  .owner-img{transition:none!important}
-  .owner-quote span{animation:none;filter:none;opacity:1;transform:none}
-}
-
 .plates{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
 .plate-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
 .plate{
@@ -530,6 +481,7 @@ button{font:inherit}
     <nav>
       <a href="#plates">Plates</a>
       <a href="#about">About</a>
+      <a href="owner.html">Owner</a>
       <a href="#contact">Contact</a>
       <div class="top-socials">
         <a href="https://wa.me/919716073555" class="icon-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></a>
@@ -597,30 +549,6 @@ button{font:inherit}
       <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This sketchbook holds that work the way we remember it, in <a class="bio-link" href="#plates">ink and a little colour</a> — and to write your own chapter, <a class="bio-link" href="https://wa.me/919716073555">say hello on WhatsApp</a>.</p>
     </div>
     <img class="bloom" src="delhi-photo-studio/bloom.webp" alt="" aria-hidden="true">
-  </section>
-
-  <div class="rule short" aria-hidden="true"></div>
-
-  <section id="owner" class="owner" aria-labelledby="ownerTitle">
-    <p class="section-label">The Owner</p>
-    <h2 class="owner-title" id="ownerTitle">The man behind the <em>lens</em></h2>
-    <div class="owner-card">
-      <div class="owner-stage" id="ownerStage">
-        <img class="owner-img" src="delhi-photo-studio/owner-1.webp" alt="Shahnawaz Ali, founder of Delhi Photo Studio BTH — sketchbook portrait with his camera" loading="lazy" decoding="async">
-        <img class="owner-img" src="delhi-photo-studio/owner-2.webp" alt="Shahnawaz Ali photographing a bride — sketchbook illustration" loading="lazy" decoding="async">
-        <img class="owner-img" src="delhi-photo-studio/owner-3.webp" alt="Shahnawaz Ali sharing a wedding album with a couple — sketchbook illustration" loading="lazy" decoding="async">
-      </div>
-      <div class="owner-content">
-        <h3 class="owner-name">Shahnawaz Ali</h3>
-        <p class="owner-role">Founder &amp; Chief Photographer · Delhi Photo Studio BTH</p>
-        <p class="owner-vision-label">His vision</p>
-        <p class="owner-quote" id="ownerQuote" aria-live="polite"></p>
-        <div class="owner-arrows">
-          <button class="owner-arrow" id="ownerPrev" type="button" aria-label="Previous vision"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
-          <button class="owner-arrow" id="ownerNext" type="button" aria-label="Next vision"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
-        </div>
-      </div>
-    </div>
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
@@ -1252,75 +1180,6 @@ if(chaiForm){
     window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
   });
 }
-
-/* ------------------------------------------------ the owner's card — circular visions */
-(function(){
-  const stage=document.getElementById('ownerStage');
-  const quote=document.getElementById('ownerQuote');
-  if(!stage||!quote)return;
-  const VISIONS=[
-    '“My vision is simple — I photograph every family as if they were my own: with patience, respect, and an eye for the moments you didn’t even know were happening.”',
-    '“Cameras have changed and films have changed, but my promise has not — honest frames, made with warmth, that your grandchildren will one day hold in their hands.”',
-    '“From Bettiah to anywhere in India, I want to make photographs so true that decades from now, they still feel like that evening.”'
-  ];
-  const imgs=[...stage.querySelectorAll('.owner-img')];
-  const N=imgs.length;
-  let active=0,timer=null;
-  /* the card deck's breathing room, ported from the circular-testimonials component */
-  function gap(){
-    const w=stage.offsetWidth,minW=1024,maxW=1456,minG=60,maxG=86;
-    if(w<=minW)return minG;
-    if(w>=maxW)return Math.max(minG,maxG+.06018*(w-maxW));
-    return minG+(maxG-minG)*((w-minW)/(maxW-minW));
-  }
-  function paint(){                                  /* centre / left / right transforms */
-    const g=gap(),up=g*.8,T='all .8s cubic-bezier(.4,2,.3,1)';
-    imgs.forEach((img,i)=>{
-      const off=(i-active+N)%N,s=img.style;
-      s.transition=T;
-      if(i===active){
-        s.zIndex=3;s.opacity=1;s.pointerEvents='auto';
-        s.transform='translateX(0) translateY(0) scale(1) rotateY(0deg)';
-      }else if(off===1){                             /* right card */
-        s.zIndex=2;s.opacity=1;s.pointerEvents='auto';
-        s.transform='translateX('+g+'px) translateY(-'+up+'px) scale(.85) rotateY(-15deg)';
-      }else if(off===N-1){                           /* left card */
-        s.zIndex=2;s.opacity=1;s.pointerEvents='auto';
-        s.transform='translateX(-'+g+'px) translateY(-'+up+'px) scale(.85) rotateY(15deg)';
-      }else{                                         /* rest of the deck waits off-stage */
-        s.zIndex=1;s.opacity=0;s.pointerEvents='none';
-      }
-    });
-  }
-  function setQuote(){                               /* word-by-word blur-in */
-    quote.innerHTML='';
-    VISIONS[active].split(' ').forEach((w,i)=>{
-      const sp=document.createElement('span');
-      sp.textContent=w;
-      sp.style.animationDelay=(i*.025)+'s';
-      quote.appendChild(sp);
-      quote.appendChild(document.createTextNode(' '));
-    });
-  }
-  function go(dir){
-    active=(active+dir+N)%N;
-    if(timer){clearInterval(timer);timer=null;}      /* a manual turn stops the carousel */
-    paint();setQuote();
-  }
-  document.getElementById('ownerPrev').addEventListener('click',()=>go(-1));
-  document.getElementById('ownerNext').addEventListener('click',()=>go(1));
-  addEventListener('resize',paint);
-  /* autoplay, but only while the card is actually on screen */
-  if(!REDUCED&&'IntersectionObserver' in window){
-    new IntersectionObserver(es=>{
-      es.forEach(e=>{
-        if(e.isIntersecting&&!timer)timer=setInterval(()=>{active=(active+1)%N;paint();setQuote();},5000);
-        else if(!e.isIntersecting&&timer){clearInterval(timer);timer=null;}
-      });
-    },{threshold:.25}).observe(stage);
-  }
-  paint();setQuote();
-})();
 </script>
 </body>
 </html>
