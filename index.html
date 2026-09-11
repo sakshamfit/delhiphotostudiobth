@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DELHI PHOTO STUDIO BTH</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%232b2721' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%232b2721'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23F1830F'/%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23B3271E' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%23B3271E'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Saira+Extra+Condensed:wght@700;800&display=swap">
 <meta name="description" content="Wedding photography & cinematography studio — Bettiah, Bihar">
 <style>
 @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;
@@ -15,12 +16,20 @@
   src:url(delhi-photo-studio/newsreader.woff2) format('woff2')}
 
 :root{
-  --paper:#ece7dc;
-  --ink:#2b2721;
-  --ink-soft:rgba(43,39,33,.58);
-  --ink-faint:rgba(43,39,33,.36);
-  --hairline:rgba(43,39,33,.14);
-  --earth:#9a6a3e;
+  /* the whole site runs on solid wedding colours: marigold orange,
+     deep sindoor red and cream — no gradient washes anywhere          */
+  --orange:#F1830F;          /* page ground — bright marigold          */
+  --orange-deep:#E47400;     /* a shade darker for the top bar         */
+  --red:#B3271E;             /* primary accent — sindoor red           */
+  --red-deep:#8C1D18;        /* headings, album cover                  */
+  --maroon:#5C140D;          /* body text on orange                    */
+  --gold:#F2C14E;            /* little hits — rings, trims             */
+  --cream:#FFF3E0;           /* cards                                  */
+  --paper-page:#FFF6E6;      /* the album's photo page                 */
+  --ink:var(--maroon);
+  --ink-soft:rgba(92,20,13,.72);
+  --ink-faint:rgba(92,20,13,.6);
+  --hairline:rgba(92,20,13,.22);
   --display:'Instrument Serif',"New York",Georgia,'Times New Roman',serif;
   --font:'Newsreader',"New York",Georgia,'Times New Roman',serif;
   --track-caps:.24em;
@@ -30,58 +39,48 @@
 html,body{margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
 body{
-  font-family:var(--font);font-weight:400;background:var(--paper);color:var(--ink);
+  font-family:var(--font);font-weight:400;background:var(--orange);color:var(--ink);
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
-::selection{background:rgba(43,39,33,.85);color:var(--paper)}
+::selection{background:var(--red);color:#fff}
 
-/* the painted ground the whole page sits on */
+/* soft watercolour flowers standing behind everything — steady, blurred-looking,
+   and tinted into the orange so the ground never feels plain                  */
 .wash{
   position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:url(delhi-photo-studio/bg-wash.jpg) center top / cover no-repeat;
-  opacity:.85;
-}
-.wash:after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(236,231,220,.25) 0%,rgba(236,231,220,.72) 58%,var(--paper) 88%);
+  mix-blend-mode:multiply;opacity:.5;
 }
 
 /* ---------------- top bar ---------------- */
 .top{
   position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;flex-direction:column;align-items:center;gap:11px;
-  padding-inline:clamp(16px,4vw,48px);padding-block:18px 64px;pointer-events:none;text-align:center;
-}
-.top>*{pointer-events:auto}
-.top:before{
-  content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(240,236,226,.94),rgba(240,236,226,.7) 48%,rgba(240,236,226,0));
-  -webkit-backdrop-filter:blur(14px) saturate(.95);backdrop-filter:blur(14px) saturate(.95);
-  -webkit-mask-image:linear-gradient(180deg,#000 46%,transparent);
-  mask-image:linear-gradient(180deg,#000 46%,transparent);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding-inline:clamp(16px,4vw,48px);padding-block:14px 12px;text-align:center;
+  background:var(--orange);border-bottom:1px solid rgba(92,20,13,.18);
 }
 .top .name{
   font-family:var(--display);font-size:clamp(24px,2.4vw,30px);letter-spacing:.01em;
-  white-space:nowrap;line-height:1;
+  white-space:nowrap;line-height:1;color:var(--red-deep);
 }
 .top nav{
   display:flex;gap:clamp(14px,2vw,26px);font-size:15px;align-items:center;
-  letter-spacing:var(--track-nav);font-weight:300;
+  letter-spacing:var(--track-nav);font-weight:400;
 }
-.top nav a{color:var(--ink-soft);transition:color .2s}
-.top nav a:hover,.top nav a[aria-current]{color:var(--ink)}
+.top nav a{color:var(--ink-soft);transition:color .2s;white-space:nowrap}
+.top nav a:hover,.top nav a[aria-current]{color:var(--red)}
 .top nav .top-socials{
   display:flex;align-items:center;gap:13px;margin-left:2px;padding-left:clamp(12px,1.6vw,20px);
   border-left:1px solid var(--hairline);
 }
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;padding:4px;color:var(--ink-soft);transition:color .2s}
-.icon-btn:hover{color:var(--ink)}
+.icon-btn:hover{color:var(--red)}
 .top .icon-btn svg{width:16px;height:16px;display:block}
 @media (max-width:640px){
-  .top{padding-inline:12px;padding-block:13px 50px;gap:8px}
-  .top .name{font-size:20px}
+  .top{padding-inline:12px;padding-block:11px 10px;gap:7px}
+  .top .name{font-size:19px}
   .top nav{gap:11px;font-size:13px}
   .top nav .top-socials{gap:9px;padding-left:10px}
   .top .icon-btn{padding:2px}
@@ -92,50 +91,37 @@ button{font:inherit}
 .hero{
   position:relative;display:grid;justify-items:center;align-content:center;
   min-height:100svh;overflow-anchor:none;
-  padding:clamp(112px,13svh,152px) 0 clamp(72px,10svh,120px);
+  padding:clamp(120px,15svh,168px) 0 clamp(64px,8svh,104px);
 }
-.botany{
-  position:absolute;bottom:0;width:clamp(120px,15vw,250px);opacity:.5;
-  pointer-events:none;user-select:none;z-index:0;
-}
-.botany.l{left:clamp(-40px,-1vw,0px);bottom:2%}
-.botany.r{right:clamp(-30px,0vw,10px);bottom:-2%;width:clamp(100px,12vw,200px)}
-@media (max-width:900px){.botany{display:none}}
-
 .hero-kicker{
-  font-size:12px;font-weight:400;letter-spacing:var(--track-caps);text-align:center;
-  color:var(--ink-soft);margin:0 0 clamp(22px,3.4vh,40px);text-transform:uppercase;
+  font-size:12px;font-weight:500;letter-spacing:var(--track-caps);text-align:center;
+  color:var(--ink-soft);margin:0 0 clamp(18px,3vh,32px);text-transform:uppercase;
 }
 .hero-down{
-  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);border:0;background:transparent;
-  padding:10px 14px;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);border:0;background:transparent;
+  padding:10px 14px;color:var(--red);cursor:pointer;-webkit-tap-highlight-color:transparent;
   animation:cue-breathe 2.6s ease-in-out infinite;z-index:3;
 }
 .hero-down:hover{animation:none;opacity:1}
-@keyframes cue-breathe{0%,100%{opacity:.15}50%{opacity:.7}}
-@media (prefers-reduced-motion:reduce){.hero-down{animation:none;opacity:.5}}
+@keyframes cue-breathe{0%,100%{opacity:.25}50%{opacity:.9}}
+@media (prefers-reduced-motion:reduce){.hero-down{animation:none;opacity:.6}}
 
-/* ---------------- sketchbook ---------------- */
+/* ================= the wedding flip album =================
+   The studio album sits open facing you: two photo pages side by side
+   inside a deep-red padded cover, stitched together down the centre
+   gutter like a real book.  Turning a page slides the right leaf over
+   the spine onto the left — sideways, never upward like a chart.     */
 .hero,.hero *{-webkit-user-select:none;-moz-user-select:none;user-select:none}
 .hero img{-webkit-user-drag:none;user-drag:none}
-.sb-wrap{display:grid;justify-items:center;gap:20px;width:100%;position:relative;z-index:2}
+.sb-wrap{display:grid;justify-items:center;gap:18px;width:100%;position:relative;z-index:2}
 .sb-stage{
   display:flex;align-items:center;justify-content:center;width:100%;
   position:relative;
-  touch-action:pan-y;
+  touch-action:pan-y;              /* sideways swipes belong to the album */
 }
-.sb-arrow{
-  flex:none;display:inline-flex;align-items:center;justify-content:center;padding:6px 2px;
-  border:0;background:transparent;color:var(--ink-faint);cursor:pointer;transition:color .2s;
-  -webkit-tap-highlight-color:transparent;z-index:8;
-}
-.sb-arrow:hover{color:var(--ink)}
-
-/* The box is the book's own untransformed frame: the loupe lives here, on
-   the desk, while only .sb-tilt leans and scales underneath it. */
 .sb-3d{
-  position:relative;flex:1 1;min-width:0;max-width:900px;
-  perspective:1750px;perspective-origin:50% 46%;
+  position:relative;flex:1 1;min-width:0;max-width:min(880px,97%);
+  perspective:2600px;perspective-origin:50% 46%;
 }
 .sb-tilt{
   position:relative;
@@ -143,106 +129,172 @@ button{font:inherit}
   transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--zoom,1));
   will-change:transform;
 }
-.sb-book{position:relative;width:100%;aspect-ratio:1760/1240;transform-style:preserve-3d;z-index:1}
-
-/* The book sits on a surface, so its shadow is a soft pool underneath —
-   no box, no filter on the artwork, nothing with an edge of its own.
-   Both blobs fade to zero well inside their own bounds, and both ease
-   off while a leaf is in the air. */
+/* the album cover: solid deep red board, gold trim, cream photo page */
+.sb-book{
+  position:relative;width:100%;z-index:1;transform-style:preserve-3d;
+  background:var(--red-deep);
+  border-radius:18px;
+  border:1px solid rgba(60,8,4,.35);
+  box-shadow:
+    0 0 0 2px rgba(242,193,78,.5),
+    0 18px 34px rgba(92,20,13,.30),
+    0 4px 10px rgba(92,20,13,.22);
+  padding:4.2% 3.8% 6.8%;
+}
+/* the open spread: two cream pages in the deep-red cover — every page is
+   filled edge to edge by its photo, painted at book-page size          */
+.sb-spread{
+  position:relative;width:100%;aspect-ratio:2048/1536;
+  background:var(--paper-page);border-radius:6px;transform-style:preserve-3d;
+}
+.sb-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}
+.sb-half.left{left:0;border-radius:6px 0 0 6px}
+.sb-half.right{right:0;border-radius:0 6px 6px 0}
+.sb-page-img{
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;
+}
+/* a soft seam where the two pages meet, with a fine gold stitch */
+.sb-half.left::after{content:"";position:absolute;top:0;bottom:0;right:0;width:14%;pointer-events:none;
+  background:linear-gradient(270deg,rgba(60,8,4,.28),rgba(60,8,4,0) 86%)}
+.sb-half.right::after{content:"";position:absolute;top:0;bottom:0;left:0;width:14%;pointer-events:none;
+  background:linear-gradient(90deg,rgba(60,8,4,.22),rgba(60,8,4,0) 86%)}
+.sb-stitch{
+  position:absolute;left:50%;top:1.2%;bottom:1.2%;width:0;
+  border-left:1.5px dashed rgba(242,193,78,.5);
+  z-index:5;pointer-events:none;
+}
+.sb-monogram{
+  position:absolute;left:0;right:0;bottom:0;height:6.8%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:11px;font-size:clamp(8px,1.6vw,12px);
+  letter-spacing:.42em;text-indent:.42em;color:var(--gold);opacity:.85;
+  pointer-events:none;z-index:3;
+}
+/* warm shade drifting out of the gutter while a leaf is in the air */
+.leaf-shade{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:rgba(60,14,7,.14);
+  opacity:calc(var(--shade,0) * .8);
+}
+.sb-half.left .leaf-shade{
+  -webkit-mask-image:linear-gradient(270deg,#000 0,transparent 56%);
+  mask-image:linear-gradient(270deg,#000 0,transparent 56%);
+}
+.sb-half.right .leaf-shade{
+  -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 56%);
+  mask-image:linear-gradient(90deg,#000 0,transparent 56%);
+}
+/* the shadow the album throws on the desk underneath it */
 .sb-cast{position:absolute;pointer-events:none;z-index:0}
 .sb-cast.ambient{
-  left:5%;right:5%;top:27%;bottom:2%;
+  left:4%;right:4%;top:24%;bottom:-3%;
   background:radial-gradient(50% 50% at 50% 58%,
-    rgba(58,44,26,.34) 0%,rgba(58,44,26,.19) 40%,rgba(58,44,26,0) 74%);
+    rgba(74,20,10,.36) 0%,rgba(74,20,10,.19) 40%,rgba(74,20,10,0) 74%);
   filter:blur(26px);
   opacity:calc(1 - var(--shade,0) * .42);
 }
 .sb-cast.contact{
-  left:9%;right:9%;top:62%;bottom:10%;
+  left:10%;right:10%;top:64%;bottom:4%;
   background:radial-gradient(50% 44% at 50% 42%,
-    rgba(44,32,14,.40) 0%,rgba(44,32,14,.17) 48%,rgba(44,32,14,0) 78%);
+    rgba(60,14,7,.42) 0%,rgba(60,14,7,.17) 48%,rgba(60,14,7,0) 78%);
   filter:blur(11px);
   opacity:calc(1 - var(--shade,0) * .5);
 }
 .sb-cast.hair{
-  left:12%;right:12%;top:70%;bottom:17%;
+  left:14%;right:14%;top:74%;bottom:12%;
   background:radial-gradient(50% 52% at 50% 40%,
-    rgba(40,28,10,.34) 0%,rgba(40,28,10,0) 76%);
+    rgba(56,12,5,.36) 0%,rgba(56,12,5,0) 76%);
   filter:blur(4px);
   opacity:calc(1 - var(--shade,0) * .62);
 }
-.sb-full{position:absolute;inset:0}
-.sb-full img{width:100%;height:auto;display:block}
-.sb-half{position:absolute;top:0;bottom:0;width:50%;overflow-x:clip;overflow-y:visible}
-.sb-half.left{left:0}
-.sb-half.right{left:50%}
-.sb-half-img{width:200%;max-width:none;height:auto;display:block}
-.sb-half-img.right{margin-left:-100%}
-/* the shadow the lifting leaf throws onto the page beneath it */
-.gutter-shade{
-  position:absolute;top:var(--pg,21.8%);bottom:var(--pg,21.8%);width:46%;
-  pointer-events:none;opacity:calc(var(--shade,0) * .62);
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
-  mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
-}
-.gutter-shade.left{right:0;background:linear-gradient(270deg,rgba(52,38,20,.30),rgba(52,38,20,0) 82%)}
-.gutter-shade.right{left:0;background:linear-gradient(90deg,rgba(52,38,20,.24),rgba(52,38,20,0) 82%)}
 
-/* ---- the turning leaf: nested strips forming a curved surface ---- */
+
+/* ---- the turning leaf: nested vertical strips forming a curved
+       surface that slides over the centre gutter like a book page ---- */
 .curl{
-  position:absolute;top:0;height:100%;
-  width:calc(var(--bw,0px) * var(--span));
+  position:absolute;top:0;height:100%;width:var(--psw,0px);
   transform-style:preserve-3d;z-index:6;
+  pointer-events:none!important;   /* the whole turning stack: sight only */
 }
-.curl.next{left:50%;transform-origin:left center;transform:rotateY(calc(-1 * var(--tt,0deg)))}
-.curl.prev{right:50%;transform-origin:right center;transform:rotateY(var(--tt,0deg))}
+.curl.next{left:50%;transform-origin:0 50%;transform:rotateY(calc(-1 * var(--tt,0deg)))}
+.curl.prev{left:0;transform-origin:100% 50%;transform:rotateY(var(--tt,0deg))}
 .strip{
   position:absolute;top:0;height:100%;
-  width:calc(var(--bw,0px) * var(--span) / var(--n));
+  width:calc(var(--psw,0px) / var(--n));
   transform-style:preserve-3d;
 }
-.curl.next .strip{transform-origin:left center}
-.curl.prev .strip{transform-origin:right center}
+.curl.next .strip{transform-origin:0 50%}
+.curl.prev .strip{transform-origin:100% 50%}
 .curl.next>.strip{left:0}
 .curl.prev>.strip{right:0;left:auto}
-.curl.next .strip .strip{left:100%;transform:rotateY(var(--td,0deg))}
-.curl.prev .strip .strip{right:100%;transform:rotateY(calc(-1 * var(--td,0deg)))}
+/* a whisper of z-depth per strip keeps nearly-coplanar neighbours from
+   z-fighting into 'venetian blinds' on some rasterisers                */
+.curl.next .strip .strip{left:100%;transform:rotateY(var(--td,0deg)) translateZ(var(--ez,0px))}
+.curl.prev .strip .strip{right:100%;left:auto;transform:rotateY(calc(-1 * var(--td,0deg))) translateZ(var(--ez,0px))}
+/* when the leaf is in deep fold its curled tip can overlap the root of
+   the leaf in screen space, and two near-parallel surfaces z-fight into
+   a checkerboard — so the last strips fade away toward the tip
+   (the tip points right on a 'next' leaf, left on a 'prev' one)        */
+.curl.next .strip.edge .face,.curl.prev .strip.edge .face.back{
+  -webkit-mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
+  mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
+}
+.curl.next .strip.edge .face.back,.curl.prev .strip.edge .face{
+  -webkit-mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
+  mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
+}
 .face{
-  position:absolute;top:0;bottom:0;left:0;right:-1.1px;
+  position:absolute;top:0;bottom:0;left:0;right:-1.4px;   /* bleed past our slice */
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  background-repeat:no-repeat;background-size:var(--bw,0px) auto;
+  background-color:var(--paper-page);
+  background-repeat:no-repeat;
+  background-size:var(--aw,100%) var(--ah,100%);
+  pointer-events:none!important;   /* the flying leaf is a picture, not a wall —
+    while it curls above the page it must never eat the flip zones beneath it */
 }
 .face.back{transform:rotateY(180deg)}
+/* the slice textures are painted as backgrounds, offset so each strip
+   shows its own window of the page — contain-fitted exactly the way the
+   resting halves show it, so the slide reads as one continuous sheet.  */
 .face .sh,.face .gl{
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
-  mask-image:linear-gradient(180deg,transparent 0,#000 5.2%,#000 94.8%,transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 100%);
+  mask-image:linear-gradient(180deg,#000 0,#000 100%);
 }
-.strip.edge .face .sh,.strip.edge .face .gl{
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent 100%),var(--hf);
-  mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 91%,transparent 100%),var(--hf);
-  -webkit-mask-composite:source-in;mask-composite:intersect;
-}
-.curl.next .strip.edge .face.front,.curl.prev .strip.edge .face.back{
-  --hf:linear-gradient(90deg,#000 0 22%,transparent 96%);
-}
-.curl.next .strip.edge .face.back,.curl.prev .strip.edge .face.front{
-  --hf:linear-gradient(270deg,#000 0 22%,transparent 96%);
-}
-.face .sh{position:absolute;left:0;right:0;top:var(--pg,21.8%);bottom:var(--pg,21.8%);pointer-events:none}
-.curl.next .face.front .sh,.curl.prev .face.back .sh{
-  background:linear-gradient(90deg,rgba(58,43,20,var(--a1,0)),rgba(58,43,20,var(--a2,0)));
-}
-.curl.next .face.back .sh,.curl.prev .face.front .sh{
-  background:linear-gradient(90deg,rgba(58,43,20,var(--a2,0)),rgba(58,43,20,var(--a1,0)));
+.face .sh{position:absolute;top:0;bottom:0;left:0;right:0;pointer-events:none;border-radius:inherit;
+  background:rgba(60,14,7,var(--sh,0));
 }
 .face .gl{
-  position:absolute;left:0;right:0;top:var(--pg,21.8%);bottom:var(--pg,21.8%);
-  pointer-events:none;background:#fffaf0;
-  opacity:calc(var(--shade,0) * var(--lit,1) * var(--lit,1) * .20);
+  position:absolute;top:0;bottom:0;left:0;right:0;pointer-events:none;border-radius:inherit;
+  background:#FFF6E6;
+  opacity:calc(var(--shade,0) * .06);
+}
+
+/* ---- the turn buttons: red round arrows riding the album's side edges ---- */
+.sb-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:8;
+  width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--red);color:#FFF3E0;
+  box-shadow:0 3px 8px rgba(92,20,13,.4);
+  transition:background-color .18s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.sb-arrow.prev{left:-12px}
+.sb-arrow.next{right:-12px}
+.sb-arrow:hover{background:var(--red-deep)}
+.sb-arrow:active{transform:translateY(-50%) scale(.94)}
+.sb-arrow svg{width:17px;height:17px;display:block}
+.sb-arrow.off{opacity:.35;pointer-events:none}
+@media (max-width:760px){
+  .sb-arrow.prev{left:4px}
+  .sb-arrow.next{right:4px}
+  .sb-arrow{width:36px;height:36px}
+  .sb-arrow svg{width:14px;height:14px}
 }
 
 /* ---- the loupe: a real magnifier lying on the page.  Pick it up and
-       drag it across the book; it stays where you put it. ---- */
+       drag it across the album; it stays where you put it. ---- */
 .loupe{
   position:absolute;left:0;top:0;
   width:var(--lr,270px);height:var(--lr,270px);
@@ -251,19 +303,19 @@ button{font:inherit}
   will-change:transform;
 }
 .loupe.on{opacity:1}
-.loupe.held .ring{cursor:grabbing}
-.loupe .ring{
+.loupe.held .ring-glass{cursor:grabbing}
+.loupe .ring-glass{
   position:absolute;inset:0;border-radius:50%;
   pointer-events:auto;cursor:grab;
   padding:calc(var(--lr,270px) * .058);
   box-shadow:
-    0 1px 2px rgba(58,44,26,.30),
-    0 10px 18px rgba(58,44,26,.24),
-    0 26px 40px rgba(58,44,26,.20),
-    0 48px 66px rgba(58,44,26,.13);
+    0 1px 2px rgba(60,14,7,.30),
+    0 10px 18px rgba(60,14,7,.24),
+    0 26px 40px rgba(60,14,7,.20),
+    0 48px 66px rgba(60,14,7,.13);
 }
 /* the bezel is an annulus, so the glass really is see-through */
-.loupe .ring:before{
+.loupe .ring-glass:before{
   content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
   background:linear-gradient(146deg,
     #fdf7e9 0%,#e6d7b4 14%,#b69d70 32%,#7d6740 50%,
@@ -287,31 +339,36 @@ button{font:inherit}
                     rgba(0,0,0,.26) 100%),
     linear-gradient(90deg,#d9bd82 0 14%,#a9884e 14% 20%,#6d4c2b 20% 62%,
                     #5a3d22 62% 92%,#7a563180 92% 100%);
-  box-shadow:0 8px 15px rgba(58,44,26,.26),0 18px 26px rgba(58,44,26,.14);
+  box-shadow:0 8px 15px rgba(74,20,10,.26),0 18px 26px rgba(74,20,10,.14);
 }
 .lens{
   position:relative;display:block;width:100%;height:100%;border-radius:50%;
   background-repeat:no-repeat;overflow:hidden;
   box-shadow:
-    inset 0 0 0 1px rgba(52,40,22,.55),
-    inset 0 4px 12px rgba(40,30,14,.28),
-    inset 0 -7px 16px rgba(255,250,240,.14);
+    inset 0 0 0 1px rgba(52,24,10,.55),
+    inset 0 4px 12px rgba(40,16,6,.28),
+    inset 0 -7px 16px rgba(255,246,230,.14);
 }
 .lens .mag{display:none}
-/* A second copy of the book, sitting beside the glass outside the tilt, and
+/* A second copy of the album, sitting beside the glass outside the tilt, and
    scaled about whichever page point the glass is currently over. */
 .zoomwrap{
   position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;
   opacity:0;
 }
 .zoominner{position:absolute;inset:0;transform-origin:0 0}
+/* the duplicate album copy keeps the cover, rings and page in sync */
+.zoominner .sb-zone{display:none}
+.zoomskin{background:var(--red-deep);border:1px solid rgba(60,8,4,.35);box-sizing:border-box}
+.zoomskin .sb-cast,.zoomskin .leaf-shade{display:none}
+.zoomskin .curl{display:none}   /* the lens never echoes the leaf mid-flip */
 .lens:before,.lens:after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none}
 .lens:before{z-index:1}
 .lens:after{z-index:2}
 /* the glass bends and darkens toward its rim, with a faint colour fringe */
 .lens:before{
   background:radial-gradient(circle at 50% 50%,
-    rgba(0,0,0,0) 54%,rgba(58,44,26,.10) 76%,rgba(46,34,16,.34) 100%);
+    rgba(0,0,0,0) 54%,rgba(74,20,10,.10) 76%,rgba(56,14,5,.34) 100%);
   box-shadow:
     inset 0 0 0 2px rgba(130,162,196,.26),
     inset 0 0 0 4px rgba(206,158,112,.15);
@@ -328,16 +385,15 @@ button{font:inherit}
 .sb-tools{
   display:flex;align-items:center;gap:6px;
   border:1px solid var(--hairline);border-radius:999px;
-  padding:5px 7px;background:rgba(250,246,238,.62);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  padding:5px 7px;background:rgba(255,243,224,.88);
 }
 .tool{
   width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
   border:0;border-radius:50%;background:transparent;color:var(--ink-soft);
   cursor:pointer;transition:background-color .18s ease,color .18s ease;
 }
-.tool:hover{background:rgba(255,252,244,.9);color:var(--ink)}
-.tool[aria-pressed="true"]{background:rgba(154,106,62,.16);color:var(--earth)}
+.tool:hover{background:#FFF3E0;color:var(--red)}
+.tool[aria-pressed="true"]{background:rgba(179,39,30,.15);color:var(--red)}
 .tool:disabled{opacity:.32;cursor:default;background:transparent}
 .tool svg{width:15px;height:15px;display:block}
 .tool-sep{width:1px;height:17px;background:var(--hairline);margin:0 2px}
@@ -347,14 +403,16 @@ button{font:inherit}
 }
 @media (pointer:coarse){.loupe{display:none}}
 
+/* tap zones over the album: the left half folds back to the previous page,
+   the right half turns the page over the spine                          */
 .sb-zone{position:absolute;top:0;bottom:0;border:0;background:transparent;cursor:grab;z-index:60;-webkit-tap-highlight-color:transparent}
 .sb-zone:active{cursor:grabbing}
-.sb-prev{left:0;width:50%}
-.sb-next{right:0;width:50%}
+.sb-prev{left:0;width:46%}
+.sb-next{right:0;width:54%}
 
 .sb-captions{display:grid;justify-items:center}
 .sb-captions>*{grid-area:1/1;margin:0}
-.sb-caption{font-size:13px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft);
+.sb-caption{font-size:13px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink);
   animation:sb-cap-in .5s ease both}
 .sb-caption.live{animation:none}
 @keyframes sb-cap-in{0%{opacity:0}}
@@ -364,28 +422,25 @@ button{font:inherit}
   transition:opacity .4s ease;
 }
 .sb-hint.gone{opacity:0}
-.sb-wrap.intro .sb-full img,.sb-wrap.intro .sb-half-img{filter:url(#sb-mblur-1)}
-.sb-wrap.intro.b2 .sb-full img,.sb-wrap.intro.b2 .sb-half-img{filter:url(#sb-mblur-2)}
+.sb-wrap.intro .sb-page-img,.sb-wrap.intro .face{filter:url(#sb-mblur-1)}
+.sb-wrap.intro.b2 .sb-page-img,.sb-wrap.intro.b2 .face{filter:url(#sb-mblur-2)}
 .sb-wrap.intro .sb-caption{animation:none}
 .sb-wrap.intro .sb-caption.cap-out{display:none}
 @media (max-width:640px){
   .hero-kicker{font-size:10.5px;letter-spacing:.16em}
   .sb-wrap{width:100vw;margin-inline:calc(50% - 50vw)}
-  .sb-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:70;padding:12px 6px}
-  .sb-arrow.left{left:2px}
-  .sb-arrow.right{right:2px}
-  .sb-3d{max-width:none}
+  .sb-3d{max-width:none;margin-inline:14px}
   .sb-hint{font-size:9.5px;letter-spacing:.1em;padding:0 16px;text-align:center}
 }
 
-/* ---------------- painted rules + sections ---------------- */
+/* ---------------- solid rules + sections ---------------- */
+/* a slim solid rule with one small marigold at its centre */
 .rule{
   display:block;width:min(1080px,86vw);margin:clamp(30px,6vh,64px) auto;
-  height:clamp(26px,4vw,46px);
-  background:url(delhi-photo-studio/divider.webp) center / 100% auto no-repeat;
-  opacity:.5;
-}
-.rule.short{width:min(420px,52vw);opacity:.4}
+  height:clamp(30px,4.6vw,48px);
+  background-repeat:no-repeat;background-position:center;background-size:min(560px,86%) 100%;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 48'%3E%3Cg fill='none'%3E%3Cpath d='M24 24h244' stroke='%23B3271E' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M372 24h244' stroke='%23B3271E' stroke-opacity='.55' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M268 24l12-6-12-6-12 6z' fill='%23B3271E' fill-opacity='.55'/%3E%3Cpath d='M372 24l-12 6 12 6 12-6z' fill='%23B3271E' fill-opacity='.55'/%3E%3Cg transform='translate(320 24)'%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(45)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(90)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(135)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(180)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(225)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(270)'/%3E%3Cellipse rx='5' ry='11' cy='-12' fill='%23FFF3E0' transform='rotate(315)'/%3E%3Ccircle r='7' fill='%23B3271E'/%3E%3Ccircle r='3' fill='%238C1D18'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.rule.short{background-size:min(380px,72%) 100%}
 .section-label{
   font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
   color:var(--ink-faint);margin:0 0 18px;
@@ -395,14 +450,14 @@ button{font:inherit}
   padding:0 clamp(20px,5vw,48px);
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,60px);align-items:start;
 }
-.bio{font-size:clamp(17px,1.7vw,20px);line-height:1.74;letter-spacing:.005em;margin:0;font-weight:300;max-width:56ch}
-.bio-link{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(43,39,33,.28);
-  text-underline-offset:4px;transition:text-decoration-color .2s}
-.bio-link:hover{text-decoration-color:var(--ink)}
-.bloom{width:clamp(150px,17vw,260px);opacity:.9;user-select:none;align-self:center}
+.bio{font-size:clamp(17px,1.7vw,20px);line-height:1.74;letter-spacing:.005em;margin:0;font-weight:400;max-width:56ch}
+.bio-link{color:var(--red);text-decoration:underline;text-decoration-color:rgba(179,39,30,.4);
+  text-underline-offset:4px;transition:text-decoration-color .2s;font-weight:500}
+.bio-link:hover{text-decoration-color:var(--red)}
+.bloom{width:clamp(140px,16vw,230px);user-select:none;align-self:center}
 @media (max-width:760px){
   .about{grid-template-columns:1fr}
-  .bloom{width:170px;justify-self:center}
+  .bloom{width:160px;justify-self:center}
 }
 
 .plates{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
@@ -413,21 +468,26 @@ button{font:inherit}
   background:transparent;text-align:left;cursor:pointer;color:inherit;
   transition:background-color .22s ease,padding-left .22s ease;
 }
-.plate:hover,.plate[aria-current="true"]{background:rgba(255,252,244,.5);padding-left:12px}
+.plate:hover,.plate[aria-current="true"]{background:rgba(255,243,224,.42);padding-left:12px}
 .plate .n{font-size:12px;color:var(--ink-faint);letter-spacing:var(--track-nav)}
-.plate .t{font-family:var(--display);font-size:clamp(19px,2.1vw,26px)}
+.plate .t{font-family:var(--display);font-size:clamp(19px,2.1vw,26px);color:var(--red-deep)}
 .plate .p{font-size:12.5px;color:var(--ink-faint);letter-spacing:.08em;text-transform:uppercase;text-align:right}
-.plate[aria-current="true"] .p{color:var(--earth)}
+.plate[aria-current="true"] .p{color:var(--red)}
 
 /* ---------------- chai or coffee ---------------- */
-.chai{max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,48px);text-align:center}
+.chai{max-width:760px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.chai-card{
+  background:var(--cream);border:1px solid rgba(92,20,13,.16);
+  border-radius:22px;padding:clamp(26px,4.5vw,52px);
+  box-shadow:0 14px 30px rgba(92,20,13,.22);text-align:center;
+}
 .chai-title{
   font-family:var(--display);font-weight:400;font-size:clamp(36px,5.6vw,58px);
-  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;
+  line-height:1.06;margin:4px 0 16px;letter-spacing:.004em;color:var(--red-deep);
 }
 .chai-title em{font-style:italic}
 .chai-sub{
-  font-size:clamp(15px,1.6vw,17.5px);font-weight:300;color:var(--ink-soft);
+  font-size:clamp(15px,1.6vw,17.5px);font-weight:400;color:var(--ink-soft);
   line-height:1.65;margin:0 auto 36px;max-width:46ch;
 }
 .chai-form{display:grid;grid-template-columns:1fr 1fr;gap:30px 32px;text-align:left}
@@ -435,17 +495,17 @@ button{font:inherit}
 .chai-wide{grid-column:1/-1}
 .chai-label{font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--ink-soft)}
 .chai-field input,.chai-field select,.chai-field textarea{
-  font-family:var(--font);font-size:16.5px;font-weight:300;color:var(--ink);
+  font-family:var(--font);font-size:16.5px;font-weight:400;color:var(--ink);
   background:transparent;border:0;border-bottom:1px solid var(--hairline);
   border-radius:0;padding:6px 2px 10px;outline:none;width:100%;
   transition:border-color .22s ease;
 }
 .chai-field textarea{resize:vertical;min-height:58px;line-height:1.55}
-.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--ink)}
+.chai-field :is(input,select,textarea):focus{border-bottom-color:var(--red)}
 .chai-field :is(input,select,textarea)::placeholder{color:var(--ink-faint)}
 .chai-field select{
   appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:22px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%232b2721' stroke-opacity='.55' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='m1 1.5 5 5 5-5' stroke='%23B3271E' stroke-opacity='.7' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 3px center/11px auto no-repeat;
 }
 .chai-actions{
   grid-column:1/-1;display:flex;align-items:center;justify-content:center;
@@ -454,22 +514,103 @@ button{font:inherit}
 .chai-btn{
   display:inline-flex;align-items:center;gap:11px;cursor:pointer;
   font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
-  text-transform:uppercase;color:var(--ink);
-  border:1px solid var(--hairline);border-radius:999px;background:rgba(250,246,238,.62);
+  text-transform:uppercase;color:var(--cream);
+  border:1px solid var(--red-deep);border-radius:999px;background:var(--red);
   padding:13px 26px;transition:background-color .2s ease,border-color .2s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.chai-btn:hover{background:rgba(255,252,244,.95);border-color:rgba(43,39,33,.3)}
+.chai-btn:hover{background:var(--red-deep)}
 .chai-btn svg{width:16px;height:16px;display:block}
 .chai-note{font-size:12px;letter-spacing:.06em;color:var(--ink-faint);transition:color .2s}
-.chai-note.err{color:var(--earth)}
+.chai-note.err{color:var(--red)}
 @media (max-width:640px){
   .chai-form{grid-template-columns:1fr;gap:24px}
   .chai-sub{margin-bottom:28px}
 }
 
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
-  color:var(--ink-faint);text-align:center;padding-bottom:44px}
+  color:var(--ink-soft);text-align:center;padding-bottom:44px}
+.foot .bio-link{font-weight:400}
+
+/* ================= the blossom poster & petals =================
+   A scroll-driven sakura editorial poster (ported from the
+   sakura-editorial-poster component) plus petals drifting down the
+   whole page's background — the flowers the studio shoots in.       */
+#petals{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+}
+#petals span{
+  position:absolute;top:-6vh;left:var(--x);
+  width:var(--s,14px);height:var(--s,14px);
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c1.7 2.6 3 5.2 3 7.4 0 2.1-.9 3.6-2.1 4.6.3.8.4 1.6.3 2.4-.2 1.5-1 2.5-2.2 2.5S8.6 17.3 9 16c-2.5-.4-4.5-1.8-5.2-3.6-.3-.7 0-1.4.9-1.3 1.6.2 3.3.9 4.5 2-.2-1.6.1-3.5 1-5.2C10.5 7.4 11 4.6 12 2Z' fill='%23E8A7B4'/%3E%3C/svg%3E");
+  opacity:var(--o,.55);
+  animation:petal-fall var(--d,9s) linear var(--dl,0s) infinite;
+}
+#petals span i{
+  display:block;width:100%;height:100%;
+  animation:petal-sway calc(var(--d,9s)*.27) ease-in-out var(--dl,0s) infinite alternate;
+}
+@keyframes petal-fall{
+  0%{transform:translate3d(0,-6vh,0) rotate(0deg)}
+  100%{transform:translate3d(6vw,112vh,0) rotate(340deg)}
+}
+@keyframes petal-sway{
+  0%{transform:translateX(-2.4vw) rotate(-24deg)}
+  50%{transform:translateX(2.4vw) rotate(18deg)}
+  100%{transform:translateX(-1vw) rotate(30deg)}
+}
+@media (prefers-reduced-motion:reduce){#petals{display:none}}
+
+.sakura{margin:clamp(48px,9vw,110px) 0 0}
+.sakura-track{height:260vh;position:relative}
+.sakura-sticky{
+  position:sticky;top:0;height:100svh;box-sizing:border-box;
+  padding:clamp(14px,3.4vmin,34px);
+  display:grid;place-items:center;
+}
+.sakura-card{
+  position:relative;width:min(1120px,100%);height:100%;min-height:0;
+  display:flex;flex-direction:column;overflow:hidden;
+  border-radius:18px;background:#f6f0e8;
+  border:1px solid rgba(60,8,4,.3);
+  box-shadow:0 0 0 2px rgba(242,193,78,.45),0 24px 60px rgba(92,20,13,.22);
+}
+.sakura-scene{position:relative;flex:1 1;min-height:0;overflow:hidden}
+.sakura-scene>img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05);
+  user-select:none;-webkit-user-drag:none;
+}
+.sakura-branch{
+  filter:drop-shadow(0 3px 8px rgba(60,16,20,.22));
+}
+.sakura-title{
+  position:absolute;inset:4.5% 4% auto;z-index:20;margin:0;
+  padding-top:.05em;
+  white-space:nowrap;text-align:left;
+  font-family:'Saira Extra Condensed','Instrument Serif',Georgia,serif;
+  font-weight:800;letter-spacing:.02em;line-height:1.03;
+  font-size:clamp(58px,12.5vw,168px);
+  color:#FFF9EC;text-shadow:0 2px 22px rgba(120,40,50,.35);
+}
+.sakura-title span{display:inline-block;will-change:transform,opacity}
+.sakura-copy{
+  position:absolute;inset:auto 0 0;z-index:30;min-height:38%;
+  display:flex;flex-direction:column;color:#fbf1e9;
+  padding:clamp(14px,3vw,26px) clamp(16px,3.6vw,34px) clamp(12px,2.4vw,22px);
+  background:linear-gradient(0deg,#3c1018e6 0%,#6e2b33cc 34%,#8a3d4073 62%,transparent 100%);
+  will-change:transform;
+}
+.sakura-keys{display:flex;justify-content:space-between;gap:12px;letter-spacing:.18em;font-size:clamp(9px,1.55vw,11px);text-transform:uppercase;opacity:.72;font-family:'Jost',ui-sans-serif,sans-serif}
+.sakura-h{margin:clamp(6px,1.4vw,10px) 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(17px,2.8vw,26px);line-height:1.3}
+.sakura-b{margin:clamp(4px,1vw,8px) 0 0;max-width:640px;font-family:'Jost',ui-sans-serif,sans-serif;font-weight:300;font-size:clamp(11px,1.6vw,13.5px);line-height:1.6;opacity:.88}
+.sakura-s{margin:clamp(6px,1.2vw,9px) 0 0;font-family:'Jost',ui-sans-serif,sans-serif;font-weight:500;font-size:clamp(13px,2vw,17px)}
+.sakura-foot{margin-top:auto;padding-top:clamp(8px,1.4vw,12px);display:flex;justify-content:space-between;gap:12px;font-family:'Jost',ui-sans-serif,sans-serif;font-weight:300;font-size:clamp(9px,1.5vw,11px);letter-spacing:.1em;opacity:.75}
+@media (max-width:640px){.sakura-track{height:220vh}.sakura-copy{min-height:44%}}
+@media (prefers-reduced-motion:reduce){
+  .sakura-track{height:auto}
+  .sakura-sticky{position:relative;height:auto}
+  .sakura-card{height:min(640px,92svh)}
+}
 </style>
 </head>
 <body>
@@ -479,7 +620,7 @@ button{font:inherit}
   <header class="top">
     <a class="name" href="#">DELHI PHOTO STUDIO BTH</a>
     <nav>
-      <a href="#plates">Plates</a>
+      <a href="#plates">Album</a>
       <a href="#about">About</a>
       <a href="owner.html">Owner</a>
       <a href="#contact">Contact</a>
@@ -494,20 +635,14 @@ button{font:inherit}
   </header>
 
   <section id="sketchbook" class="hero">
-    <img class="botany l" src="delhi-photo-studio/botany-left.webp" alt="" aria-hidden="true">
-    <img class="botany r" src="delhi-photo-studio/botany-right.webp" alt="" aria-hidden="true">
-
     <p class="hero-kicker">Wedding Photographers / Cinematographers / Storytellers @ Bettiah</p>
 
     <div class="sb-wrap" id="sbWrap">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <filter id="sb-mblur-1"><feGaussianBlur stdDeviation="5 0"/></filter>
-        <filter id="sb-mblur-2"><feGaussianBlur stdDeviation="14 0"/></filter>
+        <filter id="sb-mblur-1"><feGaussianBlur stdDeviation="6 0"/></filter>
+        <filter id="sb-mblur-2"><feGaussianBlur stdDeviation="16 0"/></filter>
       </svg>
       <div class="sb-stage" id="sbStage">
-        <button class="sb-arrow left" id="sbLeft" aria-label="previous page">
-          <svg viewBox="0 0 14 44" width="14" height="44" fill="none" aria-hidden="true"><polyline points="11,3 3,22 11,41" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
         <div class="sb-3d" id="sb3d">
           <div class="sb-tilt" id="sbTilt">
             <div class="sb-cast ambient" aria-hidden="true"></div>
@@ -516,11 +651,14 @@ button{font:inherit}
             <div class="sb-book" id="sbBook"></div>
           </div>
           <div class="zoomwrap" id="zoomWrap" aria-hidden="true"><div class="zoominner" id="zoomInner"></div></div>
-          <div class="loupe" id="loupe"><span class="grip"></span><span class="ring"><span class="lens" id="loupeLens"><span class="mag" id="loupeMag"></span></span></span></div>
+          <div class="loupe" id="loupe"><span class="grip"></span><span class="ring-glass"><span class="lens" id="loupeLens"><span class="mag" id="loupeMag"></span></span></span></div>
+          <button class="sb-arrow prev" id="sbLeft" aria-label="previous page">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="12.5,3.5 6,10 12.5,16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="sb-arrow next" id="sbRight" aria-label="next page">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><polyline points="7.5,3.5 14,10 7.5,16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-        <button class="sb-arrow right" id="sbRight" aria-label="next page">
-          <svg viewBox="0 0 14 44" width="14" height="44" fill="none" aria-hidden="true"><polyline points="3,3 11,22 3,41" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
       </div>
       <div class="sb-captions" id="sbCaptions"></div>
       <div class="sb-tools" role="group" aria-label="view controls">
@@ -530,7 +668,7 @@ button{font:inherit}
         <span class="tool-sep" aria-hidden="true"></span>
         <button class="tool" id="loupeBtn" aria-label="magnifier" aria-pressed="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8.8" cy="8.8" r="5.8"/><path d="M13 13l4.4 4.4"/><path d="M6.4 7.2a3.2 3.2 0 0 1 2.4-1.4" opacity=".55"/></svg></button>
       </div>
-      <p class="sb-hint" id="sbHint">Drag the page to turn · Drag the glass across it</p>
+      <p class="sb-hint" id="sbHint">Swipe the page sideways to turn · Drag the glass across it</p>
     </div>
 
     <button class="hero-down" id="heroDown" aria-label="scroll to about">
@@ -546,15 +684,36 @@ button{font:inherit}
   <section id="about" class="about">
     <div>
       <p class="section-label">About</p>
-      <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This sketchbook holds that work the way we remember it, in <a class="bio-link" href="#plates">ink and a little colour</a> — and to write your own chapter, <a class="bio-link" href="https://wa.me/919716073555">say hello on WhatsApp</a>.</p>
+      <p class="bio">Delhi Photo Studio is a wedding photography and cinematography studio based in Bettiah, Bihar — rated 4.5 stars across 173 reviews. We document the whole arc of a celebration, from bridal mornings and baraats to the pheras and the dance floor after, in candid frames, traditional portraits, and cinematic films. This wedding album holds that work the way we make it — page after page of <a class="bio-link" href="#plates">your favourite celebrations</a> — and to start your own chapter, <a class="bio-link" href="https://wa.me/919716073555">say hello on WhatsApp</a>.</p>
     </div>
-    <img class="bloom" src="delhi-photo-studio/bloom.webp" alt="" aria-hidden="true">
+    <svg class="bloom" viewBox="0 0 120 120" aria-hidden="true">
+      <g id="mgA">
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(45 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(90 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(135 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(180 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(225 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(270 60 60)"/>
+        <ellipse cx="60" cy="26" rx="10" ry="19" fill="#FFE3B3" transform="rotate(315 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(22.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(67.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(112.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(157.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(202.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(247.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(292.5 60 60)"/>
+        <ellipse cx="60" cy="33" rx="7" ry="13" fill="#F2C14E" transform="rotate(337.5 60 60)"/>
+        <circle cx="60" cy="60" r="12" fill="#B3271E"/>
+        <circle cx="60" cy="60" r="5" fill="#8C1D18"/>
+      </g>
+    </svg>
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
 
   <section id="plates" class="plates">
-    <p class="section-label">Plates</p>
+    <p class="section-label">Inside the album</p>
     <ol class="plate-list" id="plateList"></ol>
   </section>
 
@@ -562,46 +721,73 @@ button{font:inherit}
 
   <section id="contact" class="chai" aria-labelledby="chaiTitle">
     <p class="section-label">Contact</p>
-    <h2 class="chai-title" id="chaiTitle">Let’s have a <em>chai</em> or coffee</h2>
-    <p class="chai-sub">Tell us a little about your day — we’ll write back on WhatsApp, usually within a day.</p>
-    <form id="chaiForm" class="chai-form" novalidate>
-      <label class="chai-field">
-        <span class="chai-label">Your name</span>
-        <input name="name" type="text" autocomplete="name" placeholder="Ananya Sharma">
-      </label>
-      <label class="chai-field">
-        <span class="chai-label">Phone / WhatsApp</span>
-        <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98xxx xxxxx">
-      </label>
-      <label class="chai-field">
-        <span class="chai-label">Event date</span>
-        <input name="date" type="date">
-      </label>
-      <label class="chai-field">
-        <span class="chai-label">I’m interested in</span>
-        <select name="interest">
-          <option>Wedding Day</option>
-          <option>Bride Portraits</option>
-          <option>Pre-Wedding Story</option>
-          <option>Destination Wedding</option>
-          <option>Model / Fashion Shoot</option>
-          <option>Cinematography</option>
-          <option>Album &amp; Prints</option>
-          <option>Something else</option>
-        </select>
-      </label>
-      <label class="chai-field chai-wide">
-        <span class="chai-label">A few lines about your day</span>
-        <textarea name="note" rows="3" placeholder="Venue, city, how many guests, what you have in mind…"></textarea>
-      </label>
-      <div class="chai-actions">
-        <button type="submit" class="chai-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h12v4.6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9.5Z"/><path d="M16 10.5h2a2.4 2.4 0 0 1 0 4.8h-2"/><path d="M8 5.2c-.9.9-.9 1.9 0 2.8M12 5.2c-.9.9-.9 1.9 0 2.8"/></svg>
-          Send on WhatsApp
-        </button>
-        <span class="chai-note" id="chaiNote">Opens WhatsApp with your message ready to send</span>
+    <div class="chai-card">
+      <h2 class="chai-title" id="chaiTitle">Let’s have a <em>chai</em> or coffee</h2>
+      <p class="chai-sub">Tell us a little about your day — we’ll write back on WhatsApp, usually within a day.</p>
+      <form id="chaiForm" class="chai-form" novalidate>
+        <label class="chai-field">
+          <span class="chai-label">Your name</span>
+          <input name="name" type="text" autocomplete="name" placeholder="Ananya Sharma">
+        </label>
+        <label class="chai-field">
+          <span class="chai-label">Phone / WhatsApp</span>
+          <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98xxx xxxxx">
+        </label>
+        <label class="chai-field">
+          <span class="chai-label">Event date</span>
+          <input name="date" type="date">
+        </label>
+        <label class="chai-field">
+          <span class="chai-label">I’m interested in</span>
+          <select name="interest">
+            <option>Wedding Day</option>
+            <option>Bride Portraits</option>
+            <option>Pre-Wedding Story</option>
+            <option>Destination Wedding</option>
+            <option>Model / Fashion Shoot</option>
+            <option>Cinematography</option>
+            <option>Album &amp; Prints</option>
+            <option>Something else</option>
+          </select>
+        </label>
+        <label class="chai-field chai-wide">
+          <span class="chai-label">A few lines about your day</span>
+          <textarea name="note" rows="3" placeholder="Venue, city, how many guests, what you have in mind…"></textarea>
+        </label>
+        <div class="chai-actions">
+          <button type="submit" class="chai-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h12v4.6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9.5Z"/><path d="M16 10.5h2a2.4 2.4 0 0 1 0 4.8h-2"/><path d="M8 5.2c-.9.9-.9 1.9 0 2.8M12 5.2c-.9.9-.9 1.9 0 2.8"/></svg>
+            Send on WhatsApp
+          </button>
+          <span class="chai-note" id="chaiNote">Opens WhatsApp with your message ready to send</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- =============== the blossom poster: a scroll poem to close the ===============
+       page — the same sakura editorial poster, rebuilt natively.  Keep
+       scrolling and the canopy blooms letter by letter; at the very end
+       the studio's note rises from the bottom.                       -->
+  <section id="sakura" class="sakura" aria-label="Blossom — a note from the studio">
+    <div class="sakura-track" id="sakTrack">
+      <div class="sakura-sticky">
+        <article class="sakura-card">
+          <div class="sakura-scene">
+            <img src="delhi-photo-studio/sakura-scene.jpg" alt="" aria-hidden="true" draggable="false">
+            <img class="sakura-branch" src="delhi-photo-studio/sakura-branch.webp" alt="" aria-hidden="true" draggable="false">
+            <h2 class="sakura-title" id="sakTitle" aria-label="Blossom"></h2>
+          </div>
+          <div class="sakura-copy" id="sakCopy">
+            <div class="sakura-keys"><span>Bloom</span><span>Vows</span><span>Forever</span></div>
+            <p class="sakura-h">Phoolon Se Likhi Shadiyan | फूलों से लिखी शादियाँ</p>
+            <p class="sakura-b">Every spring the town turns pink for a little while — right when the weddings begin. We learnt our patience from the blossom: stand still, hold the light, and let the moment fall into your hands.</p>
+            <p class="sakura-s">Stay for the fall — we already are.</p>
+            <div class="sakura-foot"><span>Delhi Photo Studio</span><span>Vol. 02</span><span>Bettiah</span></div>
+          </div>
+        </article>
       </div>
-    </form>
+    </div>
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
@@ -610,11 +796,14 @@ button{font:inherit}
 
 <script>
 /* =====================================================================
-   Delhi Photo Studio — sketchbook hero.
-   Spreads are transparent WebP illustrations of an open sketchbook
-   painted for the studio.  The leaf that turns is a real curved surface: a chain of
-   nested strips whose tangent sweeps through an arc, so the page bends
-   the way paper bends instead of pivoting like a flat door.
+   Delhi Photo Studio — the wedding flip album.
+   The album is wide (long in the width, the way wedding albums are)
+   and its pages hang from a row of gold rings along the top edge.
+   Each turn lifts the current page UP — never sideways: it curls
+   over the rings like the flip albums in the studio, landing stacked
+   above the album while the next page is revealed beneath.  The leaf
+   is a real curved surface: a chain of nested strips whose tangent
+   sweeps through an arc, so the paper bends the way paper bends.
    ===================================================================== */
 const Q=new URLSearchParams(location.search);
 const DIR='delhi-photo-studio/';
@@ -646,7 +835,7 @@ const PAGES=[
   {file:'albums.webp',         title:'Albums & Keepsakes',      place:'Fine-Art Prints'}
 ];
 PAGES.forEach(p=>p.url=DIR+p.file);
-const M=PAGES.length, LAND=9;
+const M=PAGES.length, LAND=8;      /* land on the spread that carries Pre-Wedding */
 
 const wrap=document.getElementById('sbWrap');
 const stage=document.getElementById('sbStage');
@@ -657,50 +846,56 @@ const hint=document.getElementById('sbHint');
 const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ------------------------------------------------ the turning leaf */
-const N=18;            /* strips — enough for a smooth curve          */
-const SPAN=0.449;      /* gutter → outer page edge, as a fraction     */
-const BETA=0.60;       /* peak curl of the arc, radians              */
+const N=20;            /* strips — enough for a smooth curve          */
+const BETA=0.55;       /* peak curl of the arc, radians              */
 let idx=0, turn=null;  /* turn = {dir, from, to, t}                   */
 let strips=[];         /* the chain, kept for per-frame lighting       */
+let turnLeaf=null;     /* the curl element, for end-fades              */
 
 function el(t,c){const e=document.createElement(t);if(c)e.className=c;return e}
-function imgEl(i,side){
-  const im=new Image();im.className='sb-half-img '+side;
-  im.draggable=false;im.alt='';im.src=PAGES[i].url;return im;
+function imgEl(i){
+  const im=new Image();im.className='sb-page-img';
+  im.draggable=false;im.alt=PAGES[i].title||PAGES[i].alt||'';im.src=PAGES[i].url;return im;
 }
-
-function halfEl(pos,i){
-  const d=el('div','sb-half '+pos);
-  d.appendChild(imgEl(i,pos));
-  d.appendChild(el('div','gutter-shade '+pos));
-  return d;
+/* one resting page of the open book; past the end it is plain end-paper */
+function halfEl(side,i){
+  const h=el('div','sb-half '+side);
+  if(i>=0&&i<M)h.appendChild(imgEl(i));
+  return h;
 }
-/* build the strip chain once per turn; background offsets are pure
-   geometry, so they never need touching again while it animates */
-function buildCurl(dir,from,to){
+/* one face of one slice of the turning leaf: the page's photo painted as
+   a background, offset so this strip shows its own window — registered
+   exactly the way the resting halves show it                            */
+function faceEl(kind,i,offset){
+  const f=el('div','face '+kind);
+  if(i>=0&&i<M){
+    f.style.backgroundImage='url('+PAGES[i].url+')';
+    f.style.backgroundPositionX=offset;
+    f.style.backgroundPositionY='var(--ay,0px)';
+  }
+  f.appendChild(el('div','sh'));f.appendChild(el('div','gl'));
+  return f;
+}
+/* build the strip chain once per turn.  Slices are pure geometry, so
+   their offsets never change while it animates.  A 'next' leaf covers
+   the right page and folds left over the gutter; a 'prev' leaf covers
+   the left page, so its chain runs the other way with B offsets — and
+   in both cases the back face ends up flat with A offsets.             */
+function buildCurl(dir,fi,bi){
   strips=[];
   const c=el('div','curl '+dir);
   c.style.setProperty('--n',N);
-  c.style.setProperty('--span',SPAN);
   let host=c;
+  const sw='calc(var(--psw) * 1 / '+N+')';
   for(let i=0;i<N;i++){
     const s=el('div','strip');
     s.style.setProperty('--i',i);
-    const gut='calc(var(--bw) * 0.5)';
-    const sw='calc(var(--bw) * '+SPAN+' / '+N+')';
-    const A='calc(-1 * ('+gut+' + '+i+' * '+sw+'))';         /* faces the from-page  */
-    const B='calc('+(i+1)+' * '+sw+' - '+gut+')';            /* faces the to-page    */
-    const f=el('div','face front'), b=el('div','face back');
-    const dress=(e,url,px)=>{
-      e.style.backgroundImage='url('+url+')';
-      e.style.backgroundPositionX=px;
-    };
-    dress(f,PAGES[from].url, dir==='next'?A:B);
-    dress(b,PAGES[to].url,   dir==='next'?B:A);
-    f.appendChild(el('div','sh'));f.appendChild(el('div','gl'));
-    b.appendChild(el('div','sh'));b.appendChild(el('div','gl'));
-    s.appendChild(f);s.appendChild(b);
-    if(i===N-1)s.classList.add('edge');
+    s.style.setProperty('--ez',(0.08*i).toFixed(2)+'px');
+    if(i>=N-2)s.classList.add('edge');
+    const A='calc(var(--ax,0px) - '+i+' * '+sw+')';
+    const B='calc(var(--ax,0px) + '+(i+1)+' * '+sw+' - var(--psw))';
+    s.appendChild(faceEl('front',fi,dir==='next'?A:B));
+    s.appendChild(faceEl('back',bi,A));
     host.appendChild(s);host=s;
     strips.push(s);
   }
@@ -716,51 +911,72 @@ function applyTurn(t){
   sb3d.style.setProperty('--shade',Math.sin(Math.PI*t).toFixed(3));
   fadeCaption(t);
   for(let i=0;i<strips.length;i++){
-    const l1=Math.abs(Math.cos(tt-i*td));        /* facing at this strip's near edge */
-    const l2=Math.abs(Math.cos(tt-(i+1)*td));    /* ...and at its far edge           */
-    const st=strips[i].style;
-    st.setProperty('--lit',l1.toFixed(3));
-    st.setProperty('--a1',((1-l1)*.62).toFixed(3));
-    st.setProperty('--a2',((1-l2)*.62).toFixed(3));
+    const l1=Math.abs(Math.cos(tt-i*td));        /* how much this strip faces us      */
+    /* one flat shade per strip — a ramp per strip would re-seam the sheet,
+       and a per-strip sheen bands flat colours, so the sheen stays even   */
+    strips[i].style.setProperty('--sh',((1-l1)*.30).toFixed(3));
   }
 }
 function paint(){
   book.textContent='';
-  if(!turn){
-    const f=el('div','sb-full');
-    const im=new Image();im.src=PAGES[idx].url;im.alt=PAGES[idx].title;
-    im.draggable=false;
-    f.appendChild(im);book.appendChild(f);
-    sb3d.style.setProperty('--shade','0');
-  }else{
-    const next=turn.dir==='next';
-    book.appendChild(halfEl('left', next?turn.from:turn.to));
-    book.appendChild(halfEl('right',next?turn.to:turn.from));
-    book.appendChild(buildCurl(turn.dir,turn.from,turn.to));
+  turnLeaf=null;
+  /* the stationary halves beneath the leaf:
+     next — old left page stays put, the leaf (old right, carrying the
+            new left on its back) folds over the gutter, and the page
+            after that already peeks from underneath on the right;
+     prev — the mirror image of that.                            */
+  let L,R;
+  if(turn&&turn.dir==='next'){L=idx;R=idx+3;}
+  else if(turn){L=idx-2;R=idx+1;}
+  else{L=idx;R=idx+1;}
+  const spread=el('div','sb-spread');
+  const hl=halfEl('left',L), hr=halfEl('right',R);
+  if(turn){hl.appendChild(el('div','leaf-shade'));hr.appendChild(el('div','leaf-shade'));}
+  spread.appendChild(hl);spread.appendChild(hr);
+  const st=el('div','sb-stitch');st.setAttribute('aria-hidden','true');
+  spread.appendChild(st);
+  if(turn){
+    const fi=turn.dir==='next'?idx+1:idx;          /* face leaving its side      */
+    const bi=turn.dir==='next'?idx+2:idx-1;        /* face arriving on the other */
+    turnLeaf=buildCurl(turn.dir,fi,bi);
+    spread.appendChild(turnLeaf);
     applyTurn(turn.t);
+  }else{
+    sb3d.style.setProperty('--shade','0');
   }
+  book.appendChild(spread);
+  const mg=el('div','sb-monogram');mg.textContent='Delhi Photo Studio · Bettiah';mg.setAttribute('aria-hidden','true');
+  book.appendChild(mg);
   const a=el('button','sb-zone sb-prev'),b=el('button','sb-zone sb-next');
   a.setAttribute('aria-label','previous page');b.setAttribute('aria-label','next page');
   book.appendChild(a);book.appendChild(b);
+  document.getElementById('sbLeft').classList.toggle('off',!can('prev')&&!(turn&&turn.dir==='prev'));
+  document.getElementById('sbRight').classList.toggle('off',!can('next')&&!(turn&&turn.dir==='next'));
   layout();
   caption();
   marks();
   if(typeof syncZoomLayer==='function')syncZoomLayer();
   if(typeof placeLoupe==='function')placeLoupe();
 }
+/* one caption line under the album naming the titles on show */
+function titlesFor(k){
+  const parts=[];
+  if(k<M&&PAGES[k].title)parts.push(PAGES[k].title);
+  if(k+1<M&&PAGES[k+1].title)parts.push(PAGES[k+1].title);
+  return parts.join('  ·  ');
+}
 function caption(){
   capBox.textContent='';
   capOut=capIn=null;
   if(turn){
-    if(PAGES[turn.from].title){
-      capOut=el('p','sb-caption live');capOut.textContent=PAGES[turn.from].title;capBox.appendChild(capOut);
-    }
-    if(PAGES[turn.to].title){
-      capIn=el('p','sb-caption live');capIn.textContent=PAGES[turn.to].title;capBox.appendChild(capIn);
-    }
+    const after=turn.dir==='next'?idx+2:idx-2;
+    const out=titlesFor(idx), inn=titlesFor(after);
+    if(out){capOut=el('p','sb-caption live');capOut.textContent=out;capBox.appendChild(capOut);}
+    if(inn){capIn=el('p','sb-caption live');capIn.textContent=inn;capBox.appendChild(capIn);}
     fadeCaption(turn.t);
-  }else if(PAGES[idx].title){
-    const p=el('p','sb-caption');p.textContent=PAGES[idx].title;capBox.appendChild(p);
+  }else{
+    const txt=titlesFor(idx);
+    if(txt){const p=el('p','sb-caption');p.textContent=txt;capBox.appendChild(p);}
   }
 }
 let capOut=null,capIn=null;
@@ -773,7 +989,20 @@ function fadeCaption(t){
   if(capIn)capIn.style.opacity=Math.max(0,Math.min(1,(t-0.56)/0.30)).toFixed(3);
 }
 function layout(){
-  sb3d.style.setProperty('--bw',book.clientWidth+'px');
+  const spread=book.querySelector('.sb-spread');
+  if(!spread)return;
+  const w=spread.clientWidth, h=spread.clientHeight, psw=w/2;
+  sb3d.style.setProperty('--bw',w+'px');
+  sb3d.style.setProperty('--psw',psw+'px');
+  sb3d.style.setProperty('--bh',h+'px');
+  /* the exact rect the photo occupies in one page — the arts are painted
+     at book-page size, so the turning slices land pixel-perfect against
+     the resting halves                                                 */
+  const sc=Math.min(psw/1024,h/1536);
+  sb3d.style.setProperty('--aw',(1024*sc)+'px');
+  sb3d.style.setProperty('--ah',(1536*sc)+'px');
+  sb3d.style.setProperty('--ax',((psw-1024*sc)/2)+'px');
+  sb3d.style.setProperty('--ay',((h-1536*sc)/2)+'px');
 }
 addEventListener('resize',layout);
 
@@ -818,8 +1047,8 @@ function tick(now){
 }
 function kick(){ if(raf===null){last=performance.now();raf=requestAnimationFrame(tick);} }
 
-/* ------------------------------------------- tilt + zoom of the book */
-const TILT_X=4.5, TILT_Y=7;      /* degrees — deliberately restrained   */
+/* ------------------------------------------- tilt + zoom of the album */
+const TILT_X=4.5, TILT_Y=6;      /* degrees — deliberately restrained   */
 const ZOOM_MIN=0.9, ZOOM_MAX=1.5;
 const view={rx:0,ry:0,z:1, trx:0,try_:0,tz:1};
 let viewActive=false;
@@ -850,7 +1079,7 @@ function setView(rx,ry,z){
   viewActive=true;kick();
   if(typeof syncZoom==='function')syncZoom();
 }
-/* the book leans toward the cursor — no dragging, and never far */
+/* the album leans toward the cursor — no dragging, and never far */
 function tiltTo(cx,cy){
   if(drag)return;                       /* hold still while a page is being turned */
   const r=book.getBoundingClientRect();
@@ -871,20 +1100,31 @@ stage.addEventListener('dblclick',()=>setView(view.trx,view.try_,1));
 
 /* ------------------------------------------------------- pointer work */
 let drag=null;
-function bookRect(){return book.getBoundingClientRect()}
+function pageRect(){
+  const spread=book.querySelector('.sb-spread');
+  return (spread||book).getBoundingClientRect();
+}
 function hideHint(){hint.classList.add('gone')}
+/* the book's physical ends: no prev before the first spread, no next
+   once the right-hand side is down to end-paper                     */
+function can(dir){return dir==='next'?idx+1<M:idx>0;}
 
 stage.addEventListener('pointerdown',e=>{
   if(e.button!==0)return;
+  const zone=e.target.closest('.sb-zone');
+  if(!zone)return;                     /* arrows and tools keep their click */
+  if(introOn)endIntro();              /* a gesture always wins over the riffle */
+  const dir=zone.classList.contains('sb-next')?'next':'prev';
+  if(turn==null&&!can(dir))return;
+  /* only claim the gesture once we know it really is a page turn —
+     an unconditional preventDefault here would swallow the click of
+     every button living inside the stage (the arrows stopped working) */
   e.preventDefault();                     /* no text selection, no image drag */
-  const onBook=e.target.closest('.sb-zone');
   stage.setPointerCapture(e.pointerId);
   hideHint();
-  if(!onBook||introOn)return;
-  const r=bookRect();
-  const dir=(e.clientX-r.left)/r.width>0.5?'next':'prev';
+  const r=pageRect();
   startTurn(dir,0);
-  drag={dir:dir,x0:e.clientX,w:r.width,moved:0,vel:0,tPrev:performance.now()};
+  drag={dir:dir,x0:e.clientX,w:r.width||1,moved:0,vel:0,tPrev:performance.now()};
 });
 stage.addEventListener('pointermove',e=>{
   if(!drag)return;
@@ -915,16 +1155,16 @@ stage.addEventListener('pointercancel',endDrag);
 /* ------------------------------------------------------ turn control */
 function startTurn(dir,t){
   spring=null;
-  if(turn){idx=turn.to;turn=null;}      /* settle anything still in flight */
+  if(turn){idx+=turn.adv;turn=null;}          /* settle anything still in flight */
+  if(!can(dir))return;
   if(typeof shoveLoupe==='function')shoveLoupe(dir);
-  const from=idx;
-  turn={dir:dir,from:from,to:dir==='next'?(from+1)%M:(from-1+M)%M,t:t||0};
+  turn={dir:dir,adv:dir==='next'?2:-2,t:t||0};
   paint();
 }
 function commit(){
   if(!turn)return;
-  if(REDUCED){idx=turn.to;turn=null;paint();return;}
-  animateTo(1,()=>{idx=turn.to;turn=null;paint();},170,26);
+  if(REDUCED){idx+=turn.adv;turn=null;paint();return;}
+  animateTo(1,()=>{idx+=turn.adv;turn=null;paint();},170,26);
   kick();
 }
 function cancel(){
@@ -934,16 +1174,16 @@ function cancel(){
 }
 function step(dir){
   if(introOn)endIntro();
-  if(turn){ /* finish whatever is in flight first */ idx=turn.to;turn=null; }
+  if(turn){ /* finish whatever is in flight first */ idx+=turn.adv;turn=null; }
+  if(!can(dir))return;
   startTurn(dir,0);commit();
 }
 function goTo(i){
   if(introOn)endIntro();
-  if(i===idx)return;
-  if(turn){idx=turn.to;turn=null;}
-  const fwd=(i-idx+M)%M, back=(idx-i+M)%M;
-  if(Math.min(fwd,back)===1){step(fwd===1?'next':'prev');return;}
-  idx=i;paint();
+  const want=i-(i%2);                      /* land on the spread holding page i */
+  if(turn){idx+=turn.adv;turn=null;}
+  if(want===idx)return;
+  idx=want;paint();
 }
 document.getElementById('sbLeft').onclick=()=>step('prev');
 document.getElementById('sbRight').onclick=()=>step('next');
@@ -967,34 +1207,49 @@ const zRead=document.getElementById('zRead');
 const loupeBtn=document.getElementById('loupeBtn');
 const zInBtn=document.getElementById('zIn'), zOutBtn=document.getElementById('zOut');
 const MAG=2.3;
-const DESK=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()||'#ece7dc';
 let loupeOn=true, lx=null, ly=null, lgrab=null, lTarget=null;
 
-function loupeSize(){return Math.round(Math.max(165,Math.min(262,book.clientWidth*0.235)));}
-/* the loupe's own coordinate space: stage pixels in live mode (it sits
-   outside the book's transform), book pixels otherwise */
+function loupeSize(){return Math.round(Math.max(150,Math.min(240,book.clientWidth*0.30)));}
+/* the loupe's own coordinate space: book pixels (it sits outside the
+   tilt, over the untransformed album)                                  */
 function bookBox(){
   return {x:0,y:0,w:book.clientWidth,h:book.clientHeight};
 }
-/* park it on the desk at the lower right, half off the book */
+/* where the photo pages sit inside the cover, as fractions of the book */
+function pageFrame(){
+  const spread=book.querySelector('.sb-spread');
+  if(!spread||!book.clientWidth)return null;
+  const w=book.clientWidth,h=book.clientHeight;
+  return {x0:spread.offsetLeft/w,x1:(spread.offsetLeft+spread.clientWidth)/w,
+          y0:spread.offsetTop/h,y1:(spread.offsetTop+spread.clientHeight)/h};
+}
+/* park it at the lower right of the page, half off the paper */
 function restLoupe(){
-  const b=bookBox();
-  lx=b.x+b.w*0.88; ly=b.y+b.h*0.855;
+  const b=bookBox(), f=pageFrame()||{x0:0,x1:1,y0:0,y1:1};
+  lx=b.x+b.w*(f.x0+(f.x1-f.x0)*0.88);
+  ly=b.y+b.h*(f.y0+(f.y1-f.y0)*0.86);
   placeLoupe();
 }
-/* The glass sits above the tilt, in the book's untransformed pixels, so the
-   lean of the page never nudges it.  What the tilt does change is which part
-   of the paper is under the glass, and only the scale matters enough to
-   correct for: the book is drawn about its own centre. */
 const zoomWrap=document.getElementById('zoomWrap');
 const zoomInner=document.getElementById('zoomInner');
-/* mirror whatever the book is currently showing into the magnified copy */
+/* mirror whatever the album is currently showing into the magnified copy.
+   The clones sit inside a skin that reproduces the cover's own padding,
+   so the page lands at the same spot it does on the real album.      */
 function syncZoomLayer(){
   zoomInner.textContent='';
+  zoomInner.style.width=book.clientWidth+'px';
+  zoomInner.style.height=book.clientHeight+'px';
+  const skin=el('div','zoomskin');
+  const cs=getComputedStyle(book);
+  skin.style.position='absolute';
+  skin.style.inset='0';
+  skin.style.padding=cs.padding;
+  skin.style.borderRadius=cs.borderRadius;
   for(const c of book.children){
     if(c.classList.contains('sb-zone'))continue;      /* hit targets need no copy */
-    zoomInner.appendChild(c.cloneNode(true));
+    skin.appendChild(c.cloneNode(true));
   }
+  zoomInner.appendChild(skin);
 }
 function placeLoupe(){
   if(lx===null)return;
@@ -1005,13 +1260,14 @@ function placeLoupe(){
   loupe.style.transform='translate3d('+(lx-R).toFixed(1)+'px,'+(ly-R).toFixed(1)+'px,0)';
   if(loupeOn)loupe.classList.add('on');
 
-  /* where the paper's edges actually land once the book is scaled */
+  /* where the paper's edges actually land once the album is scaled */
+  const f=pageFrame()||{x0:0,x1:1,y0:0,y1:1};
   const z=view.z, cx=bw/2, cy=bh/2;
-  const x0=cx+(bw*.051-cx)*z, x1=cx+(bw*.949-cx)*z;
-  const y0=cy+(bh*.218-cy)*z, y1=cy+(bh*.782-cy)*z;
+  const x0=cx+(bw*f.x0-cx)*z, x1=cx+(bw*f.x1-cx)*z;
+  const y0=cy+(bh*f.y0-cy)*z, y1=cy+(bh*f.y1-cy)*z;
   /* How far the glass's own centre is inside the paper.  The copy fades out
      as it wanders off the sheet, so you are left looking through plain
-     glass rather than at a sliver of page on flat desk. */
+     glass rather than at a sliver of page on the desk. */
   const nx=Math.max(x0,Math.min(lx,x1));
   const ny=Math.max(y0,Math.min(ly,y1));
   const inside=(lx>x0&&lx<x1&&ly>y0&&ly<y1)
@@ -1036,10 +1292,10 @@ function placeLoupe(){
 function shoveLoupe(dir){
   if(!loupeOn||lx===null||lgrab)return;
   const b=bookBox();
-  /* which page point the glass covers, once the book's scale is undone */
+  /* which page point the glass covers, once the album's scale is undone */
   const nx=(b.w/2+(lx-b.x-b.w/2)/view.z)/b.w, ny=(b.h/2+(ly-b.y-b.h/2)/view.z)/b.h;
   if(nx<0.02||nx>0.98||ny<0.17||ny>0.83)return;      /* already clear of the page */
-  lTarget={x:b.x+b.w*(dir==='next'?0.12:0.88), y:b.y+b.h*0.855};
+  lTarget={x:b.x+b.w*0.86, y:b.y+b.h*0.95};          /* down onto the cover band */
   kick();
 }
 function loupeEase(){
@@ -1062,7 +1318,7 @@ loupe.addEventListener('pointerdown',e=>{
 loupe.addEventListener('pointermove',e=>{
   if(!lgrab)return;
   const b=bookBox(), R=loupeSize()/2;
-  /* the glass carries none of the book's transform, so the cursor maps 1:1 */
+  /* the glass carries none of the album's transform, so the cursor maps 1:1 */
   lx=Math.max(b.x-R*0.7,Math.min(b.x+b.w+R*0.7, lgrab.lx0+(e.clientX-lgrab.cx)));
   ly=Math.max(b.y-R*0.7,Math.min(b.y+b.h+R*1.0, lgrab.ly0+(e.clientY-lgrab.cy)));
   placeLoupe();
@@ -1090,7 +1346,7 @@ zOutBtn.onclick=()=>{setView(view.trx,view.try_,view.tz/1.16);hideHint();};
 const plateList=document.getElementById('plateList');
 let plateNo=0;
 PAGES.forEach((p,i)=>{
-  if(!p.title)return;                 /* untitled spreads stay in the book only */
+  if(!p.title)return;                 /* untitled pages stay in the album only */
   plateNo++;
   const li=el('li');
   const b=el('button','plate');
@@ -1103,46 +1359,63 @@ PAGES.forEach((p,i)=>{
   li.appendChild(b);plateList.appendChild(li);
 });
 function marks(){
-  const cur=turn?turn.to:idx;
-  plateList.querySelectorAll('.plate').forEach(b=>b.setAttribute('aria-current',(+b.dataset.pi===cur)?'true':'false'));
+  const cur=turn?(turn.dir==='next'?idx+2:idx-2):idx;
+  plateList.querySelectorAll('.plate').forEach(b=>{
+    const pi=+b.dataset.pi;
+    b.setAttribute('aria-current',(pi===cur||pi===cur+1)?'true':'false');
+  });
 }
 
 /* ---------------------------------------------------------- the riffle */
-let riffle=null,riffleAt=0,introOn=false;
+let riffle=null,riffleAt=0,introOn=false,introDeadline=0;
 function endIntro(){
-  introOn=false;wrap.classList.remove('intro','b2');
+  introOn=false;spring=null;
+  wrap.classList.remove('intro','b2');
 }
 function riffleStep(){
+  if(!introOn)return;
   const s=riffle[riffleAt];
   wrap.classList.toggle('b2',s.bell>0.55);
+  if(!can('next'))idx=0;            /* loop around the end-paper */
   startTurn('next',0);
   tweenTo(1,s.dur,()=>{
-    idx=turn.to;turn=null;
+    if(turn)turn.t=1;
+    idx+=(turn?turn.adv:2);turn=null;
     riffleAt++;
-    if(introOn&&riffleAt<riffle.length){paint();riffleStep();}
-    else{endIntro();paint();}
+    if(introOn&&riffleAt<riffle.length&&performance.now()<introDeadline){paint();riffleStep();}
+    else if(introOn){introOn=false;idx=LAND;endIntro();paint();}
   });
 }
 function startIntro(){
   const coarse=matchMedia('(max-width: 640px), (pointer: coarse)').matches;
   if(coarse||REDUCED||Q.has('nointro')){idx=LAND;paint();return;}
-  const steps=M+LAND;
+  /* cycles the visited spreads {2,4,…,lastEven}; page 0 stays a pass-through */
+  const lastEven=2*Math.ceil(M/2)-2;
+  const cycle=[];for(let p=2;p<=lastEven;p+=2)cycle.push(p);
+  const total=cycle.length+6;
   riffle=[];
-  for(let r=0;r<steps;r++){
-    const bell=Math.sin(Math.PI*(r/(steps-1)));
+  for(let r=0;r<total;r++){
+    const bell=Math.sin(Math.PI*(r/(total-1)));
     riffle.push({bell:bell,dur:0.26-0.19*bell});
   }
-  /* however thick the book gets, the riffle stays a quick flourish */
-  const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.25;
+  /* however thick the album gets, the riffle stays a quick flourish */
+  const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.1;
   const k=Math.min(1,BUDGET/natural);
   riffle.forEach(s=>{s.dur*=k;});
-  riffleAt=0;introOn=true;wrap.classList.add('intro');
+  /* walk the cycle backwards from LAND so the last riff lands there exactly */
+  let start=LAND;
+  for(let s=0;s<total;s++){start=(start<=2?Math.max(lastEven,start===2?lastEven:2):start-2);if(lastEven>0&&start===0)start=lastEven;}
+  if(start<2||start%2)start=cycle[0];
+  idx=start%2?start-1:start;
+  riffleAt=0;introOn=true;introDeadline=performance.now()+3200;
+  wrap.classList.add('intro');
   riffleStep();
 }
 
 /* ------------------------------------------------------------- boot */
 (async function boot(){
-  idx=Q.has('shot')?(parseInt(Q.get('shot'),10)||0)%M:0;
+  idx=Q.has('shot')?Math.max(0,Math.min(M-1,parseInt(Q.get('shot'),10)||0)):0;
+  idx-=idx%2;                       /* spreads always begin on an even page */
   paint();applyView();
   await Promise.all(PAGES.map(p=>{
     const im=new Image();im.src=p.url;
@@ -1152,7 +1425,7 @@ function startIntro(){
   syncZoom();restLoupe();
   document.body.dataset.ready='1';
   if(Q.has('shot')){
-    if(Q.has('t')){startTurn(Q.get('dir')||'next',parseFloat(Q.get('t')));}
+    if(Q.has('t')){startTurn(Q.get('dir')||'next',parseFloat(Q.get('t')))}
     return;
   }
   setTimeout(startIntro,220);
@@ -1160,6 +1433,106 @@ function startIntro(){
 
 /* ------------------------------------------------ the chai form → admin WhatsApp */
 const WA_NUMBER='919716073555';   /* the studio's WhatsApp, same as up top */
+/* ================= sakura editorial poster + falling petals ================= */
+const sakTrack=document.getElementById('sakTrack');
+const sakTitle=document.getElementById('sakTitle');
+const sakCopy=document.getElementById('sakCopy');
+const sakSticky=sakTrack?sakTrack.querySelector('.sakura-sticky'):null;
+const sakScene=sakTrack?sakTrack.querySelector('.sakura-scene'):null;
+const SAK_WORD='BLOSSOM';
+let sakChars=[];
+/* build the headline, one character at a time */
+if(sakTitle){
+  let added=0;
+  let last='';
+  let i=0;
+  while(added<SAK_WORD.length){
+    last=SAK_WORD[i%SAK_WORD.length];
+    const s=document.createElement('span');
+    s.textContent=last;
+    sakTitle.appendChild(s);
+    sakChars.push(s);
+    i++;added++;
+  }
+}
+const sakProbe=(()=>{ /* transform-free probe: the letters scale during the reveal,
+  so the headline itself can never be trusted for measuring */
+  const d=document.createElement('div');
+  d.setAttribute('aria-hidden','true');
+  d.style.cssText='position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;left:-9999px;top:0';
+  d.style.fontFamily="'Saira Extra Condensed','Instrument Serif',Georgia,serif";
+  d.style.fontWeight='800';d.style.fontSize='100px';
+  d.textContent=SAK_WORD;
+  return d;
+})();
+function sakFitFont(){
+  if(!sakSticky||!sakTitle)return;
+  if(!sakProbe.parentNode)(sakScene||sakSticky).appendChild(sakProbe);
+  const w=sakProbe.getBoundingClientRect().width||1;
+  const avail=(sakScene?sakScene.clientWidth:sakSticky.clientWidth)*0.92;
+  const px=Math.max(34,Math.floor(100*(avail/Math.max(w,1))));
+  sakTitle.style.fontSize=Math.min(px,190)+'px';
+}
+const sakState={p:0,t:0,raf:0};
+function sakLoop(){
+  sakState.p+=(sakState.t-sakState.p)*0.22;
+  const p=sakState.p;
+  const n=sakChars.length;
+  for(let i=0;i<n;i++){
+    const fromCenter=i<=n/2?i/(n/2):(n-i)/(n/2);
+    const c=Math.min(1,Math.max(0,fromCenter*0.92+(p/0.4)*(1+0.28-fromCenter)-0.14));
+    sakChars[i].style.transform='translate3d(0,'+((1-c)*36)+'px,'+((1-c)*(i%2===0?640:-640))+'px) scale('+(0.14+0.86*c)+') rotate3d(0,0,1,'+((1-c)*(i%2===0?-90:90))+'deg)';
+    sakChars[i].style.opacity=c;
+  }
+  sakTitle.style.transform='translate3d('+(p*4)+'%,0,0)';
+  if(sakScene)sakScene.style.transform='translate3d(0,'+(p*2.2)+'%,0)';
+  const cp=Math.min(1,Math.max(0,(p-0.78)/0.22));
+  sakCopy.style.transform='translate3d(0,'+((1-cp)*104)+'%,0)';
+  if(Math.abs(sakState.t-sakState.p)>0.0005){
+    sakState.raf=requestAnimationFrame(sakLoop);
+  }else{sakState.raf=0}
+}
+function sakKick(){if(!sakState.raf)sakState.raf=requestAnimationFrame(sakLoop)}
+let sakTock=false;
+function sakOnScroll(){
+  if(sakTock||!sakTrack)return;
+  sakTock=true;
+  requestAnimationFrame(()=>{
+    sakTock=false;
+    const r=sakTrack.getBoundingClientRect();
+    const total=r.height-Math.min(innerHeight,r.height);
+    sakState.t=Math.min(1,Math.max(0,total>1?-r.top/Math.max(total,1):0));
+    sakKick();
+  });
+}
+if(sakTrack){
+  sakFitFont();
+  addEventListener('scroll',sakOnScroll,{passive:true});
+  addEventListener('resize',()=>{sakFitFont();sakOnScroll()},{passive:true});
+  addEventListener('orientationchange',()=>setTimeout(sakFitFont,80),{passive:true});
+  sakOnScroll();sakKick();
+}
+/* petals drifting through the whole page, behind everything */
+(function(){
+  if(document.getElementById('petals'))return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const host=document.createElement('div');
+  host.id='petals';host.setAttribute('aria-hidden','true');
+  const N=innerWidth<760?8:14;
+  for(let i=0;i<N;i++){
+    const s=document.createElement('span');
+    const size=9+Math.round(Math.random()*13);
+    s.style.setProperty('--x',(Math.random()*100).toFixed(1)+'vw');
+    s.style.setProperty('--s',size+'px');
+    s.style.setProperty('--o',(0.28+Math.random()*0.34).toFixed(2));
+    s.style.setProperty('--d',(6+Math.random()*7).toFixed(2)+'s');
+    s.style.setProperty('--dl',(-(Math.random()*14)).toFixed(2)+'s');
+    s.appendChild(document.createElement('i'));
+    host.appendChild(s);
+  }
+  document.body.appendChild(host);
+})();
+
 const chaiForm=document.getElementById('chaiForm');
 const chaiNote=document.getElementById('chaiNote');
 if(chaiForm){
@@ -1193,4 +1566,3 @@ if(chaiForm){
 </script>
 </body>
 </html>
-
