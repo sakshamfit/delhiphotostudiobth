@@ -215,6 +215,7 @@ button{font:inherit}
 .curl{
   position:absolute;top:0;height:100%;width:var(--psw,0px);
   transform-style:preserve-3d;z-index:6;
+  pointer-events:none!important;   /* the whole turning stack: sight only */
 }
 .curl.next{left:50%;transform-origin:0 50%;transform:rotateY(calc(-1 * var(--tt,0deg)))}
 .curl.prev{left:0;transform-origin:100% 50%;transform:rotateY(var(--tt,0deg))}
@@ -249,6 +250,8 @@ button{font:inherit}
   background-color:var(--paper-page);
   background-repeat:no-repeat;
   background-size:var(--aw,100%) var(--ah,100%);
+  pointer-events:none!important;   /* the flying leaf is a picture, not a wall —
+    while it curls above the page it must never eat the flip zones beneath it */
 }
 .face.back{transform:rotateY(180deg)}
 /* the slice textures are painted as backgrounds, offset so each strip
@@ -1109,7 +1112,8 @@ function can(dir){return dir==='next'?idx+1<M:idx>0;}
 stage.addEventListener('pointerdown',e=>{
   if(e.button!==0)return;
   const zone=e.target.closest('.sb-zone');
-  if(!zone||introOn)return;          /* arrows and tools keep their click */
+  if(!zone)return;                     /* arrows and tools keep their click */
+  if(introOn)endIntro();              /* a gesture always wins over the riffle */
   const dir=zone.classList.contains('sb-next')?'next':'prev';
   if(turn==null&&!can(dir))return;
   /* only claim the gesture once we know it really is a page turn —
@@ -1363,40 +1367,48 @@ function marks(){
 }
 
 /* ---------------------------------------------------------- the riffle */
-let riffle=null,riffleAt=0,introOn=false;
+let riffle=null,riffleAt=0,introOn=false,introDeadline=0;
 function endIntro(){
-  introOn=false;wrap.classList.remove('intro','b2');
+  introOn=false;spring=null;
+  wrap.classList.remove('intro','b2');
 }
 function riffleStep(){
+  if(!introOn)return;
   const s=riffle[riffleAt];
   wrap.classList.toggle('b2',s.bell>0.55);
-  if(idx+1>=M)idx=0;                 /* loop around the end-paper */
+  if(!can('next'))idx=0;            /* loop around the end-paper */
   startTurn('next',0);
   tweenTo(1,s.dur,()=>{
-    idx+=turn.adv;turn=null;
+    if(turn)turn.t=1;
+    idx+=(turn?turn.adv:2);turn=null;
     riffleAt++;
-    if(introOn&&riffleAt<riffle.length){paint();riffleStep();}
-    else{endIntro();paint();}
+    if(introOn&&riffleAt<riffle.length&&performance.now()<introDeadline){paint();riffleStep();}
+    else if(introOn){introOn=false;idx=LAND;endIntro();paint();}
   });
 }
 function startIntro(){
   const coarse=matchMedia('(max-width: 640px), (pointer: coarse)').matches;
   if(coarse||REDUCED||Q.has('nointro')){idx=LAND;paint();return;}
-  /* a spread per riff: through the whole book in one continuous fan */
-  const total=Math.ceil(M/2)+6;
+  /* cycles the visited spreads {2,4,…,lastEven}; page 0 stays a pass-through */
+  const lastEven=2*Math.ceil(M/2)-2;
+  const cycle=[];for(let p=2;p<=lastEven;p+=2)cycle.push(p);
+  const total=cycle.length+6;
   riffle=[];
   for(let r=0;r<total;r++){
     const bell=Math.sin(Math.PI*(r/(total-1)));
     riffle.push({bell:bell,dur:0.26-0.19*bell});
   }
   /* however thick the album gets, the riffle stays a quick flourish */
-  const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.25;
+  const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.1;
   const k=Math.min(1,BUDGET/natural);
   riffle.forEach(s=>{s.dur*=k;});
-  /* start far enough back that the last riff lands exactly on LAND */
-  const wrap26=2*Math.ceil(M/2);
-  idx=(((LAND-2*total)%wrap26)+wrap26)%wrap26;
-  riffleAt=0;introOn=true;wrap.classList.add('intro');
+  /* walk the cycle backwards from LAND so the last riff lands there exactly */
+  let start=LAND;
+  for(let s=0;s<total;s++){start=(start<=2?Math.max(lastEven,start===2?lastEven:2):start-2);if(lastEven>0&&start===0)start=lastEven;}
+  if(start<2||start%2)start=cycle[0];
+  idx=start%2?start-1:start;
+  riffleAt=0;introOn=true;introDeadline=performance.now()+3200;
+  wrap.classList.add('intro');
   riffleStep();
 }
 
