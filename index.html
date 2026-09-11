@@ -106,11 +106,10 @@ button{font:inherit}
 @media (prefers-reduced-motion:reduce){.hero-down{animation:none;opacity:.6}}
 
 /* ================= the wedding flip album =================
-   A wide album — long in the width, the way wedding albums are made —
-   standing up and facing you, hanging from a row of rings along the
-   top edge.  One photo page at a time; each turn lifts the page UP
-   and folds it over the rings, flipping vertically like the flip
-   albums in the studio reels — never sideways like a school copy.   */
+   The studio album sits open facing you: two photo pages side by side
+   inside a deep-red padded cover, stitched together down the centre
+   gutter like a real book.  Turning a page slides the right leaf over
+   the spine onto the left — sideways, never upward like a chart.     */
 .hero,.hero *{-webkit-user-select:none;-moz-user-select:none;user-select:none}
 .hero img{-webkit-user-drag:none;user-drag:none}
 .sb-wrap{display:grid;justify-items:center;gap:18px;width:100%;position:relative;z-index:2}
@@ -120,8 +119,8 @@ button{font:inherit}
   touch-action:pan-y;              /* sideways swipes belong to the album */
 }
 .sb-3d{
-  position:relative;flex:1 1;min-width:0;max-width:640px;
-  perspective:2300px;perspective-origin:50% 46%;
+  position:relative;flex:1 1;min-width:0;max-width:min(1020px,97%);
+  perspective:2600px;perspective-origin:50% 46%;
 }
 .sb-tilt{
   position:relative;
@@ -141,10 +140,28 @@ button{font:inherit}
     0 4px 10px rgba(92,20,13,.22);
   padding:4.2% 3.8% 6.8%;
 }
-.sb-page{position:relative;width:100%;aspect-ratio:1760/1240;background:var(--paper-page);border-radius:6px;transform-style:preserve-3d}
+/* the open spread: two cream pages in the deep-red cover */
+.sb-spread{
+  position:relative;width:100%;aspect-ratio:3520/1240;
+  background:var(--paper-page);border-radius:6px;transform-style:preserve-3d;
+}
+@media (max-width:760px){.sb-spread{aspect-ratio:1.05}}   /* taller pages on phones */
+.sb-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}
+.sb-half.left{left:0;border-radius:6px 0 0 6px}
+.sb-half.right{right:0;border-radius:0 6px 6px 0}
 .sb-page-img{
-  position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:5px;
-  box-shadow:0 1px 3px rgba(92,20,13,.28);
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:contain;
+}
+/* a soft seam where the two pages meet, with a fine gold stitch */
+.sb-half.left::after{content:"";position:absolute;top:0;bottom:0;right:0;width:14%;pointer-events:none;
+  background:linear-gradient(270deg,rgba(60,8,4,.28),rgba(60,8,4,0) 86%)}
+.sb-half.right::after{content:"";position:absolute;top:0;bottom:0;left:0;width:14%;pointer-events:none;
+  background:linear-gradient(90deg,rgba(60,8,4,.22),rgba(60,8,4,0) 86%)}
+.sb-stitch{
+  position:absolute;left:50%;top:1.2%;bottom:1.2%;width:0;
+  border-left:1.5px dashed rgba(242,193,78,.5);
+  z-index:5;pointer-events:none;
 }
 .sb-monogram{
   position:absolute;left:0;right:0;bottom:0;height:6.8%;
@@ -153,14 +170,19 @@ button{font:inherit}
   letter-spacing:.42em;text-indent:.42em;color:var(--gold);opacity:.85;
   pointer-events:none;z-index:3;
 }
-/* the rings the pages hang from — they straddle the page's top edge and
-   stay in front while a leaf folds through them                          */
-/* a slim stitched spine on the page's left edge — the page turns around it */
-.sb-spine{
-  position:absolute;left:0;top:0;bottom:0;width:14px;z-index:2;pointer-events:none;
-  border-radius:6px 0 0 6px;
-  background:linear-gradient(90deg,rgba(60,8,4,.30),rgba(60,8,4,.08) 55%,rgba(60,8,4,0) 100%);
-  border-right:1px solid rgba(242,193,78,.5);
+/* warm shade drifting out of the gutter while a leaf is in the air */
+.leaf-shade{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:rgba(60,14,7,.14);
+  opacity:calc(var(--shade,0) * .8);
+}
+.sb-half.left .leaf-shade{
+  -webkit-mask-image:linear-gradient(270deg,#000 0,transparent 56%);
+  mask-image:linear-gradient(270deg,#000 0,transparent 56%);
+}
+.sb-half.right .leaf-shade{
+  -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 56%);
+  mask-image:linear-gradient(90deg,#000 0,transparent 56%);
 }
 /* the shadow the album throws on the desk underneath it */
 .sb-cast{position:absolute;pointer-events:none;z-index:0}
@@ -185,52 +207,57 @@ button{font:inherit}
   filter:blur(4px);
   opacity:calc(1 - var(--shade,0) * .62);
 }
-/* warm shade moving across the resting page while a leaf is in the air */
-.leaf-shade{
-  position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:5px;
-  background:rgba(60,14,7,.16);
-  -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 58%);
-  mask-image:linear-gradient(90deg,#000 0,transparent 58%);
-  opacity:calc(var(--shade,0) * .8);
-}
+
 
 /* ---- the turning leaf: nested vertical strips forming a curved
-       surface that folds sideways over the LEFT spine of the page ---- */
+       surface that slides over the centre gutter like a book page ---- */
 .curl{
-  position:absolute;left:0;top:0;height:100%;width:var(--bw,0px);
+  position:absolute;top:0;height:100%;width:var(--psw,0px);
   transform-style:preserve-3d;z-index:6;
 }
-.curl.next{transform-origin:0 50%;transform:rotateY(calc(-1 * var(--tt,0deg)))}
-.curl.prev{transform-origin:0 50%;transform:rotateY(calc(var(--tt,0deg) - 180deg))}
+.curl.next{left:50%;transform-origin:0 50%;transform:rotateY(calc(-1 * var(--tt,0deg)))}
+.curl.prev{left:0;transform-origin:100% 50%;transform:rotateY(var(--tt,0deg))}
 .strip{
   position:absolute;top:0;height:100%;
-  width:calc(var(--bw,0px) / var(--n));
+  width:calc(var(--psw,0px) / var(--n));
   transform-style:preserve-3d;
 }
-.strip{transform-origin:0 50%}
-.curl>.strip{left:0}
+.curl.next .strip{transform-origin:0 50%}
+.curl.prev .strip{transform-origin:100% 50%}
+.curl.next>.strip{left:0}
+.curl.prev>.strip{right:0;left:auto}
 /* a whisper of z-depth per strip keeps nearly-coplanar neighbours from
    z-fighting into 'venetian blinds' on some rasterisers                */
-.curl .strip .strip{left:100%;transform:rotateY(var(--td,0deg)) translateZ(var(--ez,0px))}
+.curl.next .strip .strip{left:100%;transform:rotateY(var(--td,0deg)) translateZ(var(--ez,0px))}
+.curl.prev .strip .strip{right:100%;left:auto;transform:rotateY(calc(-1 * var(--td,0deg))) translateZ(var(--ez,0px))}
 /* when the leaf is in deep fold its curled tip can overlap the root of
    the leaf in screen space, and two near-parallel surfaces z-fight into
-   a checkerboard — so the last strips fade away toward the tip          */
-.strip.edge .face{
+   a checkerboard — so the last strips fade away toward the tip
+   (the tip points right on a 'next' leaf, left on a 'prev' one)        */
+.curl.next .strip.edge .face,.curl.prev .strip.edge .face.back{
   -webkit-mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
   mask-image:linear-gradient(90deg,#000 0 42%,transparent 88%);
 }
-.strip.edge .face.back{   /* the back is rotated 180°, so the fade mirrors */
+.curl.next .strip.edge .face.back,.curl.prev .strip.edge .face{
   -webkit-mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
   mask-image:linear-gradient(270deg,#000 0 42%,transparent 88%);
 }
 .face{
-  position:absolute;top:0;bottom:0;left:0;right:-1.1px;
+  position:absolute;top:0;bottom:0;left:0;right:-3.6px;   /* bleed past our slice */
+  overflow:hidden;
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  background-repeat:no-repeat;background-size:var(--bw,0px) var(--bh,0px);
+  background:var(--paper-page);
 }
-.face.back{
-  transform:rotateY(180deg);
-  background:#F9EEDC;
+/* the per-strip z-epsilon that stops z-fighting also nudges each slice's
+   photo off registration by a couple of pixels near the tip; the generous
+   bleed above keeps neighbouring slices overlapping, so no white teeth   */
+.face.back{transform:rotateY(180deg)}
+/* each slice holds the page's photo offset to its own window, contain-fitted
+   exactly the way the resting page shows it                              */
+.face-img{
+  position:absolute;top:0;bottom:0;width:var(--psw,0px);height:100%;
+  object-fit:contain;display:block;
+  -webkit-user-select:none;user-select:none;
 }
 .face .sh,.face .gl{
   -webkit-mask-image:linear-gradient(180deg,#000 0,#000 100%);
@@ -335,7 +362,7 @@ button{font:inherit}
 .zoominner .sb-zone{display:none}
 .zoomskin{background:var(--red-deep);border:1px solid rgba(60,8,4,.35);box-sizing:border-box}
 .zoomskin .sb-cast,.zoomskin .leaf-shade{display:none}
-.zoomskin .curl{z-index:6}
+.zoomskin .curl{display:none}   /* the lens never echoes the leaf mid-flip */
 .lens:before,.lens:after{content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none}
 .lens:before{z-index:1}
 .lens:after{z-index:2}
@@ -396,8 +423,8 @@ button{font:inherit}
   transition:opacity .4s ease;
 }
 .sb-hint.gone{opacity:0}
-.sb-wrap.intro .sb-page-img{filter:url(#sb-mblur-1)}
-.sb-wrap.intro.b2 .sb-page-img{filter:url(#sb-mblur-2)}
+.sb-wrap.intro .sb-page-img,.sb-wrap.intro .face-img{filter:url(#sb-mblur-1)}
+.sb-wrap.intro.b2 .sb-page-img,.sb-wrap.intro.b2 .face-img{filter:url(#sb-mblur-2)}
 .sb-wrap.intro .sb-caption{animation:none}
 .sb-wrap.intro .sb-caption.cap-out{display:none}
 @media (max-width:640px){
@@ -704,7 +731,7 @@ const PAGES=[
   {file:'albums.webp',         title:'Albums & Keepsakes',      place:'Fine-Art Prints'}
 ];
 PAGES.forEach(p=>p.url=DIR+p.file);
-const M=PAGES.length, LAND=9;
+const M=PAGES.length, LAND=8;      /* land on the spread that carries Pre-Wedding */
 
 const wrap=document.getElementById('sbWrap');
 const stage=document.getElementById('sbStage');
@@ -726,37 +753,45 @@ function imgEl(i){
   const im=new Image();im.className='sb-page-img';
   im.draggable=false;im.alt=PAGES[i].title||PAGES[i].alt||'';im.src=PAGES[i].url;return im;
 }
-/* one photo page resting in the cover, with its stitched left spine */
-function pageEl(i){
-  const p=el('div','sb-page');
-  p.appendChild(imgEl(i));
-  const sp=el('div','sb-spine');sp.setAttribute('aria-hidden','true');
-  p.appendChild(sp);
-  return p;
+/* one resting page of the open book; past the end it is plain end-paper */
+function halfEl(side,i){
+  const h=el('div','sb-half '+side);
+  if(i>=0&&i<M)h.appendChild(imgEl(i));
+  return h;
 }
-/* build the strip chain once per turn; background offsets are pure
-   geometry, so they never need touching again while it animates.
-   Chain order mirrors the physical page: slice 0 hangs at the spine. */
-function buildCurl(dir,from,to){
+/* one face of one slice of the turning leaf: the page's photo shifted
+   so this slice shows its own window of it, contain-fitted exactly the
+   way the resting halves show it                                        */
+function faceEl(kind,i,offset){
+  const f=el('div','face '+kind);
+  if(i>=0&&i<M){
+    const im=new Image();im.className='face-img';im.draggable=false;im.alt='';
+    im.src=PAGES[i].url;im.style.left=offset;
+    f.appendChild(im);
+  }
+  f.appendChild(el('div','sh'));f.appendChild(el('div','gl'));
+  return f;
+}
+/* build the strip chain once per turn.  Slices are pure geometry, so
+   their offsets never change while it animates.  A 'next' leaf covers
+   the right page and folds left over the gutter; a 'prev' leaf covers
+   the left page, so its chain runs the other way with B offsets — and
+   in both cases the back face ends up flat with A offsets.             */
+function buildCurl(dir,fi,bi){
   strips=[];
   const c=el('div','curl '+dir);
   c.style.setProperty('--n',N);
   let host=c;
-  const sw='calc(var(--bw) * 1 / '+N+')';
+  const sw='calc(var(--psw) * 1 / '+N+')';
   for(let i=0;i<N;i++){
     const s=el('div','strip');
     s.style.setProperty('--i',i);
     s.style.setProperty('--ez',(0.15*i).toFixed(2)+'px');
     if(i>=N-2)s.classList.add('edge');
-    const A='calc(-1 * '+i+' * '+sw+')';         /* slice i of the image   */
-    const f=el('div','face front'), b=el('div','face back');
-    /* the front of the paper shows the page being turned away (next)
-       or brought back over (prev); the back is plain album paper     */
-    f.style.backgroundImage='url('+PAGES[dir==='next'?from:to].url+')';
-    f.style.backgroundPositionX=A;
-    f.appendChild(el('div','sh'));f.appendChild(el('div','gl'));
-    b.appendChild(el('div','sh'));b.appendChild(el('div','gl'));
-    s.appendChild(f);s.appendChild(b);
+    const A='calc(-1 * '+i+' * '+sw+')';
+    const B='calc('+(i+1)+' * '+sw+' - var(--psw))';
+    s.appendChild(faceEl('front',fi,dir==='next'?A:B));
+    s.appendChild(faceEl('back',bi,A));
     host.appendChild(s);host=s;
     strips.push(s);
   }
@@ -771,12 +806,6 @@ function applyTurn(t){
   sb3d.style.setProperty('--td',(td*D).toFixed(3)+'deg');
   sb3d.style.setProperty('--shade',Math.sin(Math.PI*t).toFixed(3));
   fadeCaption(t);
-  /* the 'next' leaf ends stacked above the album and the 'prev' leaf
-     appears from there — both fade at the tips so nothing pops       */
-  if(turnLeaf){
-    if(turn.dir==='next') turnLeaf.style.opacity=(t>0.93?Math.max(0,(1-t)/0.07):1).toFixed(3);
-    else turnLeaf.style.opacity=(t<0.07?Math.max(0.15,t/0.07):1).toFixed(3);
-  }
   for(let i=0;i<strips.length;i++){
     const l1=Math.abs(Math.cos(tt-i*td));        /* how much this strip faces us      */
     /* one flat shade per strip — a ramp per strip would re-seam the sheet,
@@ -787,17 +816,31 @@ function applyTurn(t){
 function paint(){
   book.textContent='';
   turnLeaf=null;
-  const resting=turn ? (turn.dir==='next'?turn.to:turn.from) : idx;
-  const page=pageEl(resting);
-  book.appendChild(page);
+  /* the stationary halves beneath the leaf:
+     next — old left page stays put, the leaf (old right, carrying the
+            new left on its back) folds over the gutter, and the page
+            after that already peeks from underneath on the right;
+     prev — the mirror image of that.                            */
+  let L,R;
+  if(turn&&turn.dir==='next'){L=idx;R=idx+3;}
+  else if(turn){L=idx-2;R=idx+1;}
+  else{L=idx;R=idx+1;}
+  const spread=el('div','sb-spread');
+  const hl=halfEl('left',L), hr=halfEl('right',R);
+  if(turn){hl.appendChild(el('div','leaf-shade'));hr.appendChild(el('div','leaf-shade'));}
+  spread.appendChild(hl);spread.appendChild(hr);
+  const st=el('div','sb-stitch');st.setAttribute('aria-hidden','true');
+  spread.appendChild(st);
   if(turn){
-    page.appendChild(el('div','leaf-shade'));
-    turnLeaf=buildCurl(turn.dir,turn.from,turn.to);
-    page.appendChild(turnLeaf);
+    const fi=turn.dir==='next'?idx+1:idx;          /* face leaving its side      */
+    const bi=turn.dir==='next'?idx+2:idx-1;        /* face arriving on the other */
+    turnLeaf=buildCurl(turn.dir,fi,bi);
+    spread.appendChild(turnLeaf);
     applyTurn(turn.t);
   }else{
     sb3d.style.setProperty('--shade','0');
   }
+  book.appendChild(spread);
   const mg=el('div','sb-monogram');mg.textContent='Delhi Photo Studio · Bettiah';mg.setAttribute('aria-hidden','true');
   book.appendChild(mg);
   const a=el('button','sb-zone sb-prev'),b=el('button','sb-zone sb-next');
@@ -809,19 +852,25 @@ function paint(){
   if(typeof syncZoomLayer==='function')syncZoomLayer();
   if(typeof placeLoupe==='function')placeLoupe();
 }
+/* one caption line under the album naming the titles on show */
+function titlesFor(k){
+  const parts=[];
+  if(k<M&&PAGES[k].title)parts.push(PAGES[k].title);
+  if(k+1<M&&PAGES[k+1].title)parts.push(PAGES[k+1].title);
+  return parts.join('  ·  ');
+}
 function caption(){
   capBox.textContent='';
   capOut=capIn=null;
   if(turn){
-    if(PAGES[turn.from].title){
-      capOut=el('p','sb-caption live');capOut.textContent=PAGES[turn.from].title;capBox.appendChild(capOut);
-    }
-    if(PAGES[turn.to].title){
-      capIn=el('p','sb-caption live');capIn.textContent=PAGES[turn.to].title;capBox.appendChild(capIn);
-    }
+    const after=turn.dir==='next'?idx+2:idx-2;
+    const out=titlesFor(idx), inn=titlesFor(after);
+    if(out){capOut=el('p','sb-caption live');capOut.textContent=out;capBox.appendChild(capOut);}
+    if(inn){capIn=el('p','sb-caption live');capIn.textContent=inn;capBox.appendChild(capIn);}
     fadeCaption(turn.t);
-  }else if(PAGES[idx].title){
-    const p=el('p','sb-caption');p.textContent=PAGES[idx].title;capBox.appendChild(p);
+  }else{
+    const txt=titlesFor(idx);
+    if(txt){const p=el('p','sb-caption');p.textContent=txt;capBox.appendChild(p);}
   }
 }
 let capOut=null,capIn=null;
@@ -834,10 +883,11 @@ function fadeCaption(t){
   if(capIn)capIn.style.opacity=Math.max(0,Math.min(1,(t-0.56)/0.30)).toFixed(3);
 }
 function layout(){
-  const page=book.querySelector('.sb-page');
-  if(!page)return;
-  sb3d.style.setProperty('--bw',page.clientWidth+'px');
-  sb3d.style.setProperty('--bh',page.clientHeight+'px');
+  const spread=book.querySelector('.sb-spread');
+  if(!spread)return;
+  sb3d.style.setProperty('--bw',spread.clientWidth+'px');
+  sb3d.style.setProperty('--psw',(spread.clientWidth/2)+'px');
+  sb3d.style.setProperty('--bh',spread.clientHeight+'px');
 }
 addEventListener('resize',layout);
 
@@ -936,10 +986,13 @@ stage.addEventListener('dblclick',()=>setView(view.trx,view.try_,1));
 /* ------------------------------------------------------- pointer work */
 let drag=null;
 function pageRect(){
-  const page=book.querySelector('.sb-page');
-  return (page||book).getBoundingClientRect();
+  const spread=book.querySelector('.sb-spread');
+  return (spread||book).getBoundingClientRect();
 }
 function hideHint(){hint.classList.add('gone')}
+/* the book's physical ends: no prev before the first spread, no next
+   once the right-hand side is down to end-paper                     */
+function can(dir){return dir==='next'?idx+1<M:idx>0;}
 
 stage.addEventListener('pointerdown',e=>{
   if(e.button!==0)return;
@@ -949,6 +1002,7 @@ stage.addEventListener('pointerdown',e=>{
   hideHint();
   if(!zone||introOn)return;
   const dir=zone.classList.contains('sb-next')?'next':'prev';
+  if(turn==null&&!can(dir))return;
   const r=pageRect();
   startTurn(dir,0);
   drag={dir:dir,x0:e.clientX,w:r.width||1,moved:0,vel:0,tPrev:performance.now()};
@@ -982,16 +1036,16 @@ stage.addEventListener('pointercancel',endDrag);
 /* ------------------------------------------------------ turn control */
 function startTurn(dir,t){
   spring=null;
-  if(turn){idx=turn.to;turn=null;}      /* settle anything still in flight */
+  if(turn){idx+=turn.adv;turn=null;}          /* settle anything still in flight */
+  if(!can(dir))return;
   if(typeof shoveLoupe==='function')shoveLoupe(dir);
-  const from=idx;
-  turn={dir:dir,from:from,to:dir==='next'?(from+1)%M:(from-1+M)%M,t:t||0};
+  turn={dir:dir,adv:dir==='next'?2:-2,t:t||0};
   paint();
 }
 function commit(){
   if(!turn)return;
-  if(REDUCED){idx=turn.to;turn=null;paint();return;}
-  animateTo(1,()=>{idx=turn.to;turn=null;paint();},170,26);
+  if(REDUCED){idx+=turn.adv;turn=null;paint();return;}
+  animateTo(1,()=>{idx+=turn.adv;turn=null;paint();},170,26);
   kick();
 }
 function cancel(){
@@ -1001,16 +1055,16 @@ function cancel(){
 }
 function step(dir){
   if(introOn)endIntro();
-  if(turn){ /* finish whatever is in flight first */ idx=turn.to;turn=null; }
+  if(turn){ /* finish whatever is in flight first */ idx+=turn.adv;turn=null; }
+  if(!can(dir))return;
   startTurn(dir,0);commit();
 }
 function goTo(i){
   if(introOn)endIntro();
-  if(i===idx)return;
-  if(turn){idx=turn.to;turn=null;}
-  const fwd=(i-idx+M)%M, back=(idx-i+M)%M;
-  if(Math.min(fwd,back)===1){step(fwd===1?'next':'prev');return;}
-  idx=i;paint();
+  const want=i-(i%2);                      /* land on the spread holding page i */
+  if(turn){idx+=turn.adv;turn=null;}
+  if(want===idx)return;
+  idx=want;paint();
 }
 document.getElementById('sbLeft').onclick=()=>step('prev');
 document.getElementById('sbRight').onclick=()=>step('next');
@@ -1042,13 +1096,13 @@ function loupeSize(){return Math.round(Math.max(150,Math.min(240,book.clientWidt
 function bookBox(){
   return {x:0,y:0,w:book.clientWidth,h:book.clientHeight};
 }
-/* where the photo page sits inside the cover, as fractions of the book */
+/* where the photo pages sit inside the cover, as fractions of the book */
 function pageFrame(){
-  const page=book.querySelector('.sb-page');
-  if(!page||!book.clientWidth)return null;
+  const spread=book.querySelector('.sb-spread');
+  if(!spread||!book.clientWidth)return null;
   const w=book.clientWidth,h=book.clientHeight;
-  return {x0:page.offsetLeft/w,x1:(page.offsetLeft+page.clientWidth)/w,
-          y0:page.offsetTop/h,y1:(page.offsetTop+page.clientHeight)/h};
+  return {x0:spread.offsetLeft/w,x1:(spread.offsetLeft+spread.clientWidth)/w,
+          y0:spread.offsetTop/h,y1:(spread.offsetTop+spread.clientHeight)/h};
 }
 /* park it at the lower right of the page, half off the paper */
 function restLoupe(){
@@ -1186,8 +1240,11 @@ PAGES.forEach((p,i)=>{
   li.appendChild(b);plateList.appendChild(li);
 });
 function marks(){
-  const cur=turn?turn.to:idx;
-  plateList.querySelectorAll('.plate').forEach(b=>b.setAttribute('aria-current',(+b.dataset.pi===cur)?'true':'false'));
+  const cur=turn?(turn.dir==='next'?idx+2:idx-2):idx;
+  plateList.querySelectorAll('.plate').forEach(b=>{
+    const pi=+b.dataset.pi;
+    b.setAttribute('aria-current',(pi===cur||pi===cur+1)?'true':'false');
+  });
 }
 
 /* ---------------------------------------------------------- the riffle */
@@ -1198,9 +1255,10 @@ function endIntro(){
 function riffleStep(){
   const s=riffle[riffleAt];
   wrap.classList.toggle('b2',s.bell>0.55);
+  if(idx+1>=M)idx=0;                 /* loop around the end-paper */
   startTurn('next',0);
   tweenTo(1,s.dur,()=>{
-    idx=turn.to;turn=null;
+    idx+=turn.adv;turn=null;
     riffleAt++;
     if(introOn&&riffleAt<riffle.length){paint();riffleStep();}
     else{endIntro();paint();}
@@ -1209,23 +1267,28 @@ function riffleStep(){
 function startIntro(){
   const coarse=matchMedia('(max-width: 640px), (pointer: coarse)').matches;
   if(coarse||REDUCED||Q.has('nointro')){idx=LAND;paint();return;}
-  const steps=M+LAND;
+  /* a spread per riff: through the whole book in one continuous fan */
+  const total=Math.ceil(M/2)+6;
   riffle=[];
-  for(let r=0;r<steps;r++){
-    const bell=Math.sin(Math.PI*(r/(steps-1)));
+  for(let r=0;r<total;r++){
+    const bell=Math.sin(Math.PI*(r/(total-1)));
     riffle.push({bell:bell,dur:0.26-0.19*bell});
   }
   /* however thick the album gets, the riffle stays a quick flourish */
   const natural=riffle.reduce((a,s)=>a+s.dur,0), BUDGET=2.25;
   const k=Math.min(1,BUDGET/natural);
   riffle.forEach(s=>{s.dur*=k;});
+  /* start far enough back that the last riff lands exactly on LAND */
+  const wrap26=2*Math.ceil(M/2);
+  idx=(((LAND-2*total)%wrap26)+wrap26)%wrap26;
   riffleAt=0;introOn=true;wrap.classList.add('intro');
   riffleStep();
 }
 
 /* ------------------------------------------------------------- boot */
 (async function boot(){
-  idx=Q.has('shot')?(parseInt(Q.get('shot'),10)||0)%M:0;
+  idx=Q.has('shot')?Math.max(0,Math.min(M-1,parseInt(Q.get('shot'),10)||0)):0;
+  idx-=idx%2;                       /* spreads always begin on an even page */
   paint();applyView();
   await Promise.all(PAGES.map(p=>{
     const im=new Image();im.src=p.url;
