@@ -119,7 +119,7 @@ button{font:inherit}
   touch-action:pan-y;              /* sideways swipes belong to the album */
 }
 .sb-3d{
-  position:relative;flex:1 1;min-width:0;max-width:min(1020px,97%);
+  position:relative;flex:1 1;min-width:0;max-width:min(880px,97%);
   perspective:2600px;perspective-origin:50% 46%;
 }
 .sb-tilt{
@@ -140,18 +140,18 @@ button{font:inherit}
     0 4px 10px rgba(92,20,13,.22);
   padding:4.2% 3.8% 6.8%;
 }
-/* the open spread: two cream pages in the deep-red cover */
+/* the open spread: two cream pages in the deep-red cover — every page is
+   filled edge to edge by its photo, painted at book-page size          */
 .sb-spread{
-  position:relative;width:100%;aspect-ratio:3520/1240;
+  position:relative;width:100%;aspect-ratio:2048/1536;
   background:var(--paper-page);border-radius:6px;transform-style:preserve-3d;
 }
-@media (max-width:760px){.sb-spread{aspect-ratio:1.05}}   /* taller pages on phones */
 .sb-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}
 .sb-half.left{left:0;border-radius:6px 0 0 6px}
 .sb-half.right{right:0;border-radius:0 6px 6px 0}
 .sb-page-img{
   position:absolute;inset:0;width:100%;height:100%;display:block;
-  object-fit:contain;
+  object-fit:cover;
 }
 /* a soft seam where the two pages meet, with a fine gold stitch */
 .sb-half.left::after{content:"";position:absolute;top:0;bottom:0;right:0;width:14%;pointer-events:none;
@@ -883,13 +883,14 @@ function layout(){
   sb3d.style.setProperty('--bw',w+'px');
   sb3d.style.setProperty('--psw',psw+'px');
   sb3d.style.setProperty('--bh',h+'px');
-  /* the exact rect the contain-fitted photo occupies in one page, so the
-     turning slices land pixel-perfect against the resting halves        */
-  const sc=Math.min(psw/1760,h/1240);
-  sb3d.style.setProperty('--aw',(1760*sc)+'px');
-  sb3d.style.setProperty('--ah',(1240*sc)+'px');
-  sb3d.style.setProperty('--ax',((psw-1760*sc)/2)+'px');
-  sb3d.style.setProperty('--ay',((h-1240*sc)/2)+'px');
+  /* the exact rect the photo occupies in one page — the arts are painted
+     at book-page size, so the turning slices land pixel-perfect against
+     the resting halves                                                 */
+  const sc=Math.min(psw/1024,h/1536);
+  sb3d.style.setProperty('--aw',(1024*sc)+'px');
+  sb3d.style.setProperty('--ah',(1536*sc)+'px');
+  sb3d.style.setProperty('--ax',((psw-1024*sc)/2)+'px');
+  sb3d.style.setProperty('--ay',((h-1536*sc)/2)+'px');
 }
 addEventListener('resize',layout);
 
